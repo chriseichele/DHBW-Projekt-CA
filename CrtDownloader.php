@@ -1,48 +1,58 @@
 <?php
 
 //Dummy Download aufruf
-$download = $_GET ['download'];
-$loader = New CrtDownloader();
-$loader->download();
+$download = $_GET['download'];
+if(isset($_GET['download'])) {
+  //Datei downloaden
+  $loader = New CrtDownloader();
+  $loader->download($download);
+} else {
+  //Dummy dowload formular zeigen
+  echo'<html>
+       <head>
+       <title>Downloader</title>
+       </head>
+       <body>
+       <form action="'.$PHP_SELF.'" method="GET">
+         <input type="text" name="download" placeholder="File"/>
+         <input type="submit" value="download"/>
+      </form>
+      </body>
+      </html>';
+}
 
 /* Downloader Klasse fuer CRT-Files */
+
 class CrtDownloader {
 	private $basedir;
 	
 	public function __construct() {
 		//Variablen Initialisierung
-		$basedir = "/home/www/download"; //Verzeichnis außerhalb des Document Root (nicht per Web-URL ereichbar)
+		$this->basedir = "../../download"; //Verzeichnis außerhalb des Document Root (nicht per Web-URL ereichbar)
 	}
 	
-	public function download($download) {
+	public function download($download_bezeichner) {
 		
 		//TODO: Angemeldeten User prüfen
 		
-		//TODO: Lesen von Dateien des Users
-		// Übersetzung von Download-Bezeichner in Dateinamen.
+		//TODO: Lesen von Dateien des Users (Download Bezeichner und Pfad)
 		$filelist = array (
-				"file1" => "area1/datei1.zip",
-				"file2" => "area1/datei2.zip",
-				"file3" => "area2/datei1.zip" 
+				"testzertifikat" => "test.crt",
+				"testkey" => "test.key"
 		);
 		
-		//TODO: ist gewünschte Download Datei für den aktuellen User erlaubt?
-		// Einbruchsversuch abfangen.
-		if (! isset ( $filelist [$download] ))
-			die ( "Datei $download nicht vorhanden." );
+		//ist gewünschte Download Datei für den erlaubten Dateien des aktuellen Users?
+		if (! isset ( $filelist [$download_bezeichner] ))
+			die ( "Die Datei \"$download\" ist nicht vorhanden." );
 			
-		//TODO: Download Pfad ermitteln
-		// Vertrauenswuerdigen Dateinamen basteln.
-		$filename = sprintf ( "%s/%s", $basedir, $filelist [$download] );
+		//Download Pfad zusammenbauen
+		$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner] );
 		
-		//TODO: Datentyp im Header setzen
-		// Passenden Datentyp erzeugen.
+		//Passenden Datentyp im HTTP Header setzen
 		header ( "Content-Type: application/octet-stream" );
 		
-		//TODO: Dateinamen im Downloader setzen
-		// Passenden Dateinamen im Download-Requester vorgeben,
-		// z. B. den Original-Dateinamen
-		$save_as_name = basename ( $filelist [$download] );
+		//Passenden Dateinamen im Download-Requester vorgeben
+		$save_as_name = basename ( $filelist [$download_bezeichner] );
 		header ( "Content-Disposition: attachment; filename=\"$save_as_name\"" );
 		
 		// Datei ausgeben.
