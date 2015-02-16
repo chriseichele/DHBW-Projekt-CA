@@ -25,7 +25,7 @@ class DBAccess {
         //$query = $connection->real_escape_string($query);
         //Query ausführen
         $rows = $this->query_secuence($connection, $query);
-		//Verbindung sauber trennen
+        //Verbindung sauber trennen
         $connection->close();
         return $rows;
     }
@@ -52,23 +52,35 @@ class DBAccess {
         }
         //Result freigeben
         $result->free();
-		$test = 'ich';
-		$test = $connection->real_escape_string($test);
-		var_dump($connection->query("SELECT * FROM role WHERE name = 'ich'"));
-		var_dump($connection->query("SELECT * FROM role WHERE name = '".$test."'"));
         return $obj_array;
     }
 
-    private function select($select, $from, $where_clause = NULL) {
+    private function select($select, $from, $where_clause = array()) {
         $connection = $this->connect();
         if ($select == "*" or $select == "" or $select === NULL)
             $select = "*";
         //escape
         $select = $connection->real_escape_string($select);
         $from = $connection->real_escape_string($from);
-        $where_clause = $where_clause === NULL ? NULL : $connection->real_escape_string($where_clause);
+        $where = "";
+        if (is_array($where_clause) and count($where_clause) > 0) {
+            foreach ($where_clause as $where_value) {
+                if ((strpos($where_value, "'") !== false
+                        and strrpos($where_value, "'") !== false
+                        and strpos($where_value, "'") < strrpos($where_value, "'")
+                        ) or ( strpos($where_value, '"') !== false
+                        and strrpos($where_value, '"') !== false
+                        and strpos($where_value, '"') < strrpos($where_value, '"')
+                        ) or ( strpos($where_value, "`") !== false
+                        and strrpos($where_value, "`") !== false
+                        and strpos($where_value, "`") < strrpos($where_value, "`")))
+                    $where .= "'".$connection->real_escape_string(substr($where_value, 1, strlen($where_value) - 2))."'";
+                else
+                    $where .= $connection->real_escape_string($where_value);
+            }
+        }
 
-        $query = $where_clause === NULL ? "SELECT $select FROM $from" : "SELECT $select FROM $from WHERE $where_clause";
+        $query = count($where_clause) == 0 ? "SELECT $select FROM $from" : "SELECT $select FROM $from WHERE $where";
         //Query ausführen
         $rows = $this->query_secuence($connection, $query);
         //Verbindung sauber trennen
@@ -127,36 +139,36 @@ class DBAccess {
         foreach ($cols as $part) {
             $col .= ", `" . $connection->real_escape_string($part) . "`";
         }
-        if (strlen($col) > 0) 
+        if (strlen($col) > 0)
             $col = substr($col, 1);
         $value = NULL;
         foreach ($values as $part) {
             $value .= ",'" . $connection->real_escape_string($part) . "'";
         }
-        if (strlen($value) > 0) 
+        if (strlen($value) > 0)
             $value = substr($value, 1);
 
         //Query ausführen und Verbindung trennen
         $query = "INSERT INTO `$table` ($col) VALUES($value)";
         $connection->query($query);
-        return printf("%d: %s",$connection->errno, $connection->error); //Alles größer 0 ist ein Fehler
+        return $connection->errno == 0 ? true : printf("%d: %s", $connection->errno, $connection->error); //Alles größer 0 ist ein Fehler
         //wenn Query erfolgreich durchgelaufen ist und kein autoincrement vorhanden war wird true ausgegeben war ein fehler vorhanden und der auto increment wert konnte gelesen werden wird $ai auf false gesetzt
-/*
-if ($errno == 0 && $ai == false) {
-	//ok, kein auto_inc vorhanden
-	$ai = true;
-} else if ($errno != 0 && $ai != false) {
-	// nicht gut obwohl auto_inc vorhanden war
-	$ai = false;
-}
-$connection->close();
-return $ai;
-*/
+        /*
+          if ($errno == 0 && $ai == false) {
+          //ok, kein auto_inc vorhanden
+          $ai = true;
+          } else if ($errno != 0 && $ai != false) {
+          // nicht gut obwohl auto_inc vorhanden war
+          $ai = false;
+          }
+          $connection->close();
+          return $ai;
+         */
     }
 
     //spezifisch
     function insert_role($name, $read_own, $write_own, $execute_own, $read_foreign, $write_foreign, $execute_foreign) {
-		$role_name = $name; // hier current User nehmen
+        $role_name = $name; // hier current User nehmen
         return $this->insert("role", array("name", "read_own", "write_own", "execute_own", "read_foreign", "write_foreign", "execute_foreign", "role_name"), array($name, $read_own, $write_own, $execute_own, $read_foreign, $write_foreign, $execute_foreign, $role_name));
     }
 
@@ -165,7 +177,7 @@ return $ai;
     }
 
     function insert_request($start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $id_from_intermediate, $status, $verifier, $path) {
-		$user_email = NULL; // hier current user nehmen
+        $user_email = "test@test.de"; // hier current user nehmen
         return $this->insert("request", array("start", "end", "country", "state", "city", "organisation_name", "organisation_unit_name", "common_name", "responsible_email", "challenge_password", "optional_company_name", "intermediate", "id_from_intermediate", "status", "verifier", "path", "user_email"), array($start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $id_from_intermediate, $status, $verifier, $path, $user_email));
     }
 
