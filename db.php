@@ -173,7 +173,7 @@ class DBAccess {
     }
 
     function insert_user($email, $firstname, $surname, $password, $role_name) {
-        return $this->insert("user", array("email", "firstname", "surname", "password", "role_name"), array($email, $firstname, $surname, hash("sha512", $password), $role_name));
+        return $this->insert("user", array("email", "firstname", "surname", "passwordhash", "role_name"), array($email, $firstname, $surname, $password, $role_name));
     }
 
     function insert_request($start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $id_from_intermediate, $status, $verifier, $path) {
@@ -376,8 +376,8 @@ class DBAccess {
         return $this->delete("article", "ID", $id);
     }
 
-    function delete_customer($email) {
-        return $this->delete("customer", "email", $email);
+    function delete_user($email) {
+        return $this->delete("user", "email", $email);
     }
 
     function delete_order($id) {
