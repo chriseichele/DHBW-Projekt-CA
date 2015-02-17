@@ -55,7 +55,7 @@ class UserHelper {
 			$email = $_SESSION["email"];
 			$db = new DBAccess();
 			$user = reset($db->get_user_all_where(array("email", "=", "'".$email."'")));
-			return ($user->role == "admin");
+			return ($user->role_name == "admin");
 		}
 		else {
 			return false;
