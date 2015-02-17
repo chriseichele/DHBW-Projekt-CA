@@ -1,31 +1,36 @@
 <?php
 
+$pagetitle_main = "Projekt CA";
+
 require_once('UserHelper.php'); 
 
 $loginform = getLoginForm();
 
-//Fehlerprüfung
-$errortext = '';
-if(isset($_GET['loginerror'])) {
-	$errortext .= '<div class="alert alert-danger  alert-error alert-dismissible" role="alert">
+//Fehler & Infomeldung Überprüfung
+$messagetext = '';
+if(isset($_SESSION['message']['loginerror'])) {
+	$messagetext .= '<div class="alert alert-danger  alert-error alert-dismissible" role="alert">
   					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   					<span>Der Benutzername oder das Passwort ist falsch.</span>
 				   </div>';
+	unset($_SESSION['message']['loginerror']);
 } 
-if(isset($_GET['registererror'])) {
-	$errortext .= '<div class="alert alert-danger  alert-error alert-dismissible" role="alert">
+if(isset($_SESSION['message']['registererror'])) {
+	$messagetext .= '<div class="alert alert-danger  alert-error alert-dismissible" role="alert">
   					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   					<span>Registrierung fehlgeschlagen. Bitte stellen sie sicher, dass alle Felder ausgef&uuml;llt sind!</span>
 				   </div>';
+	unset($_SESSION['message']['registererror']);
 }  
-if(isset($_GET['registersuccess'])) {
-	$errortext .= '<div class="alert alert-success alert-dismissible" role="alert">
+if(isset($_SESSION['message']['registersuccess'])) {
+	$messagetext .= '<div class="alert alert-success alert-dismissible" role="alert">
   					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
   					<span>Registrierung erfolgreich.</span>
 				   </div>';
+	unset($_SESSION['message']['registersuccess']);
 }  	  
 
 ?>
@@ -36,13 +41,13 @@ if(isset($_GET['registersuccess'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Projekt CA || <?php echo $pagetitle ?></title>
+    <title><?php echo $pagetitle_main ?> || <?php echo $pagetitle ?></title>
     
     <!-- Web App Deklaration -->
 	<meta name="theme-color" content="#000000">
   	<meta name="apple-mobile-web-app-capable" content="yes">
   	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-  	<meta name="apple-mobile-web-app-title" content="Projekt CA || <?php echo $pagetitle ?>">
+  	<meta name="apple-mobile-web-app-title" content="<?php echo $pagetitle_main ?>">
     
     <!-- Favicon -->
 	<link rel="icon" type="image/png" sizes="192x192"  href="./icons/android-icon-192x192.png">
@@ -72,7 +77,7 @@ if(isset($_GET['registersuccess'])) {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">Projekt CA</a>
+          <a class="navbar-brand" href="index.php"><?php echo $pagetitle_main ?></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
         
@@ -103,5 +108,5 @@ if(isset($_GET['registersuccess'])) {
 
       <div class="container" style="margin-top:4.5em;">
       	<!-- Hier stehen eventuelle Fehlermeldungen -->
-      	<?php echo $errortext; ?>
+      	<?php echo $messagetext; ?>
       </div>

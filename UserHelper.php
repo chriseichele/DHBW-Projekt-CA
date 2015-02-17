@@ -126,25 +126,22 @@ else {
 			
 		  	if($success) {
 		  	  UserHelper::Login($email, $pwhash);
-			  Header('Location: '.$_SERVER['PHP_SELF'].'?registersuccess=true');
-			  exit();
+		  	  $_SESSION['message']['registersuccess'] = true;
 		    } 
 		    else {
-			  Header('Location: '.$_SERVER['PHP_SELF'].'?registererror=true');
-			  exit();
+		  	  $_SESSION['message']['registererror'] = true;
 		    }
+			Header('Location: '.$_SERVER['PHP_SELF']);
+			exit();
 			
 		} else {
 		  //Login
 		  $success = UserHelper::Login($email, $pwhash);
-		  if($success) {
-			Header('Location: '.$_SERVER['PHP_SELF']);
-			exit();
-		  } 
-		  else {
-			Header('Location: '.$_SERVER['PHP_SELF'].'?loginerror=true');
-			exit();
+		  if(!$success) {
+		  	$_SESSION['message']['loginerror'] = true;
 		  }
+		  Header('Location: '.$_SERVER['PHP_SELF']);
+		  exit();
 		}
 	} 
 	else {
