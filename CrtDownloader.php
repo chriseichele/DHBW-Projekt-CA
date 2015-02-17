@@ -1,5 +1,9 @@
 <?php
 
+require_once('./UserHelper.inc');
+
+$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
+
 //Dummy Download aufruf
 if(isset($_GET['download'])) {
   $download = $_GET['download'];
@@ -8,22 +12,15 @@ if(isset($_GET['download'])) {
     $loader = New CrtDownloader();
     $loader->download($download);
   } catch (Exception $e) {
-    echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+  	$_SESSION['message']['error'][] = $e->getMessage();
+	//zurück leiten
+	Header('Location: '.$backurl);
   }
-} else {
-  //Dummy download formular zeigen
-  echo'<html>
-       <head>
-       <title>Downloader</title>
-       </head>
-       <body>
-       <form action="'.$_SERVER['PHP_SELF'].'" method="GET">
-         <input type="text" name="download" placeholder="File"/>
-         <input type="submit" value="download"/>
-      </form>
-      '.CrtDownloader::getUserFileList().'
-      </body>
-      </html>';
+} 
+else {
+	$_SESSION['message']['warning'][] = "Sie haben keine Datei zum Download ausgew&auml;hlt!";
+	//zurück leiten
+	Header('Location: '.$backurl);
 }
 
 /* Downloader Klasse fuer CRT-Files */
@@ -38,18 +35,18 @@ class CrtDownloader {
 	
 	public function download($download_bezeichner) {
 	
-		//TODO: Angemeldeten User prüfen
+		//Angemeldeten User prüfen/holen
 		$user = CrtDownloader::getUser();
 		
 		//Lesen von Dateien des Users
 		$filelist = CrtDownloader::getUserFiles($user);
 		
-		//ist gewünschte Download Datei für den erlaubten Dateien des aktuellen Users?
+		//ist gewünschte Download Datei in den erlaubten Dateien des aktuellen Users?
 		if (! isset ( $filelist[$download_bezeichner] )) throw new Exception("Die Datei \"$download_bezeichner\" ist nicht vorhanden!");
 			
 		//Download Pfad zusammenbauen
 		$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner] );
-		if (! file_exists($filename) ) throw new Exception("Die Datei \"$download_bezeichner\" existiert nicht!"); 
+		if (! file_exists($filename) ) throw new Exception("Unerwarteter Fehler beim herunterladen der Datei \"$download_bezeichner\". Bitte nehmen Sie Kontakt zu uns auf!"); 
 		
 		//Passenden Datentyp im HTTP Header setzen
 		header ( "Content-Type: application/octet-stream" );
@@ -63,13 +60,19 @@ class CrtDownloader {
 	}
 	
 	private static function getUser() {
-	    //TODO: get current User
-		// throw new Exception("Kein User angemeldet!");
-		return "User";
+		$email = UserHelper::GetUserEmail();
+		if (!empty($email)) {
+			return $email;
+		}
+		else {
+			throw new Exception("Sie sind nicht angemeldet!");
+		}
 	}
 	
-	private static function getUserFiles($username) {
-		//TODO: Dateien des Users von der Datenbank abfragen
+	private static function getUserFiles($email) {
+		//Dateien des Users von der Datenbank abfragen
+		$db = new DBAccess();
+		//$db->get_request_all_where(array());
 		
 		//TODO: Lesen von Dateien des Users (Download Bezeichner und Pfad)
 		$files = array (

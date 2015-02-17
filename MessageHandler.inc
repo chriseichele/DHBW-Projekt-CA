@@ -16,16 +16,16 @@ function getMessages() {
 		}
 		unset($_SESSION['message']['error']);
 	}
-	if(isset($_SESSION['message']['success'])) {
-		foreach($_SESSION['message']['success'] as $txt) {
-			$messages .= '<div class="alert alert-dismissible alert-success" role="alert">
+	if(isset($_SESSION['message']['warning'])) {
+		foreach($_SESSION['message']['warning'] as $txt) {
+			$messages .= '<div class="alert alert-dismissible alert-warning" role="alert">
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:0.5em;"></span>
+								<span class="glyphicon glyphicon-alert" aria-hidden="true" style="margin-right:0.5em;"></span>
 								<span>'.$txt.'</span>
 							 </div>';
 		}
-		unset($_SESSION['message']['success']);
-	}
+		unset($_SESSION['message']['warning']);
+	} 
 	if(isset($_SESSION['message']['info'])) {
 		foreach($_SESSION['message']['info'] as $txt) {
 			$messages .= '<div class="alert alert-dismissible alert-info" role="alert">
@@ -36,16 +36,16 @@ function getMessages() {
 		}
 		unset($_SESSION['message']['info']);
 	}
-	if(isset($_SESSION['message']['warning'])) {
-		foreach($_SESSION['message']['warning'] as $txt) {
-			$messages .= '<div class="alert alert-dismissible alert-warning" role="alert">
+	if(isset($_SESSION['message']['success'])) {
+		foreach($_SESSION['message']['success'] as $txt) {
+			$messages .= '<div class="alert alert-dismissible alert-success" role="alert">
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+								<span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:0.5em;"></span>
 								<span>'.$txt.'</span>
 							 </div>';
 		}
-		unset($_SESSION['message']['warning']);
-	} 
+		unset($_SESSION['message']['success']);
+	}
 
 	return $messages;
 }

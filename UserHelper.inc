@@ -128,7 +128,7 @@ else {
 		    	}
 			}
 			else {
-		  	  $_SESSION['message']['warning'][] = "Bitte stellen sie sicher, dass alle Felder ausgef&uuml;llt sind!";
+		  	  $_SESSION['message']['warning'][] = "Bitte stellen sie sicher, dass alle Felder richtig ausgef&uuml;llt sind!";
 			}
 			
 			Header('Location: '.$_SERVER['PHP_SELF']);
