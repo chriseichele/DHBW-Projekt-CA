@@ -36,7 +36,20 @@ if(isset($_GET['registersuccess'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title><?php echo $pagetitle ?></title>
+    <title>Projekt CA || <?php echo $pagetitle ?></title>
+    
+    <!-- Web App Deklaration -->
+	<meta name="theme-color" content="#000000">
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+  	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+  	<meta name="apple-mobile-web-app-title" content="Projekt CA || <?php echo $pagetitle ?>">
+    
+    <!-- Favicon -->
+	<link rel="icon" type="image/png" sizes="192x192"  href="./icons/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="./icons/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
+	<link rel="icon" type="image/x-icon" href="./icons/favicon.ico" />
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
