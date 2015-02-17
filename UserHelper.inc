@@ -95,7 +95,8 @@ function doUserRightsCheck() {
 	}
 	else {
 		$_SESSION['message']['info'][] = "Sie m&uuml;ssen sich zuerst einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
-		Header('Location: index.php');
+		$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
+		Header('Location: '.$backurl);
 		exit();
 	}
 }
@@ -106,7 +107,8 @@ function doAdminRightsCheck() {
 		}
 		else {
 			$_SESSION['message']['error'][] = "Sie haben nicht die n&ouml;tigen Berechtigungen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
-			Header('Location: index.php');
+			$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
+			Header('Location: '.$backurl);
 			exit();
 		}
 	}
