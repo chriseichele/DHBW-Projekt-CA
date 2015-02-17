@@ -50,6 +50,17 @@ class UserHelper {
 			return false;
 		}
 	}
+	public static function IsAdminLoggedIn() {
+		if (isset($_SESSION["login"])) {
+			$email = $_SESSION["email"];
+			$db = new DBAccess();
+			$user = reset($db->get_user_all_where(array("email", "=", "'".$email."'")));
+			return ($user->role == "admin");
+		}
+		else {
+			return false;
+		}
+	}
 	
 	public static function GetUserEmail() {
 		if(UserHelper::IsLoggedIn()) {
@@ -76,10 +87,35 @@ class UserHelper {
 	
 }
 
+// #################################### Funktionen
 
-
-
-// #################################### Ab hier beginnt das Formular und Loginüberprüfung
+function doUserRightsCheck() {
+	if(UserHelper::IsLoggedIn()) {
+		return true;
+	}
+	else {
+		$_SESSION['message']['info'][] = "Sie m&uuml;ssen sich zuerst einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
+		Header('Location: index.php');
+		exit();
+	}
+}
+function doAdminRightsCheck() {
+	if(UserHelper::IsLoggedIn()) {
+		if(UserHelper::IsAdminLoggedIn()) {
+			return true;
+		}
+		else {
+			$_SESSION['message']['error'][] = "Sie haben nicht die n&ouml;tigen Berechtigungen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
+			Header('Location: index.php');
+			exit();
+		}
+	}
+	else {
+		$_SESSION['message']['info'][] = "Sie m&uuml;ssen sich zuerst als Administrator einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
+		Header('Location: index.php');
+		exit();
+	}
+}
 
 function getLoginForm() {
 
