@@ -156,9 +156,12 @@ else {
             <div class="form-group">
               <input type="password" name="pw" placeholder="Passwort" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success">Login</button>
-            <a href="register.php" class="btn btn-default">Registrieren</a>
-          </form>';
+            <button type="submit" class="btn btn-success">Login</button>';
+       if(basename($_SERVER['SCRIPT_NAME']) != 'register.php') {
+       	  //Registrieren Link nicht auf Registrieren Seite zeigen
+    	  $out .= '<a href="register.php" style="margin-left:4px;" class="btn btn-default">Registrieren</a>';
+       }
+       $out .= '</form>';
 	}
 
 }
