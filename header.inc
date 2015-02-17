@@ -8,30 +8,46 @@ $loginform = getLoginForm();
 
 //Fehler & Infomeldung Überprüfung
 $messagetext = '';
-if(isset($_SESSION['message']['loginerror'])) {
-	$messagetext .= '<div class="alert alert-danger  alert-error alert-dismissible" role="alert">
-  					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-  					<span>Der Benutzername oder das Passwort ist falsch.</span>
-				   </div>';
-	unset($_SESSION['message']['loginerror']);
-} 
-if(isset($_SESSION['message']['registererror'])) {
-	$messagetext .= '<div class="alert alert-danger  alert-error alert-dismissible" role="alert">
-  					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-  					<span>Registrierung fehlgeschlagen. Bitte stellen sie sicher, dass alle Felder ausgef&uuml;llt sind!</span>
-				   </div>';
-	unset($_SESSION['message']['registererror']);
-}  
-if(isset($_SESSION['message']['registersuccess'])) {
-	$messagetext .= '<div class="alert alert-success alert-dismissible" role="alert">
-  					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-  					<span>Registrierung erfolgreich.</span>
-				   </div>';
-	unset($_SESSION['message']['registersuccess']);
-}  	  
+if(isset($_SESSION['message']['error'])) {
+	foreach($_SESSION['message']['error'] as $error) {
+		$messagetext .= '<div class="alert alert-dismissible alert-danger" role="alert">
+						    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="margin-right:0.5em;"></span>
+  							<span>'.$error.'</span>
+						 </div>';
+	}
+	unset($_SESSION['message']['error']);
+}
+if(isset($_SESSION['message']['success'])) {
+	foreach($_SESSION['message']['success'] as $success) {
+		$messagetext .= '<div class="alert alert-dismissible alert-success" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:0.5em;"></span>
+  							<span>'.$success.'</span>
+						 </div>';
+	}
+	unset($_SESSION['message']['success']);
+}
+if(isset($_SESSION['message']['info'])) {
+	foreach($_SESSION['message']['info'] as $info) {
+		$messagetext .= '<div class="alert alert-dismissible alert-info" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right:0.5em;"></span>
+  							<span>'.$info.'</span>
+						 </div>';
+	}
+	unset($_SESSION['message']['info']);
+}
+if(isset($_SESSION['message']['warning'])) {
+	foreach($_SESSION['message']['warning'] as $warning) {
+		$messagetext .= '<div class="alert alert-dismissible alert-warning" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<span class="glyphicon glyphicon-alert" aria-hidden="true" style="margin-right:0.5em;"></span>
+  							<span>'.$warning.'</span>
+						 </div>';
+	}
+	unset($_SESSION['message']['warning']);
+} 	  
 
 ?>
 

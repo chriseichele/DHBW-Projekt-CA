@@ -119,18 +119,18 @@ else {
 			&& strlen($firstname)>0
 			&& strlen($lastname)>0 ) {
 				$success = UserHelper::RegisterCustomer($email, $firstname, $lastname, $pwhash);
+				if($success) {
+		  	  		UserHelper::Login($email, $pwhash);
+		  	  		$_SESSION['message']['success'][] = "Registrierung erfolgreich.";
+		    	} 
+		    	else {
+		  	  		$_SESSION['message']['error'][] = "Registrierung fehlgeschlagen!";
+		    	}
 			}
 			else {
-				$success = false;
+		  	  $_SESSION['message']['warning'][] = "Bitte stellen sie sicher, dass alle Felder ausgef&uuml;llt sind!";
 			}
 			
-		  	if($success) {
-		  	  UserHelper::Login($email, $pwhash);
-		  	  $_SESSION['message']['registersuccess'] = true;
-		    } 
-		    else {
-		  	  $_SESSION['message']['registererror'] = true;
-		    }
 			Header('Location: '.$_SERVER['PHP_SELF']);
 			exit();
 			
@@ -138,7 +138,7 @@ else {
 		  //Login
 		  $success = UserHelper::Login($email, $pwhash);
 		  if(!$success) {
-		  	$_SESSION['message']['loginerror'] = true;
+		  	$_SESSION['message']['error'][] = "Der Benutzername oder das Passwort ist falsch.";
 		  }
 		  Header('Location: '.$_SERVER['PHP_SELF']);
 		  exit();
