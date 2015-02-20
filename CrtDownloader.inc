@@ -65,12 +65,13 @@ class CrtDownloader {
 		$files = CrtDownloader::getUserFiles(CrtDownloader::getUser());
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Datei</th><th>Common Name</th></tr>";
+		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Status</th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
 				$out .= "<td><a href=\"CrtDownloader.php?download=$file->id\">Certificate Signing Request ID $file->id</a></td>";
 				$out .= "<td>$file->common_name</td>";
+				$out .= "<td>$file->status</td>";
 				$out .= "</tr>";
 			}
 		}
