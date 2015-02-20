@@ -22,7 +22,7 @@ class CrtDownloader {
 		if (! isset ( $filelist[$download_bezeichner] )) throw new Exception("Sie d&uuml;rfen die Datei \"$download_bezeichner\" nicht herunter laden!");
 			
 		//Download Pfad zusammenbauen
-		$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner] );
+		$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path );
 		if (! file_exists($filename) ) throw new Exception("Unerwarteter Fehler beim herunterladen der Datei \"$download_bezeichner\". Bitte nehmen Sie Kontakt zu uns auf!"); 
 		
 		//Passenden Datentyp im HTTP Header setzen
