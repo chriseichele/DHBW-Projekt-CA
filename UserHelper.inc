@@ -136,9 +136,9 @@ if(UserHelper::IsLoggedIn()) {
 	}
 	else {
 	  $out .= '<form action="'.$_SERVER['PHP_SELF'].'" class="navbar-form navbar-right" method="get">
-	  		  <div class="form-group"><span style="color:darkgrey;margin-right:1.5em;">'.UserHelper::GetUserName().'</span></div>
+	  		  <div class="form-group"><span style="color:darkgrey;margin-right:1em;">'.UserHelper::GetUserName().'</span>
 		      <input type="hidden" name="logout" value="true" />
-              <button type="submit" class="btn btn-success">Logout</button>
+              <button type="submit" class="btn btn-success">Logout</button></div>
             </form>';
 	}
 
