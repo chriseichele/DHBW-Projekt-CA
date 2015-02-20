@@ -1,5 +1,14 @@
 <?php 
 
+require_once('./UserHelper.inc');
+if(UserHelper::IsLoggedIn()) {
+	$_SESSION['message']['info'][] = "Sie können sich nicht neu registrieren, da Sie bereits eingeloggt sind.";
+	$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
+	$backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#backlink' : $backurl;
+	header('Location: '.$backurl);
+	exit();
+}
+
 $pagetitle = "Registrierung";
 
 include('./header.inc');

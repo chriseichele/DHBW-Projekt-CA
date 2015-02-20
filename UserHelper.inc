@@ -108,6 +108,7 @@ function doAdminRightsCheck() {
 		else {
 			$_SESSION['message']['error'][] = "Sie haben nicht die n&ouml;tigen Berechtigungen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
 			$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
+			$backurl = (basename($backurl)=='register.php') ? 'index.php' : $basename;
 			Header('Location: '.$backurl);
 			exit();
 		}
@@ -132,7 +133,7 @@ if(UserHelper::IsLoggedIn()) {
 	}
 	else {
 	  $out .= '<form action="'.$_SERVER['PHP_SELF'].'" class="navbar-form navbar-right" method="get">
-	  		  <div class="form-group"><span style="color:darkgrey;margin-right:1.5em;">Hallo '.UserHelper::GetUserName().'</span></div>
+	  		  <div class="form-group"><span style="color:darkgrey;margin-right:1.5em;">'.UserHelper::GetUserName().'</span></div>
 		      <input type="hidden" name="logout" value="true" />
               <button type="submit" class="btn btn-success">Logout</button>
             </form>';
@@ -160,6 +161,10 @@ else {
 				if($success) {
 		  	  		UserHelper::Login($email, $pwhash);
 		  	  		$_SESSION['message']['success'][] = "Registrierung erfolgreich.";
+					$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
+					$backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#backlink' : $backurl;
+					Header('Location: '.$backurl);
+					exit();
 		    	} 
 		    	else {
 		  	  		$_SESSION['message']['error'][] = "Registrierung fehlgeschlagen!";

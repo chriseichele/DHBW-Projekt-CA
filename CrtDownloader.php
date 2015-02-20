@@ -3,6 +3,7 @@
 require_once('./UserHelper.inc');
 
 $backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
+$backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#backlink' : $backurl;
 
 //Dummy Download aufruf
 if(isset($_GET['download'])) {
