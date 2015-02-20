@@ -1,0 +1,15 @@
+<?php 
+
+$pagetitle = "Meine Zertifikate";
+
+include('./header.inc');
+
+?>
+<div class="jumbotron">
+      <div class="container">
+        <h1>&Uuml;bersicht meiner erworbenen Zertifikate</h1>
+        <p>Mit dem dazugeh&ouml;igen Link k&ouml;nnen Sie Ihre Zertifikate downloaden.</p>
+               
+      </div>
+    </div>
+<?php include('./footer.inc'); ?>
