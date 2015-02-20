@@ -49,8 +49,8 @@ class CrtDownloader {
 	private static function getUserFiles($email) {
 		//Dateien des Users von der Datenbank abfragen
 		$db = new DBAccess();
-		//$requests = $db->get_request_all_where(array('user_email','=',$email));
-		$requests = $db->get_request_all_where(array('user_email','=',"'test@test.de'"));
+		$requests = $db->get_request_all_where(array('user_email','=',"'".$email."'"));
+		$requests = $db->get_request_all_where(array('user_email','=',"'test@test.de'")); //momentan einziger testeintrag //TODO delete line
 		if(!empty($requests)) {
 			foreach($requests as $request) {
 				$files[$request->id] = $request;
