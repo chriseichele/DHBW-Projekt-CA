@@ -183,7 +183,9 @@ else {
 		  if(!$success) {
 		  	$_SESSION['message']['error'][] = "Der Benutzername oder das Passwort ist falsch.";
 		  }
-		  Header('Location: '.$_SERVER['PHP_SELF']);
+		  $backurl = $_SERVER['PHP_SELF'];
+		  $backurl = (basename($backurl)=='register.php') ? 'index.php#backlink' : $backurl;
+		  Header('Location: '.$backurl);
 		  exit();
 		}
 	} 
