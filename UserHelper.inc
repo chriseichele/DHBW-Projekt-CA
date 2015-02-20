@@ -54,7 +54,8 @@ class UserHelper {
 		if (isset($_SESSION["login"])) {
 			$email = $_SESSION["email"];
 			$db = new DBAccess();
-			$user = reset($db->get_user_all_where(array("email", "=", "'".$email."'")));
+			$result = $db->get_user_all_where(array("email", "=", "'".$email."'"));
+			$user = reset($result);
 			return ($user->role_name == "admin");
 		}
 		else {
@@ -94,6 +95,8 @@ function doUserRightsCheck() {
 		return true;
 	}
 	else {
+		echo 'test';
+		exit();
 		$_SESSION['message']['info'][] = "Sie m&uuml;ssen sich zuerst einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
 		$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
 		Header('Location: '.$backurl);
