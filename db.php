@@ -177,8 +177,14 @@ class DBAccess {
     }
 
     function insert_request($start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $id_from_intermediate, $status, $verifier, $path) {
-        $user_email = "test@test.de"; // hier current user nehmen
-        return $this->insert("request", array("start", "end", "country", "state", "city", "organisation_name", "organisation_unit_name", "common_name", "responsible_email", "challenge_password", "optional_company_name", "intermediate", "id_from_intermediate", "status", "verifier", "path", "user_email"), array($start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $id_from_intermediate, $status, $verifier, $path, $user_email));
+    	require_once('./UserHelper.inc');
+    	$user_email = UserHelper::GetUserEmail();
+    	if (!empty($user_email)) {
+        	return $this->insert("request", array("start", "end", "country", "state", "city", "organisation_name", "organisation_unit_name", "common_name", "responsible_email", "challenge_password", "optional_company_name", "intermediate", "id_from_intermediate", "status", "verifier", "path", "user_email"), array($start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $id_from_intermediate, $status, $verifier, $path, $user_email));
+        }
+        else {
+        	return false;
+        }
     }
 
     function insert_sans($request_id, $name) {
