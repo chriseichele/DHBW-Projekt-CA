@@ -86,7 +86,7 @@ class CrtHelper {
 				$out .= "<tr>";
 				$out .= "<td>Certificate Signing Request ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
-				$out .= "<td><a href=\"zertifikatsanfragen.php?csr=$file->id\" class='btn btn-success'>CSR anzeigen</a></td>";
+				$out .= "<td><a href=\"zertifikatanfragen.php?csr=$file->id\" class='btn btn-success'>CSR anzeigen</a></td>";
 				$out .= "</tr>";
 			}
 		}
@@ -125,7 +125,7 @@ class CrtHelper {
 				$out .= "<td>Certificate Signing Request ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
 				$out .= "<td>$file->status</td>";
-				$out .= "<td><a href=\"CrtHelper.php?downloadCSR=$file->id\" class='btn btn-success'>Download CSR</a></td>";
+				$out .= "<td><a href=\"CrtDownloader.php?downloadCSR=$file->id\" class='btn btn-success'>Download CSR</a></td>";
 				$out .= "</tr>";
 			}
 		}
@@ -143,7 +143,7 @@ class CrtHelper {
 				$out .= "<tr>";
 				$out .= "<td>Certificate ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
-				$out .= "<td><a href=\"CrtHelper.php?downloadCRT=$file->id\" class='btn btn-success'>Download CRT</a></td>";
+				$out .= "<td><a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success'>Download CRT</a></td>";
 				$out .= "</tr>";
 			}
 		}
