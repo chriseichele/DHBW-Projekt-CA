@@ -7,10 +7,18 @@ class CrtDownloader {
 	
 	public function __construct() {
 		//Variablen Initialisierung
-		$this->basedir = "../../download"; //Verzeichnis außerhalb des Document Root (nicht per Web-URL ereichbar)
+		$this->basedir = "../../"; //Verzeichnis außerhalb des Document Root (nicht per Web-URL ereichbar)
 	}
 	
-	public function download($download_bezeichner) {
+	public function downloadCSR($download_bezeichner) {
+		download($download_bezeichner, "CSR")
+	}
+	
+	public function downloadCRT($download_bezeichner) {
+		download($download_bezeichner, "CRT")
+	}
+	
+	public function download($download_bezeichner, $filetype) {
 	
 		//Angemeldeten User prüfen/holen
 		$user = CrtDownloader::getUser();
@@ -22,7 +30,15 @@ class CrtDownloader {
 		if (! isset ( $filelist[$download_bezeichner] )) throw new Exception("Sie d&uuml;rfen die Datei \"$download_bezeichner\" nicht herunter laden!");
 			
 		//Download Pfad zusammenbauen
-		$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path );
+		if($filetype == "CSR") {
+			$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_csr );
+		}
+		elseif($filetype == "CRT") {
+			$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_cer );
+		}
+		else {
+			throw new Exception("Dateityp \"".$filetype."\" nicht unterst&uuml;tzt!");
+		}
 		if (! file_exists($filename) ) throw new Exception("Unerwarteter Fehler beim herunterladen der Datei \"$download_bezeichner\". Bitte nehmen Sie Kontakt zu uns auf!"); 
 		
 		//Passenden Datentyp im HTTP Header setzen
@@ -46,11 +62,17 @@ class CrtDownloader {
 		}
 	}
 	
-	private static function getUserFiles($email) {
+	private static function getUserFiles($email, $status = null) {
 		//Dateien des Users von der Datenbank abfragen
 		$db = new DBAccess();
-		$requests = $db->get_request_all_where(array('user_email','=',"'".$email."'"));
-		$requests = $db->get_request_all_where(array('user_email','=',"'test@test.de'")); //momentan einziger testeintrag //TODO delete line
+		if($status != null) {
+			$where = array('requester','=',"'".$email."'","AND","status","=","'".$status."'");
+		}
+		else {
+			$where = array('requester','=',"'".$email."'");
+		}
+		$requests = $db->get_request_all_where($where);
+		$files = null;
 		if(!empty($requests)) {
 			foreach($requests as $request) {
 				$files[$request->id] = $request;
@@ -65,13 +87,33 @@ class CrtDownloader {
 		$files = CrtDownloader::getUserFiles(CrtDownloader::getUser());
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Status</th></tr>";
+		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Status</th><!-- Download --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
-				$out .= "<td><a href=\"CrtDownloader.php?download=$file->id\">Certificate Signing Request ID $file->id</a></td>";
+				$out .= "<td>Certificate Signing Request ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
 				$out .= "<td>$file->status</td>";
+				$out .= "<td><a href=\"CrtDownloader.php?downloadCSR=$file->id\" class='btn'>Download CSR</a></td>";
+				$out .= "</tr>";
+			}
+		}
+		$out .= "</table>";
+		
+		return $out;
+	}
+	
+	public static function getUserCertList() {
+		$files = CrtDownloader::getUserFiles(CrtDownloader::getUser(), 3);
+		
+		$out = "<table class='table table-bordered'>";
+		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th><!-- Download --></th></tr>";
+		if(!empty($files)) {
+			foreach($files as $id => $file) {
+				$out .= "<tr>";
+				$out .= "<td>Certificate ID $file->id</td>";
+				$out .= "<td>$file->common_name</td>";
+				$out .= "<td><a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn'>Download CRT</a></td>";
 				$out .= "</tr>";
 			}
 		}

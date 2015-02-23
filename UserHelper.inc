@@ -8,6 +8,9 @@ class UserHelper {
 	public static function RegisterCustomer($email, $firstname, $lastname, $pwhash) {
 		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "customer");
 	}
+	public static function RegisterAdmin($email, $firstname, $lastname, $pwhash) {
+		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "administrator");
+	}
 	private static function Register($email, $firstname, $lastname, $pwhash, $role) {
 		$db = new DBAccess();
 		return $db->insert_user($email, $firstname, $lastname, $pwhash, $role) == true;
@@ -17,12 +20,12 @@ class UserHelper {
 	
 		$db = new DBAccess();
 		
-		$user = reset($db->get_user_all_where(array("email", "=", "'".$email."'")));
+		$users = $db->get_user_all_where(array("email", "=", "'".$email."'"));
+		$user = reset($users);
 		
 		if ($user == null) {
 			return false;
 		} else {
-		
 			//Check PW and do Login
 			if($pwhash == $user->passwordhash) {
 				return UserHelper::DoLogin($user->email, $user->firstname, $user->surname);
@@ -56,7 +59,7 @@ class UserHelper {
 			$db = new DBAccess();
 			$result = $db->get_user_all_where(array("email", "=", "'".$email."'"));
 			$user = reset($result);
-			return ($user->role_name == "admin");
+			return ($user->role == "administrator");
 		}
 		else {
 			return false;
@@ -95,8 +98,6 @@ function doUserRightsCheck() {
 		return true;
 	}
 	else {
-		echo 'test';
-		exit();
 		$_SESSION['message']['info'][] = "Sie m&uuml;ssen sich zuerst einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
 		$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
 		Header('Location: '.$backurl);
@@ -161,6 +162,7 @@ else {
 			&& strlen($firstname)>0
 			&& strlen($lastname)>0 ) {
 				$success = UserHelper::RegisterCustomer($email, $firstname, $lastname, $pwhash);
+				//$success = UserHelper::RegisterAdmin($email, $firstname, $lastname, $pwhash); //Befehl nur zu Testzwecken enthalten, wird auskommentiert und Admins später manuell angelegt
 				if($success) {
 		  	  		UserHelper::Login($email, $pwhash);
 		  	  		$_SESSION['message']['success'][] = "Registrierung erfolgreich.";

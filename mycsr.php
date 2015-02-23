@@ -8,6 +8,7 @@ doUserRightsCheck();
 $pagetitle = "Meine Zertifikatsanfragen";
 
 include('./header.inc');
+
 ?>
 <div class="jumbotron">
 	<div class="container">
@@ -16,6 +17,7 @@ include('./header.inc');
 	</div>
 </div>
 <?php
+
 echo '<div class="container">';
 echo CrtDownloader::getUserRequestList();
 echo '</div>';
