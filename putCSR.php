@@ -1,17 +1,23 @@
 <?php
-#add CSR to DB
+include 'DBAccess.php';
+
+#This function saves a given .csr file to the filesystem 
+#and writes its content to a database
+#Input: $filename name of the uploaded file. 
 
 function putCSR($fileName){
 #Ordner erstellen
 #Auf einem neuen System muss die uploaddir angepasst werden
-$uploaddir = '/var/www/html/upload';
-$pathToCSR = $uploaddir."/".$fileName."/";
-shell_exec("mkdir ".$pathToCSR);
+$uploaddir = 'C:/Apache64/htaccess/IndexCAs/CSRs';
+$pathToCSR = $uploaddir."/";#.$fileName."/";
+#shell_exec("mkdir ".$pathToCSR);
 
 $uploadfile = $pathToCSR . basename($_FILES['userfile']['name']);
 
 #php-Datei handler
 #move_uploaded_file speichert die empfangene Datei
+#Der Inhalt des Uploads muss noch geprüft werden! 
+#Mögliche File-Upload Attack
 echo '<pre>';
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
     echo "File is valid, and was successfully uploaded.\n";
@@ -24,8 +30,12 @@ print_r($_FILES);
 
 print "</pre>";
 
+
+
+
+
 #printCSR to website
-$var = shell_exec("openssl req -in ".$pathToCSR.$fileName." -noout -text");
+var = ("openssl req -in ".$pathToCSR.$fileName." -noout -text");
 echo($var);
 echo("<br>");
 
@@ -51,7 +61,7 @@ echo("<br>");
 echo($domain);
 echo("<br>");
 
-#extracting SANs
+#extracting SANs from the csr file
 $sanString = strpos($var, "X509v3 Subject Alternative Name");
 
 if ($sanString === false){
@@ -75,7 +85,8 @@ if ($sanString === false){
 	print_r($SANs);
 	
 #writeToDB
-#someCode
+connect();
+insert_request("CURDATE()", "NULL", $country, $state, $location, $org, $domain, "1", NULL, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
 }
 
 $file=$_FILES['userfile']['name'];
