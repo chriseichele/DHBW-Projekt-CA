@@ -24,7 +24,7 @@ elseif(isset($_GET['downloadCRT'])) {
   //Datei downloaden
   try {
     $loader = New CrtHelper();
-    $loader->download($downloadCRT);
+    $loader->downloadCRT($download);
   } catch (Exception $e) {
   	$_SESSION['message']['error'][] = $e->getMessage();
 	//zurück leiten

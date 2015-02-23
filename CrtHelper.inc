@@ -11,14 +11,14 @@ class CrtHelper {
 	}
 	
 	public function downloadCSR($download_bezeichner) {
-		download($download_bezeichner, "CSR");
+		$this->download($download_bezeichner, "CSR");
 	}
 	
 	public function downloadCRT($download_bezeichner) {
-		download($download_bezeichner, "CRT");
+		$this->download($download_bezeichner, "CRT");
 	}
 	
-	public function download($download_bezeichner, $filetype) {
+	private function download($download_bezeichner, $filetype) {
 	
 		//Angemeldeten User prüfen/holen
 		$user = CrtHelper::getUser();
@@ -31,10 +31,20 @@ class CrtHelper {
 			
 		//Download Pfad zusammenbauen
 		if($filetype == "CSR") {
-			$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_csr );
+			if(!empty($filelist[$download_bezeichner]->path_csr)) {
+				$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_csr );
+			}
+			else {
+				throw new Exception("Download Pfad f&uuml; CSR-Datei nicht gesetzt! Bitte nehmen Sie Kontakt zu uns auf!");
+			}
 		}
 		elseif($filetype == "CRT") {
-			$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_cer );
+			if(!empty($filelist[$download_bezeichner]->path_cer)) {
+				$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_cer );
+			}
+			else {
+				throw new Exception("Download Pfad f&uuml; CRT-Datei nicht gesetzt! Bitte nehmen Sie Kontakt zu uns auf!");
+			}
 		}
 		else {
 			throw new Exception("Dateityp \"".$filetype."\" nicht unterst&uuml;tzt!");
@@ -80,12 +90,14 @@ class CrtHelper {
 		$files = CrtHelper::getOpenCSR();
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>CSR</th><th>Common Name</th><th><!-- Download --></th></tr>";
+		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Download --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
 				$out .= "<td>Certificate Signing Request ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
+				$out .= "<td>$file->start</td>";
+				$out .= "<td>$file->end</td>";
 				$out .= "<td><a href=\"zertifikatanfragen.php?csr=$file->id\" class='btn btn-success'>CSR anzeigen</a></td>";
 				$out .= "</tr>";
 			}
@@ -118,13 +130,15 @@ class CrtHelper {
 		$files = CrtHelper::getUserFiles(CrtHelper::getUser());
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Status</th><th><!-- Download --></th></tr>";
+		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th>Status</th><th><!-- Download --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
 				$out .= "<td>Certificate Signing Request ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
-				$out .= "<td>$file->status</td>";
+				$out .= "<td>$file->start</td>";
+				$out .= "<td>$file->end</td>";
+				$out .= "<td><b>$file->status</b></td>";
 				$out .= "<td><a href=\"CrtDownloader.php?downloadCSR=$file->id\" class='btn btn-success'>Download CSR</a></td>";
 				$out .= "</tr>";
 			}
@@ -137,12 +151,14 @@ class CrtHelper {
 		$files = CrtHelper::getUserFiles(CrtHelper::getUser(), "finished");
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th><!-- Download --></th></tr>";
+		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Download --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
 				$out .= "<td>Certificate ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
+				$out .= "<td>$file->start</td>";
+				$out .= "<td>$file->end</td>";
 				$out .= "<td><a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success'>Download CRT</a></td>";
 				$out .= "</tr>";
 			}
