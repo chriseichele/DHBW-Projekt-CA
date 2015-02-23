@@ -13,7 +13,7 @@ class UserHelper {
 	}
 	private static function Register($email, $firstname, $lastname, $pwhash, $role) {
 		$db = new DBAccess();
-		return $db->insert_user($email, $firstname, $lastname, $pwhash, $role) == true;
+		return $db->insert_user($email, $firstname, $lastname, $pwhash, $role) == array(); //erfolg leifert ein leeres Array
 	}
 
 	public static function Login($email, $pwhash) {
