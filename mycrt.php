@@ -1,7 +1,7 @@
 <?php 
 
 require_once('./UserHelper.inc');
-require_once('./CrtDownloader.inc');
+require_once('./CrtHelper.inc');
 
 doUserRightsCheck();
 
@@ -19,7 +19,7 @@ include('./header.inc');
 <?php 
 
 echo '<div class="container">';
-echo CrtDownloader::getUserCertList();
+echo CrtHelper::getUserCertList();
 echo '</div>';
 
 include('./footer.inc'); ?>

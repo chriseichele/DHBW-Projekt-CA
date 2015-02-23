@@ -5,21 +5,21 @@ require_once('./CrtHelper.inc');
 
 doUserRightsCheck();
 
-$pagetitle = "Meine Zertifikatsanfragen";
+$pagetitle = "Offene Zertifikatsanfragen";
 
 include('./header.inc');
 
 ?>
 <div class="jumbotron">
 	<div class="container">
-		<h1>&Uuml;bersicht meiner eingereichten Zertrifikats&shy;anfragen mit Status</h1>
-		<p>Mit dem dazugeh&ouml;rigen Link können Sie Ihre Anfragen zu &Uuml;berpr&uuml;fung downloaden.</p>     
+		<h1>&Uuml;bersicht aller offenen Zertrifikats&shy;anfragen</h1>
+		<p>In der Detailansicht k&ouml;nnen diese genehmigt oder abgelehnt werden.</p>     
 	</div>
 </div>
 <?php
 
 echo '<div class="container">';
-echo CrtHelper::getUserRequestList();
+echo CrtHelper::getOpenCSRList();
 echo '</div>';
 
 include('./footer.inc'); ?>

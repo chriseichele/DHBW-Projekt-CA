@@ -1,8 +1,8 @@
 <?php
 
-/* Downloader Klasse fuer CRT-Files */
+/* Helper & Downloader Klasse fuer CSR- & CRT-Files */
 
-class CrtDownloader {
+class CrtHelper {
 	private $basedir;
 	
 	public function __construct() {
@@ -62,6 +62,39 @@ class CrtDownloader {
 		}
 	}
 	
+	private static function getOpenCSR() {
+		//Dateien von der Datenbank abfragen
+		$db = new DBAccess();
+		$where = array("status","=","'3'");
+		$requests = $db->get_request_all_where($where);
+		$files = null;
+		if(!empty($requests)) {
+			foreach($requests as $request) {
+				$files[$request->id] = $request;
+			}
+		}
+		//-> return der dateien als Array, bezeichner als key
+		return $files;
+	}
+	public static function getOpenCSRList() {
+		$files = CrtDownloader::getOpenCSR();
+		
+		$out = "<table class='table table-bordered'>";
+		$out .= "<tr><th>CSR</th><th>Common Name</th><!-- Download --></th></tr>";
+		if(!empty($files)) {
+			foreach($files as $id => $file) {
+				$out .= "<tr>";
+				$out .= "<td>Certificate Signing Request ID $file->id</td>";
+				$out .= "<td>$file->common_name</td>";
+				$out .= "<td><a href=\"zertifikatsanfragen.php?csr=$file->id\" class='btn'>CSR anzeigen</a></td>";
+				$out .= "</tr>";
+			}
+		}
+		$out .= "</table>";
+		
+		return $out;
+	}
+	
 	private static function getUserFiles($email, $status = null) {
 		//Dateien des Users von der Datenbank abfragen
 		$db = new DBAccess();
@@ -78,11 +111,9 @@ class CrtDownloader {
 				$files[$request->id] = $request;
 			}
 		}
-		
 		//-> return der dateien als Array, bezeichner als key
 		return $files;
 	}
-	
 	public static function getUserRequestList() {
 		$files = CrtDownloader::getUserFiles(CrtDownloader::getUser());
 		
@@ -102,7 +133,6 @@ class CrtDownloader {
 		
 		return $out;
 	}
-	
 	public static function getUserCertList() {
 		$files = CrtDownloader::getUserFiles(CrtDownloader::getUser(), 3);
 		
