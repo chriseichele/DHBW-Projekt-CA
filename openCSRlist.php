@@ -3,7 +3,7 @@
 require_once('./UserHelper.inc');
 require_once('./CrtHelper.inc');
 
-doUserRightsCheck();
+doAdminRightsCheck();
 
 $pagetitle = "Offene Zertifikatsanfragen";
 
