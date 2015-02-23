@@ -11,20 +11,20 @@ class CrtHelper {
 	}
 	
 	public function downloadCSR($download_bezeichner) {
-		download($download_bezeichner, "CSR")
+		download($download_bezeichner, "CSR");
 	}
 	
 	public function downloadCRT($download_bezeichner) {
-		download($download_bezeichner, "CRT")
+		download($download_bezeichner, "CRT");
 	}
 	
 	public function download($download_bezeichner, $filetype) {
 	
 		//Angemeldeten User prüfen/holen
-		$user = CrtDownloader::getUser();
+		$user = CrtHelper::getUser();
 		
 		//Lesen von Dateien des Users
-		$filelist = CrtDownloader::getUserFiles($user);
+		$filelist = CrtHelper::getUserFiles($user);
 		
 		//ist gewünschte Download Datei in den erlaubten Dateien des aktuellen Users?
 		if (! isset ( $filelist[$download_bezeichner] )) throw new Exception("Sie d&uuml;rfen die Datei \"$download_bezeichner\" nicht herunter laden!");
@@ -65,7 +65,7 @@ class CrtHelper {
 	private static function getOpenCSR() {
 		//Dateien von der Datenbank abfragen
 		$db = new DBAccess();
-		$where = array("status","=","'3'");
+		$where = array("status","=","'created'");
 		$requests = $db->get_request_all_where($where);
 		$files = null;
 		if(!empty($requests)) {
@@ -77,16 +77,16 @@ class CrtHelper {
 		return $files;
 	}
 	public static function getOpenCSRList() {
-		$files = CrtDownloader::getOpenCSR();
+		$files = CrtHelper::getOpenCSR();
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>CSR</th><th>Common Name</th><!-- Download --></th></tr>";
+		$out .= "<tr><th>CSR</th><th>Common Name</th><th><!-- Download --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
 				$out .= "<td>Certificate Signing Request ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
-				$out .= "<td><a href=\"zertifikatsanfragen.php?csr=$file->id\" class='btn'>CSR anzeigen</a></td>";
+				$out .= "<td><a href=\"zertifikatsanfragen.php?csr=$file->id\" class='btn btn-success'>CSR anzeigen</a></td>";
 				$out .= "</tr>";
 			}
 		}
@@ -99,7 +99,7 @@ class CrtHelper {
 		//Dateien des Users von der Datenbank abfragen
 		$db = new DBAccess();
 		if($status != null) {
-			$where = array('requester','=',"'".$email."'","AND","status","=","'".$status."'");
+			$where = array('requester','=',"'".$email."'"," AND ","status","=","'".$status."'");
 		}
 		else {
 			$where = array('requester','=',"'".$email."'");
@@ -115,17 +115,17 @@ class CrtHelper {
 		return $files;
 	}
 	public static function getUserRequestList() {
-		$files = CrtDownloader::getUserFiles(CrtDownloader::getUser());
+		$files = CrtHelper::getUserFiles(CrtHelper::getUser());
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Status</th><!-- Download --></th></tr>";
+		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Status</th><th><!-- Download --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
 				$out .= "<td>Certificate Signing Request ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
 				$out .= "<td>$file->status</td>";
-				$out .= "<td><a href=\"CrtDownloader.php?downloadCSR=$file->id\" class='btn'>Download CSR</a></td>";
+				$out .= "<td><a href=\"CrtHelper.php?downloadCSR=$file->id\" class='btn btn-success'>Download CSR</a></td>";
 				$out .= "</tr>";
 			}
 		}
@@ -134,7 +134,7 @@ class CrtHelper {
 		return $out;
 	}
 	public static function getUserCertList() {
-		$files = CrtDownloader::getUserFiles(CrtDownloader::getUser(), 3);
+		$files = CrtHelper::getUserFiles(CrtHelper::getUser(), "finished");
 		
 		$out = "<table class='table table-bordered'>";
 		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th><!-- Download --></th></tr>";
@@ -143,7 +143,7 @@ class CrtHelper {
 				$out .= "<tr>";
 				$out .= "<td>Certificate ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
-				$out .= "<td><a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn'>Download CRT</a></td>";
+				$out .= "<td><a href=\"CrtHelper.php?downloadCRT=$file->id\" class='btn btn-success'>Download CRT</a></td>";
 				$out .= "</tr>";
 			}
 		}
