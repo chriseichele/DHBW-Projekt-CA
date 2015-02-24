@@ -58,11 +58,11 @@ else {
 		if($accept) {
   			$_SESSION['message']['success'][] = "CSR wurde erfolgreich genehmigt!";
   			try {
-  				$success = true; //TODO Zertifikat generieren
+  				$success = false; //TODO Zertifikat generieren
   				if($success) {
   					$_SESSION['message']['success'][] = "Zertifikat wurde erfolgreich erstellt!";
   				else {
-  					$_SESSION['message']['error'][] = "Unerwarteter Fehler beim erstellen des Zertifikats!";
+  					$_SESSION['message']['error'][] = "Unerwarteter Fehler beim erstellen des Zertifikats, bitte manuell nachbessern!";
   				}
   			}
   			catch (Exception $e) {
