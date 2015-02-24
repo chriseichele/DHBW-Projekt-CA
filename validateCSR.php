@@ -57,8 +57,17 @@ else {
 	if($result['affected_rows'] == 1) {
 		if($accept) {
   			$_SESSION['message']['success'][] = "CSR wurde erfolgreich genehmigt!";
-  			//TODO Zertifikat generieren
-  			
+  			try {
+  				$success = true; //TODO Zertifikat generieren
+  				if($success) {
+  					$_SESSION['message']['success'][] = "Zertifikat wurde erfolgreich erstellt!";
+  				else {
+  					$_SESSION['message']['error'][] = "Unerwarteter Fehler beim erstellen des Zertifikats!";
+  				}
+  			}
+  			catch (Exception $e) {
+  				$_SESSION['message']['error'][] = $e->getMessage();
+  			}
   		}
   		else {
   			$_SESSION['message']['success'][] = "CSR wurde abgelehnt!";
