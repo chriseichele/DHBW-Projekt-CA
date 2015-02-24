@@ -5,7 +5,7 @@ require_once('./db.php');
 #and writes its content to a database
 #Input: $filename name of the uploaded file. 
 
-function putCSR($fileName){
+function putCSR($fileObject, $laufzeit, $fileName){
 #Ordner erstellen
 #Auf einem neuen System muss die uploaddir angepasst werden
 //$uploaddir = 'C:/Apache64/htaccess/IndexCAs/CSRs';
@@ -13,14 +13,14 @@ $uploaddir = '.'; //TODO Testverzeichnis wieder ändern
 $pathToCSR = $uploaddir."/";#.$fileName."/";
 #shell_exec("mkdir ".$pathToCSR);
 
-$uploadfile = $pathToCSR . basename($_FILES['userfile']['name']);
+$uploadfile = $pathToCSR . basename($fileObject['name']);
 
 #php-Datei handler
 #move_uploaded_file speichert die empfangene Datei
 #Der Inhalt des Uploads muss noch geprüft werden! 
 #Mögliche File-Upload Attack
 echo '<pre>';
-if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
+if (move_uploaded_filHeader('Location: '.$backurl);e($fileObject['tmp_name'], $uploadfile)) {
     echo "File is valid, and was successfully uploaded.\n";
     //TODO return true on success
 } else {

@@ -1,6 +1,10 @@
 <?php 
 SESSION_START();
 
+require_once('./UserHelper.inc');
+
+doUserRightsCheck();
+
 $pagetitle = "Intermediate Zertifikat";
 
 include('./header.inc');
@@ -12,24 +16,24 @@ include('./header.inc');
         <p>Bitte w&auml;hlen Sie die gew&uuml;nschte Laufzeit aus, und laden Sie Ihre csr-Datei für das Intermediate-Zertifikat hoch</p>
         
         <form enctype="multipart/form-data" action="annahme.php" method="post">
-            
+        <input type="hidden" name="zerttype" value="intermediate" />
         <div class="form-group">
  			<div class="radio">
   				<label>
-    				<input type="radio" name="laufzeit" id="optionsRadios1" value=1>
-    					1 Jahr Laufzeit
+    				<input type="radio" name="laufzeit" id="optionsRadios1" value=3>
+    					3 Jahr Laufzeit
   				</label>
 		</div>
 		<div class="radio">
   				<label>
-    				<input type="radio" name="laufzeit" id="optionsRadios2" value=3>
-						3 Jahre Laufzeit
+    				<input type="radio" name="laufzeit" id="optionsRadios2" value=5>
+						5 Jahre Laufzeit
   				</label>
 		</div>
 		<div class="radio">
   				<label>
-    				<input type="radio" name="laufzeit" id="optionsRadios3" value=5>
-    					5 Jahre Laufzeit
+    				<input type="radio" name="laufzeit" id="optionsRadios3" value=10>
+    					10 Jahre Laufzeit
   				</label>
 		</div>
 
