@@ -13,7 +13,13 @@ if(isset($_GET['csr'])) {
 }
 $db = new DBAccess();
 $where = array("id","=","'".$csr_id."'");
-$csr = $db->get_request_all_where($where);
+$csr = get_object_vars(reset($db->get_request_all_where($where)));
+
+if($csr['status'] != 'created') {
+  	$_SESSION['message']['warning'][] = "CSR wurde bereits bearbeitet!";
+  	header('Location: openCSRlist.php');
+  	exit();
+}
 
 
 
@@ -24,11 +30,22 @@ include('./header.inc');
 ?>
 <div class="jumbotron">
       <div class="container">
-        <h1>Zertifikatanfragen</h1>
-        <p>Bitte nehmen Sie die Zertifikatanfragen an oder lehnen Sie diese ab!</p>
-        <table class='table table-bordered'><?php foreach($csr as $key => $value){echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';}?></table>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Anfrage annehmen</a>
-        	<a class="btn btn-danger btn-lg" href="#" role="button">Anfrage ablehnen</a></p>        
+        <h1><?php echo $pagetitle; ?></h1>
+        <p>Bitte nehmen Sie die Zertifikatanfragen an oder lehnen Sie diese ab!</p>        
       </div>
-    </div>
+</div>
+<div class="container">
+	<table class='table table-hover table-bordered'>
+		<?php foreach($csr as $key => $value){echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';}?>
+	</table>
+    <form method="post" action="validateCSR.php" class="form-inline">
+    	<input type="hidden" name="csr" value="<?php echo $csr_id; ?>">
+    	<div class="form-group">
+    		<button type="submit" name="accept" value="true" class="btn btn-primary btn-lg" role="button">Anfrage annehmen</a>
+    	</div>
+    	<div class="form-group">
+    		<button type="submit" name="accept" value="false" class="btn btn-danger btn-lg" role="button">Anfrage ablehnen</a>
+    	</div>
+    </form>
+</div>
 <?php include('./footer.inc'); ?>
