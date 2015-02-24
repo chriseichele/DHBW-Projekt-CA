@@ -61,6 +61,7 @@ else {
   				$success = false; //TODO Zertifikat generieren
   				if($success) {
   					$_SESSION['message']['success'][] = "Zertifikat wurde erfolgreich erstellt!";
+  				}
   				else {
   					$_SESSION['message']['error'][] = "Unerwarteter Fehler beim erstellen des Zertifikats, bitte manuell nachbessern!";
   				}
