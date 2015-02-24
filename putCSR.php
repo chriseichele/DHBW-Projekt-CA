@@ -1,5 +1,5 @@
 <?php
-include 'DBAccess.php';
+require_once('./db.php');
 
 #This function saves a given .csr file to the filesystem 
 #and writes its content to a database
@@ -8,7 +8,8 @@ include 'DBAccess.php';
 function putCSR($fileName){
 #Ordner erstellen
 #Auf einem neuen System muss die uploaddir angepasst werden
-$uploaddir = 'C:/Apache64/htaccess/IndexCAs/CSRs';
+//$uploaddir = 'C:/Apache64/htaccess/IndexCAs/CSRs';
+$uploaddir = '.'; //TODO Testverzeichnis wieder ändern
 $pathToCSR = $uploaddir."/";#.$fileName."/";
 #shell_exec("mkdir ".$pathToCSR);
 
@@ -21,8 +22,10 @@ $uploadfile = $pathToCSR . basename($_FILES['userfile']['name']);
 echo '<pre>';
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
     echo "File is valid, and was successfully uploaded.\n";
+    //TODO return true on success
 } else {
-    echo "Possible file upload attack!\n";
+	// Exception bei Fehlern, werden von Seite ausgegeben
+	throw new Exception("Possible file upload attack!");
 }
 
 echo 'Here is some more debugging info:';
@@ -35,7 +38,7 @@ print "</pre>";
 
 
 #printCSR to website
-var = ("openssl req -in ".$pathToCSR.$fileName." -noout -text");
+$var = ("openssl req -in ".$pathToCSR.$fileName." -noout -text");
 echo($var);
 echo("<br>");
 
@@ -88,10 +91,5 @@ if ($sanString === false){
 connect();
 insert_request("CURDATE()", "NULL", $country, $state, $location, $org, $domain, "1", NULL, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
 }
-
-$file=$_FILES['userfile']['name'];
-echo($_FILES['userfile']['name']);
-
-putCSR($file);
 
 ?>

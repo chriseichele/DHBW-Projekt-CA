@@ -1,24 +1,35 @@
 <?php
 SESSION_START();
 require_once('./UserHelper.inc');
+require_once('./putCSR.php');
 
 $email = UserHelper::GetUserEmail();
 
+$jahre = $_POST['laufzeit'];
 
-$datei = $_FILES['csr']['name'];
-$dateityp = $_FILES['csr']['type'];
+$datei = $_FILES['userfile']['name'];
+$dateityp = $_FILES['userfile']['type'];
+
 
 if(UserHelper::IsLoggedIn()) {
 
-if($_FILES['csr']['name'] != "") {
+if($_FILES['userfile']['name'] != "") {
 
-	if($_FILES['csr']['type'] == "text/php"){
+
+	if($_FILES['userfile']['type'] == "application/octet-stream"){
 	
 		//Datei abspeichern
-		move_uploaded_file($_FILES['csr']['tmp_name'], "datei.txt"); 
+		try {
+			putCSR($datei);
 	
-		$_SESSION['message']['success'][] = $datei.' wurde hochgeladen.';
-		$_SESSION['message']['success'][] = $email.' Das ist die Emailadresse';
+			$_SESSION['message']['success'][] = $datei.' wurde hochgeladen.';
+			$_SESSION['message']['success'][] = $email.' Das ist die Emailadresse';
+			$_SESSION['message']['success'][] = $jahre.' Die Laufzeit haben Sie gewaehlt';
+			$_SESSION['message']['success'][] = $dateityp.' Das ist der dateityp';
+		} catch(Exception $e) {
+  			$_SESSION['message']['error'][] = $e->getMessage();
+		}
+		
 		Header('Location: intermediate.php');
 		exit();
 	}
