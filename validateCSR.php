@@ -63,7 +63,7 @@ else {
   					$_SESSION['message']['success'][] = "Zertifikat wurde erfolgreich erstellt!";
   				}
   				else {
-  					$_SESSION['message']['error'][] = "Unerwarteter Fehler beim erstellen des Zertifikats, bitte manuell nachbessern!";
+  					$_SESSION['message']['error'][] = "Unerwarteter Fehler beim Erstellen des Zertifikats, bitte manuell nachbessern!";
   				}
   			}
   			catch (Exception $e) {
