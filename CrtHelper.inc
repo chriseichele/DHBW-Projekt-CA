@@ -98,7 +98,7 @@ class CrtHelper {
 				$out .= "<td>$file->common_name</td>";
 				$out .= "<td>$file->start</td>";
 				$out .= "<td>$file->end</td>";
-				$out .= "<td><a href=\"zertifikatanfragen.php?csr=$file->id\" class='btn btn-success'>CSR anzeigen</a></td>";
+				$out .= "<td><a href=\"zertifikatanfragen.php?csr=$file->id\" class='btn btn-primary'>CSR anzeigen</a></td>";
 				$out .= "</tr>";
 			}
 		}
