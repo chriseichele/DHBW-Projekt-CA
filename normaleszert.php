@@ -1,14 +1,14 @@
 <?php 
 
-$pagetitle = "Intermediate Zertifikat";
+$pagetitle = "Standard Zertifikat";
 
 include('./header.inc');
 
 ?>
 <div class="jumbotron">
       <div class="container">
-        <h1>Bestellen Sie sich ein Normales Zertifikat</h1>
-        <p>Laden Sie bitte daf&uuml;r Ihre csr-Datei für das Normale Zertifikat hoch</p>
+        <h1>Bestellen Sie sich ein Standard Zertifikat</h1>
+        <p>Laden Sie bitte daf&uuml;r Ihre csr-Datei für das Standard Zertifikat hoch</p>
         
         <form enctype="multipart/form-data" action="#" method="post">
         <div class="form-group">
