@@ -35,7 +35,7 @@ class CrtHelper {
 				$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_csr );
 			}
 			else {
-				throw new Exception("Download Pfad f&uuml; CSR-Datei nicht gesetzt! Bitte nehmen Sie Kontakt zu uns auf!");
+				throw new Exception("Download Pfad f&uuml;r CSR-Datei nicht gesetzt! Bitte nehmen Sie Kontakt zu uns auf!");
 			}
 		}
 		elseif($filetype == "CRT") {
@@ -43,7 +43,7 @@ class CrtHelper {
 				$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_cer );
 			}
 			else {
-				throw new Exception("Download Pfad f&uuml; CRT-Datei nicht gesetzt! Bitte nehmen Sie Kontakt zu uns auf!");
+				throw new Exception("Download Pfad f&uuml;r CRT-Datei nicht gesetzt! Bitte nehmen Sie Kontakt zu uns auf!");
 			}
 		}
 		else {
