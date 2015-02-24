@@ -10,8 +10,8 @@ include('./header.inc');
     <div class="jumbotron">
       <div class="container">
         <h1>Sichere Daten&uuml;bertragung</h1>
-        <p>Verschl&uuml;sseln Sie die Datenübertragung ihrer Webseiten, und vieles mehr! Fragen sie noch heute Ihr eigenes Zertifikat zur Verschlüsselung der Kommunikation bei uns an!</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Mehr Informationen »</a></p>
+        <p>Verschl&uuml;sseln Sie die Daten&uuml;bertragung ihrer Webseiten, und vieles mehr! Fragen sie noch heute Ihr eigenes Zertifikat zur Verschl&uuml;sselung der Kommunikation bei uns an!</p>
+        <p><a class="btn btn-primary btn-lg" href="csrtutorial.php" role="button">Mehr Informationen »</a></p>
       </div>
     </div>
 
