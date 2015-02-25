@@ -72,6 +72,42 @@ class CrtHelper {
 		}
 	}
 	
+	private static function getVerifiedCSR($email) {
+		//Dateien von der Datenbank abfragen
+		$db = new DBAccess();
+		$where = array("verifier","=","'".$email."'");
+		$requests = $db->get_request_all_where($where);
+		$files = null;
+		if(!empty($requests)) {
+			foreach($requests as $request) {
+				$files[$request->id] = $request;
+			}
+		}
+		//-> return der dateien als Array, bezeichner als key
+		return $files;
+	}
+	public static function getVerifiedCSRList($email) {
+		$files = CrtHelper::getVerifiedCSR($email);
+		
+		$out = "<table class='table table-bordered'>";
+		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th>Status</th><th><!-- Details --></th></tr>";
+		if(!empty($files)) {
+			foreach($files as $id => $file) {
+				$out .= "<tr>";
+				$out .= "<td>Certificate Signing Request ID $file->id</td>";
+				$out .= "<td>$file->common_name</td>";
+				$out .= "<td>$file->start</td>";
+				$out .= "<td>$file->end</td>";
+				$out .= "<td><b>$file->status</b></td>";
+				$out .= "<td><a href=\"viewCSR.php?csr=$file->id\" class='btn btn-primary'>CSR anzeigen</a></td>";
+				$out .= "</tr>";
+			}
+		}
+		$out .= "</table>";
+		
+		return $out;
+	}
+	
 	private static function getOpenCSR() {
 		//Dateien von der Datenbank abfragen
 		$db = new DBAccess();
@@ -90,7 +126,7 @@ class CrtHelper {
 		$files = CrtHelper::getOpenCSR();
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Download --></th></tr>";
+		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Details --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
@@ -98,7 +134,7 @@ class CrtHelper {
 				$out .= "<td>$file->common_name</td>";
 				$out .= "<td>$file->start</td>";
 				$out .= "<td>$file->end</td>";
-				$out .= "<td><a href=\"zertifikatanfragen.php?csr=$file->id\" class='btn btn-primary'>CSR anzeigen</a></td>";
+				$out .= "<td><a href=\"zertifikatanfragen.php?csr=$file->id\" class='btn btn-primary'>CSR zur Genehmigung anzeigen</a></td>";
 				$out .= "</tr>";
 			}
 		}

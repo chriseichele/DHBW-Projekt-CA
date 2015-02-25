@@ -83,6 +83,7 @@ $messagetext = getMessages();
 				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
 				  <ul class="dropdown-menu" role="menu">
 					<li><a href="openCSRlist.php">Zertifikatanfragen bearbeiten</a></li>
+					<li><a href="validatedCSRlist.php">Von mir bearbeitete CSRs</a></li>
 					<li><a href="info.php">DB &amp; Session Info</a></li>
 				  </ul>
 				</li>
