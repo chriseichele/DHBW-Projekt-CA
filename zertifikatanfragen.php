@@ -33,13 +33,15 @@ include('./header.inc');
 <div class="jumbotron">
       <div class="container">
         <h1><?php echo $pagetitle; ?></h1>
-        <p>Bitte nehmen Sie die Zertifikatanfragen an oder lehnen Sie diese ab!</p>        
+        <p>Bitte nehmen Sie die Zertifikat&shy;anfragen an oder lehnen Sie diese ab.</p>        
       </div>
 </div>
 <div class="container">
-	<table class='table table-hover table-bordered'>
-		<?php foreach($csr as $key => $value){echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';}?>
-	</table>
+	<div class=" table-responsive">
+		<table class='table table-hover table-bordered'>
+			<?php foreach($csr as $key => $value){echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';}?>
+		</table>
+	</div>
     <form method="post" action="validateCSR.php" class="form-inline">
     	<input type="hidden" name="csr" value="<?php echo $csr_id; ?>">
     	<div class="form-group col-md-6">
