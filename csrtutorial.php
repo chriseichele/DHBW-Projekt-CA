@@ -77,7 +77,7 @@ include('./header.inc');
 		<h3 style="margin-top:0;">CSR Erstellung abgeschlossen</h3>
 		<p>
 			Nachdem Sie diese Schritte ausgef&uuml;hrt haben, wurden die Dateien <b>privkey.pem</b> und <b>csr.pem</b> erstellt, 
-			welche den privaten Schl&uuml;ssel und die Zertifikatsanforderung beinhalten
+			welche den privaten Schl&uuml;ssel und die Zertifikatsanforderung beinhalten.
 		</p>
 	</div>
 </div>

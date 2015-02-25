@@ -1,4 +1,8 @@
 <?php 
+require_once('./UserHelper.inc');
+
+doUserRightsCheck();
+
 $pagetitle = "Standard Zertifikat";
 
 include('./header.inc');
