@@ -60,15 +60,20 @@ else {
 			if($accept) {
 				$_SESSION['message']['success'][] = "CSR wurde erfolgreich genehmigt! <a href='viewCSR.php?csr=".$csr_id."'>Aktualisierte Zertifikatsanfrage anzeigen</a>";
 				try {
-					$success = false; //TODO Zertifikat generieren
+					//Zertifikat generieren
+					$success = false;
+					require_once('./generateCRT.php');
+					$success = createCertificate($csr_id);
 					if($success) {
 						$_SESSION['message']['success'][] = "Zertifikat wurde erfolgreich erstellt! <a href='viewCSR.php?csr=".$csr_id."'>Aktualisierte Zertifikatsanfrage anzeigen</a>";
 					}
 					else {
+						//Falls ein fehler ohne Exception Auftritt, sollte aber nicht vorkommen
 						$_SESSION['message']['error'][] = "Unerwarteter Fehler beim Erstellen des Zertifikats, bitte manuell nachbessern!";
 					}
 				}
 				catch (Exception $e) {
+					//Exceptions bei Zertifikat erstellen darstellen
 					$_SESSION['message']['error'][] = $e->getMessage();
 				}
 			}
