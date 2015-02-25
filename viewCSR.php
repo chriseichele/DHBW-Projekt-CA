@@ -2,7 +2,9 @@
 
 require_once('./UserHelper.inc');
 
-doAdminRightsCheck();
+//User Eingeloggt?
+doUserRightsCheck();
+
 
 if(isset($_GET['csr'])) {
 	$csr_id = $_GET['csr'];
@@ -14,13 +16,21 @@ if(isset($_GET['csr'])) {
 $db = new DBAccess();
 $where = array("id","=","'".$csr_id."'");
 $dbresult = $db->get_request_all_where($where);
+$csrs = reset($dbresult);
+$csr = get_object_vars($csrs);
+
 if($dbresult == array()) {
   	$_SESSION['message']['warning'][] = "Der gew&auml;hle CSR ist nicht vorhanden!";
   	header('Location: validatedCSRlist.php');
   	exit();
 }
-$csrs = reset($dbresult);
-$csr = get_object_vars($csrs);
+
+//Mein Request?
+$email = UserHelper::GetUserEmail();
+if($csr['requester'] != $email) {
+	//Admins dürfen den Request dann trotzdem anzeigen lassen
+	doAdminRightsCheck();
+}
 
 $where = array("request_id","=","'".$csr_id."'");
 $sans = $db->get_sans_all_where($where);

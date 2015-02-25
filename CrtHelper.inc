@@ -90,7 +90,7 @@ class CrtHelper {
 		$files = CrtHelper::getVerifiedCSR($email);
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th>Status</th><th><!-- Details --></th></tr>";
+		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th>Status</th><th><!-- Action --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
@@ -126,7 +126,7 @@ class CrtHelper {
 		$files = CrtHelper::getOpenCSR();
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Details --></th></tr>";
+		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Action --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
@@ -166,7 +166,7 @@ class CrtHelper {
 		$files = CrtHelper::getUserFiles(CrtHelper::getUser());
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th>Status</th><th><!-- Download --></th></tr>";
+		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th>Status</th><th><!-- Action --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
@@ -175,7 +175,9 @@ class CrtHelper {
 				$out .= "<td>$file->start</td>";
 				$out .= "<td>$file->end</td>";
 				$out .= CrtHelper::getStatusColorfulTD($file->status);
-				$out .= "<td><div class='btn-group'>";
+				$out .= "<td>";
+				$out .= "<a href=\"viewCSR.php?csr=$file->id\" class='btn btn-primary'>CSR anzeigen</a> &nbsp;";
+				$out .= "<div class='btn-group'>";
 				if($file->status == 'finished') {
 					$out .= "<a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success' title='Zertifikat herunterladen'>CRT</a>";
 					$out .= "<a href=\"CrtDownloader.php?downloadCSR=$file->id\" class='btn btn-default' title='Certificate-Signing-Request herunterladen'>CSR herunterladen</a>";
@@ -194,7 +196,7 @@ class CrtHelper {
 		$files = CrtHelper::getUserFiles(CrtHelper::getUser(), "finished");
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Download --></th></tr>";
+		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Action --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
