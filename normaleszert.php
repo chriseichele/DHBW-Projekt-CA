@@ -28,9 +28,9 @@ include('./header.inc');
 		</div> 
 		<br />
         <div class="form-horizontal"> 
-        	<div class="form-group">  
-				<input type="submit" class="btn btn-lg btn-primary" value="Zertifikat bestellen" />
-        		<a href="csrtutorial.php" class="btn btn-lg btn-default">Wie erstelle ich ein CSR?</a>
+        	<div class="form-group container">  
+				<input type="submit" class="btn btn-lg btn-primary" style="margin-bottom:10px;" value="Zertifikat bestellen" />
+        		<a href="csrtutorial.php" class="btn btn-lg btn-default" style="margin-bottom:10px;">Wie erstelle ich ein CSR?</a>
 			</div> 
 		</div>       
 	</form>
