@@ -18,7 +18,7 @@ include('./header.inc');
 </div>
 <?php
 
-echo '<div class="container">';
+echo '<div class="container table-responsive">';
 echo CrtHelper::getUserRequestList();
 echo '</div>';
 
