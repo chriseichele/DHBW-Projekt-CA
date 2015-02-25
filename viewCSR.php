@@ -14,6 +14,11 @@ if(isset($_GET['csr'])) {
 $db = new DBAccess();
 $where = array("id","=","'".$csr_id."'");
 $dbresult = $db->get_request_all_where($where);
+if($dbresult == array()) {
+  	$_SESSION['message']['warning'][] = "Der gew&auml;hle CSR ist nicht vorhanden!";
+  	header('Location: validatedCSRlist.php');
+  	exit();
+}
 $csrs = reset($dbresult);
 $csr = get_object_vars($csrs);
 
