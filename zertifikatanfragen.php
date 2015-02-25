@@ -17,13 +17,14 @@ $dbresult = $db->get_request_all_where($where);
 $csrs = reset($dbresult);
 $csr = get_object_vars($csrs);
 
+$where = array("request_id","=","'".$csr_id."'");
+$sans = $db->get_sans_all_where($where);
+
 if($csr['status'] != 'created') {
   	$_SESSION['message']['warning'][] = "CSR wurde bereits bearbeitet!";
   	header('Location: viewCSR.php?csr='.$csr_id);
   	exit();
 }
-
-
 
 $pagetitle = "Zertifikatanfrage genehmigen";
 
@@ -40,6 +41,7 @@ include('./header.inc');
 	<div class=" table-responsive">
 		<table class='table table-hover table-bordered'>
 			<?php foreach($csr as $key => $value){echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';}?>
+			<?php foreach($sans as $key => $value){echo'<tr><th>san '.($key+1).'</th><td>'.$value->name.'</td></tr>';}?>
 		</table>
 	</div>
     <form method="post" action="validateCSR.php" class="form-inline">

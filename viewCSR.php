@@ -17,6 +17,8 @@ $dbresult = $db->get_request_all_where($where);
 $csrs = reset($dbresult);
 $csr = get_object_vars($csrs);
 
+$where = array("request_id","=","'".$csr_id."'");
+$sans = $db->get_sans_all_where($where);
 
 
 $pagetitle = "Zertifikatanfrage anzeigen";
@@ -34,6 +36,7 @@ include('./header.inc');
 	<div class=" table-responsive">
 		<table class='table table-hover table-bordered'>
 			<?php foreach($csr as $key => $value){echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';}?>
+			<?php foreach($sans as $key => $value){echo'<tr><th>san '.($key+1).'</th><td>'.$value->name.'</td></tr>';}?>
 		</table>
 	</div>
 </div>
