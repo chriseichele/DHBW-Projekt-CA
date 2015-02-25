@@ -19,7 +19,7 @@ $csr = get_object_vars($csrs);
 
 if($csr['status'] != 'created') {
   	$_SESSION['message']['warning'][] = "CSR wurde bereits bearbeitet!";
-  	header('Location: openCSRlist.php');
+  	header('Location: viewCSR.php?csr='.$csr_id);
   	exit();
 }
 
