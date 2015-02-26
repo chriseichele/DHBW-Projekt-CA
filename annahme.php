@@ -84,7 +84,7 @@ else {
 
 if(UserHelper::IsLoggedIn()) {
 
-	if($dateityp == "application/octet-stream") {
+	if($dateityp == "application/x-x509-ca-cert") {
 	
 		//Datei abspeichern
 		try {
@@ -104,7 +104,7 @@ if(UserHelper::IsLoggedIn()) {
 	}
 	else {
 		// Fehlermeldung
-		$_SESSION['message']['error'][] = 'Keine PHP-Datei.';
+		$_SESSION['message']['error'][] = 'Keine CSR-Datei.';
 		Header('Location: '.$backurl);
 		exit();
 	}
