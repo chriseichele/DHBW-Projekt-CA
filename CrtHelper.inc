@@ -7,7 +7,7 @@ class CrtHelper {
 	
 	public function __construct() {
 		//Variablen Initialisierung
-		$this->basedir = "../../"; //Verzeichnis außerhalb des Document Root (nicht per Web-URL ereichbar)
+		//$this->basedir = "../../"; //Verzeichnis außerhalb des Document Root (nicht per Web-URL ereichbar)
 	}
 	
 	public function downloadCSR($download_bezeichner) {
