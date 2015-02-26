@@ -92,10 +92,7 @@ if(UserHelper::IsLoggedIn()) {
 		try {
 			putCSR($file, $jahre);
 			
-			$_SESSION['message']['success'][] = $dateiname.' wurde hochgeladen.'
-											  . '<br/>Emailadresse = "'.$email.'"'
-											  . '<br/>Laufzeit = "'.$jahre.'"'
-											  . '<br/>Dateityp = "'.$dateityp.'"';
+			$_SESSION['message']['success'][] = $dateiname.' wurde erfolgreich hochgeladen.';
 		} 
 		catch(Exception $e) {
   			$_SESSION['message']['error'][] = $e->getMessage();
