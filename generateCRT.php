@@ -19,7 +19,7 @@ require_once('./db.php');
 				if(isset($update)){
 					#TODO: Pfad muss im Shell Skript angepasst werden
 					#TODO: Pfad muss angepasst werden an den Ort des Skriptes auf dem Server angepasst werden.
-					shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificat.cnf -in ".$pathToCSR." -out c:\apache24\htdocs\\".$name." -batch);
+					shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificat.cnf -in ".$pathToCSR." -out c:\apache24\htdocs\\".$name." -batch");
 					return true;
 				}
 				else{
