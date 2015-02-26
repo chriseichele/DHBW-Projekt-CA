@@ -36,7 +36,7 @@ print "</pre>";
 
 
 #printCSR to website
-$var = shell_exec("openssl req -in ".$uploadfile." -noout -text");
+$var = shell_exec("c:\apache24\bin\openssl.exe req -in ".$uploadfile." -noout -text");
 echo($var);
 echo("<br>");
 echo("keks");
