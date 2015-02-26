@@ -20,7 +20,7 @@ $uploadfile = $pathToCSR . basename($fileObject['name']);
 #Der Inhalt des Uploads muss noch geprüft werden! 
 #Mögliche File-Upload Attack
 echo '<pre>';
-if (move_uploaded_filHeader('Location: '.$backurl);e($fileObject['tmp_name'], $uploadfile)) {
+if (move_uploaded_file($fileObject['tmp_name'], $uploadfile)) {
     echo "File is valid, and was successfully uploaded.\n";
     //TODO return true on success
 } else {
