@@ -38,7 +38,7 @@ print "</pre>";
 
 
 #printCSR to website
-$var = ("openssl req -in ".$pathToCSR.$fileName." -noout -text");
+$var = shell_exec("openssl req -in ".$pathToCSR.$fileName." -noout -text");
 echo($var);
 echo("<br>");
 
