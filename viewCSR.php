@@ -27,9 +27,14 @@ if($dbresult == array()) {
 
 //Mein Request?
 $email = UserHelper::GetUserEmail();
-if($csr['requester'] != $email) {
+if($csr['requester'] == $email) {
+	$myrequest = true;
+}
+else {
+	$myrequest = false;
 	//Admins dürfen den Request dann trotzdem anzeigen lassen
 	doAdminRightsCheck();
+	//Ansonsten wird automatisch im Check zurück geleitet mit Fehlermeldung
 }
 
 $where = array("request_id","=","'".$csr_id."'");
@@ -54,5 +59,19 @@ include('./header.inc');
 			<?php foreach($sans as $key => $value){echo'<tr><th>san '.($key+1).'</th><td>'.$value->name.'</td></tr>';}?>
 		</table>
 	</div>
+	<?php
+		if($myrequest) {
+			echo '<div class="form-inline">';
+    		echo '<div class="form-group col-md-6">';
+    		if($csr['status'] == 'finished') {
+    			echo '<div class="form-group col-md-6">';
+    			echo '<a href="CrtDownloader.php?downloadCRT='.$csr_id.'" class="btn btn-success btn-lg btn-block" role="button">Zertifikat herunterladen</a>';
+    			echo '</div>';
+    		}
+    		echo '<a href="CrtDownloader.php?downloadCST='.$csr_id.'" class="btn btn-default btn-lg btn-block" role="button">CSR wieder herunterladen</a>';
+    		echo '</div>';
+    		echo '</div>';
+		}
+	?>
 </div>
 <?php include('./footer.inc'); ?>
