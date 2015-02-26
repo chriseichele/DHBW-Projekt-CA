@@ -68,7 +68,7 @@ include('./header.inc');
     			echo '<a href="CrtDownloader.php?downloadCRT='.$csr_id.'" class="btn btn-success btn-lg btn-block" role="button">Zertifikat herunterladen</a>';
     			echo '</div>';
     		}
-    		echo '<a href="CrtDownloader.php?downloadCST='.$csr_id.'" class="btn btn-default btn-lg btn-block" role="button">CSR wieder herunterladen</a>';
+    		echo '<a href="CrtDownloader.php?downloadCSR='.$csr_id.'" class="btn btn-default btn-lg btn-block" role="button">CSR wieder herunterladen</a>';
     		echo '</div>';
     		echo '</div>';
 		}
