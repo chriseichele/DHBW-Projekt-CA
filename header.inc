@@ -84,11 +84,11 @@ $messagetext = getMessages();
 				  <ul class="dropdown-menu" role="menu">
 					<li><a href="openCSRlist.php">Zertifikatanfragen bearbeiten</a></li>
 					<li><a href="validatedCSRlist.php">Von mir bearbeitete CSRs</a></li>
-					<li><a href="info.php">DB &amp; Session Info</a></li>
 				  </ul>
 				</li>
           	</ul>';
-        }?>
+        }
+        else?>
           
           <?php echo $loginform; ?>
         </div><!--/.navbar-collapse -->
