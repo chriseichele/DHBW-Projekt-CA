@@ -90,12 +90,12 @@ if(UserHelper::IsLoggedIn()) {
 	
 		//Datei abspeichern
 		try {
-			putCSR($file, $jahre, $dateiname);
-	
-			$_SESSION['message']['success'][] = $dateiname.' wurde hochgeladen.';
-			$_SESSION['message']['success'][] = $email.' Das ist die Emailadresse';
-			$_SESSION['message']['success'][] = $jahre.' Die Laufzeit haben Sie gewaehlt';
-			$_SESSION['message']['success'][] = $dateityp.' Das ist der dateityp';
+			putCSR($file, $jahre);
+			
+			$_SESSION['message']['success'][] = $dateiname.' wurde hochgeladen.'
+											  . '<br/>Emailadresse = "'.$email.'"'
+											  . '<br/>Laufzeit = "'.$jahre.'"'
+											  . '<br/>Dateityp = "'.$dateityp.'"';
 		} 
 		catch(Exception $e) {
   			$_SESSION['message']['error'][] = $e->getMessage();
