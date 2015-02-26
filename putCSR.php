@@ -31,7 +31,7 @@ if (move_uploaded_file($fileObject['tmp_name'], $uploadfile)) {
 }
 
 echo 'Here is some more debugging info:';
-print_r($_FILES);
+print_r($fileobject);
 
 print "</pre>";
 
