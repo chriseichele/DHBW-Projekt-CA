@@ -84,7 +84,7 @@ else {
 
 if(UserHelper::IsLoggedIn()) {
 
-	if($dateityp == "application/x-x509-ca-cert") {
+	if($dateityp == "application/octet-stream") {
 	
 		//Datei abspeichern
 		try {
