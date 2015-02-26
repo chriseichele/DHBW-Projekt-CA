@@ -92,7 +92,7 @@ if(UserHelper::IsLoggedIn()) {
 		try {
 			putCSR($file, $jahre);
 			
-			$laufzeit_string =  = ($jahre <= 1) ? $jahre." Jahr" : $jahre." Jahre" ;
+			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 			$_SESSION['message']['success'][] = 'Der CSR "'$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen.';
 		} 
 		catch(Exception $e) {
