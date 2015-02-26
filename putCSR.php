@@ -42,6 +42,7 @@ echo("<br>");
 echo("keks");
 
 #save to variables
+#TODO: Was passiert, wenn Felder leer sind
 $country = substr($var, strpos($var, "C=") + 2, strpos($var, "ST=") - strpos($var, "C=") - 4);
 $state = substr($var, strpos($var, "ST=") + 3, strpos($var, "L=") - strpos($var, "ST=") - 5);
 $location = substr($var, strpos($var, "L=") + 2, strpos($var, "O=") - strpos($var, "L=") - 4);
@@ -86,6 +87,7 @@ if ($sanString === false){
 	unlink($temp);
 	print_r($SANs);
 	
+	#TODO: SANs in die DB
 #writeToDB
 $db = new DBAccess();
 $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", NULL, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
