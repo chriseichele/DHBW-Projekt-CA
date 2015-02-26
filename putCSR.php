@@ -88,8 +88,8 @@ if ($sanString === false){
 	print_r($SANs);
 	
 #writeToDB
-connect();
-insert_request("CURDATE()", "NULL", $country, $state, $location, $org, $domain, "1", NULL, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
+$db = new DBAccess();
+$db->insert_request("CURDATE()", "NULL", $country, $state, $location, $org, $domain, "1", NULL, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
 }
 
 ?>
