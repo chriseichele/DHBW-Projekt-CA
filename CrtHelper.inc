@@ -57,7 +57,7 @@ class CrtHelper {
 		header ( "Content-Type: application/octet-stream" );
 		
 		//Passenden Dateinamen im Download-Requester vorgeben
-		$save_as_name = basename ( $filelist [$download_bezeichner] );
+		$save_as_name = basename ( $filename );
 		header ( "Content-Disposition: attachment; filename=\"$save_as_name\"" );
 		
 		// Datei ausgeben.
