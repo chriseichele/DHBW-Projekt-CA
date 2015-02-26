@@ -9,8 +9,8 @@ require_once('./db.php');
 			$where = array("id","=","'".$id."'");
 			$db_result = $db->get_request_all_where($where);
 			$csr = reset($db_result);
-			$pathToCSR = $csr->$path_csr
-			$name = $csr->$common_name
+			$pathToCSR = $csr->path_csr
+			$name = $csr->common_name
 			#Prüfung ob die Select-Abfrage erfolgreich war
 			if($pathToCSR == NULL)
 				{
