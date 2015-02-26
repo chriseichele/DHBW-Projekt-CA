@@ -77,6 +77,8 @@ else {
 					$_SESSION['message']['error'][] = $e->getMessage();
 					//Status wieder auf inital setzten, sodass es wieder bearbeitet werden kann
 					$result = $db->update_request_status($where, $new_status);
+					//Verifier wieder zurück setzten
+					$result = $db->update_request_verifier($where, "");
 					$_SESSION['message']['warning'][] = "CSR wurde wieder zur&uuml;ck gesetzt!</a>";
   					header('Location: zertifikatsanfragen.php?csr='.$csr_id);
   					exit();
