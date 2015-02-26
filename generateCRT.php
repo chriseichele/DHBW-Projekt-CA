@@ -13,7 +13,7 @@ require_once('./db.php');
 				{
 					throw new Exception("Etwas blödes ist passiert. Das tut uns leid. Fehler 1");
 				}
-			elseif {
+			else{
 				$update = $db->update_request_status("id = ".$id, 3);
 				#Prüfung ob die Update-Abfrage erfolgreich war			
 				if(isset($update)){
