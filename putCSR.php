@@ -31,7 +31,7 @@ if (move_uploaded_file($fileObject['tmp_name'], $uploadfile)) {
 }
 
 echo 'Here is some more debugging info:';
-print_r($fileobject);
+print_r($fileObject);
 
 print "</pre>";
 
@@ -43,6 +43,7 @@ print "</pre>";
 $var = shell_exec("openssl req -in ".$pathToCSR.$fileName." -noout -text");
 echo($var);
 echo("<br>");
+echo("keks");
 
 #save to variables
 $country = substr($var, strpos($var, "C=") + 2, strpos($var, "ST=") - strpos($var, "C=") - 4);
