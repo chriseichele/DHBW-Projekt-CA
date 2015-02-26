@@ -9,11 +9,10 @@ function putCSR($fileObject, $laufzeit){
 #Ordner erstellen
 #Auf einem neuen System muss die uploaddir angepasst werden
 //$uploaddir = 'C:/Apache24/htdocs';
-$uploaddir = '.'; //TODO Testverzeichnis wieder ändern
-$pathToCSR = $uploaddir."/";#.$fileName."/";
+$uploaddir = './'; //TODO Testverzeichnis wieder ändern
 #shell_exec("mkdir ".$pathToCSR);
 
-$uploadfile = $pathToCSR . basename($fileObject['name']);
+$uploadfile = $uploaddir . basename($fileObject['name']);
 #echo($uploadfile);
 #exit();
 
@@ -40,7 +39,7 @@ print "</pre>";
 
 
 #printCSR to website
-$var = shell_exec("openssl req -in ".$pathToCSR.$fileName." -noout -text");
+$var = shell_exec("openssl req -in ".$uploadfile." -noout -text");
 echo($var);
 echo("<br>");
 echo("keks");
