@@ -8,7 +8,7 @@ require_once('./db.php');
 function putCSR($fileObject, $laufzeit){
 #Ordner erstellen
 #Auf einem neuen System muss die uploaddir angepasst werden
-//$uploaddir = 'C:/Apache64/htaccess/IndexCAs/CSRs';
+//$uploaddir = 'C:/Apache24/htdocs';
 $uploaddir = '.'; //TODO Testverzeichnis wieder ändern
 $pathToCSR = $uploaddir."/";#.$fileName."/";
 #shell_exec("mkdir ".$pathToCSR);
