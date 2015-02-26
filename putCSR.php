@@ -14,8 +14,8 @@ $pathToCSR = $uploaddir."/";#.$fileName."/";
 #shell_exec("mkdir ".$pathToCSR);
 
 $uploadfile = $pathToCSR . basename($fileObject['name']);
-echo($uploadfile);
-exit();
+#echo($uploadfile);
+#exit();
 
 #php-Datei handler
 #move_uploaded_file speichert die empfangene Datei
