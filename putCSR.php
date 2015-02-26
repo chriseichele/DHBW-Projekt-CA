@@ -5,7 +5,7 @@ require_once('./db.php');
 #and writes its content to a database
 #Input: $filename name of the uploaded file. 
 
-function putCSR($fileObject, $laufzeit, $fileName){
+function putCSR($fileObject, $laufzeit){
 #Ordner erstellen
 #Auf einem neuen System muss die uploaddir angepasst werden
 //$uploaddir = 'C:/Apache64/htaccess/IndexCAs/CSRs';
