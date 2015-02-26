@@ -23,6 +23,8 @@ require_once('./UserHelper.inc');
 				if(isset($update['affected_rows'])){
 					#TODO: openssl config einrichten
 					shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificat.cnf -in ".$pathToCSR." -out c:\apache24\htdocs\\".$name." -batch");
+					#TODO: CRT Erstellung validieren
+					$db->update_request_cer($where, "c:\apache24\htdocs\\".$name.");
 					return true;
 				}
 				else{
