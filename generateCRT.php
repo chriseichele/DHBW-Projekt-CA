@@ -1,9 +1,10 @@
 <?php
-require_once('./db.php');	
+require_once('./db.php');
+require_once('./UserHelper.inc');
 #input id: id für das Zertifikat in der DB
 #output .crt Datei:  
 		function createCertificate($id){
-			#TODO: Abfragen ob der User eingeloggt  ist
+			doUserRightsCheck();
 			
 			$db = new DBAccess();
 			$where = array("id","=","'".$id."'");
@@ -17,11 +18,10 @@ require_once('./db.php');
 					throw new Exception("Etwas blödes ist passiert. Das tut uns leid. Fehler 1");
 				}
 			else{
-				$update = $db->update_request_status("id = ".$id, 3);
+				$update = $db->update_request_status($where, 3);
 				#Prüfung ob die Update-Abfrage erfolgreich war			
-				if(isset($update)){
-					#TODO: Pfad muss im Shell Skript angepasst werden
-					#TODO: Pfad muss angepasst werden an den Ort des Skriptes auf dem Server angepasst werden.
+				if(isset($update['affected_rows'])){
+					#TODO: openssl config einrichten
 					shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificat.cnf -in ".$pathToCSR." -out c:\apache24\htdocs\\".$name." -batch");
 					return true;
 				}
