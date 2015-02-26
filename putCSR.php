@@ -88,7 +88,8 @@ if ($sanString === false){
 	
 #writeToDB
 $db = new DBAccess();
-$db->insert_request("CURDATE()", "NULL", $country, $state, $location, $org, $domain, "1", NULL, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
+$db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", NULL, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
+	
 }
 
 ?>
