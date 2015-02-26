@@ -7,7 +7,7 @@ class CrtHelper {
 	
 	public function __construct() {
 		//Variablen Initialisierung
-		//$this->basedir = "../../"; //Verzeichnis außerhalb des Document Root (nicht per Web-URL ereichbar)
+		$this->basedir = "C:\Apache24\htdocs\\"; //Verzeichnis außerhalb des Document Root (nicht per Web-URL ereichbar)
 	}
 	
 	public function downloadCSR($download_bezeichner) {
@@ -32,7 +32,8 @@ class CrtHelper {
 		//Download Pfad zusammenbauen
 		if($filetype == "CSR") {
 			if(!empty($filelist[$download_bezeichner]->path_csr)) {
-				$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_csr );
+				//$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_csr );
+				$filename = $filelist[$download_bezeichner]->path_csr;
 			}
 			else {
 				throw new Exception("Download Pfad f&uuml;r CSR-Datei nicht gesetzt! Bitte nehmen Sie Kontakt zu uns auf!");
@@ -40,7 +41,8 @@ class CrtHelper {
 		}
 		elseif($filetype == "CRT") {
 			if(!empty($filelist[$download_bezeichner]->path_cer)) {
-				$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_cer );
+				//$filename = sprintf ( "%s/%s", $this->basedir, $filelist[$download_bezeichner]->path_cer );
+				$filename = $filelist[$download_bezeichner]->path_cer;
 			}
 			else {
 				throw new Exception("Download Pfad f&uuml;r CRT-Datei nicht gesetzt! Bitte nehmen Sie Kontakt zu uns auf!");
