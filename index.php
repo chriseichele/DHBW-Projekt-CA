@@ -32,9 +32,9 @@ if(!isset($_REQUEST['noskip'])) {
 	<style>
 		html, body {
 			background: #222;
-			padding: 0;
+			padding: 0 10px;
 			margin: 0;
-			width: 100%;
+			width: calc(100% - 20px);
 			height: 100%;
 			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 		}
@@ -73,7 +73,7 @@ if(!isset($_REQUEST['noskip'])) {
 			text-align: center;
 		}
 		span.h {
-			font-size: 2em;
+			font-size: 1.8em;
 			font-weight: 500;
 			padding-top: 10px;
 		}
@@ -89,15 +89,15 @@ if(!isset($_REQUEST['noskip'])) {
 		<h1>Projekt CA</h1>
 		<p>DHBW Studiengang Wirtschaftsinformatik 2012 IT Sicherheit - Gruppe 3</p>
 		<div>
-			<a href="./frontend/" class="kunde">
+			<a href="./frontend/" class="kunde" title="Kunden Portal">
 				<span><img src="./frontend/icons/android-icon-192x192.png"></span>
 				<span class="h">Kunde</span>
 			</a>
 		</div>
 		<div>
-			<a href="./admin/" class="admin">
+			<a href="./admin/" class="admin" title="Administratoren Portal">
 				<span><img src="./admin/icons/android-icon-192x192.png"></span>
-				<span class="h">Administrator</span>
+				<span class="h">Admin</span>
 			</a>
 		</div>
 	</body>
