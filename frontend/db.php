@@ -176,7 +176,7 @@ class DBAccess {
 
     //spezifisch
     function insert_role($name, $read_own, $write_own, $execute_own, $read_foreign, $write_foreign, $execute_foreign) {
-        $user_email = $_SESSION["email"];
+        $user_email = $_SESSION["user"]["email"];
         $result = $this->get_user_all_where(array("email", "=", "'$user_email'"));
         $obj = reset($result);
         $role = !empty($obj) ? $obj->role : "";
@@ -191,7 +191,7 @@ class DBAccess {
     }
 
     function insert_request($start, $end, $country, $state, $city, $organisation_name, $common_name, $status, $organisation_unit_name = NULL, $responsible_email = NULL, $challenge_password = NULL, $optional_company_name = NULL, $intermediate = NULL, $verifier = NULL, $path_csr = NULL, $path_cer = NULL) {
-        $requester = $_SESSION["email"];
+        $requester = $_SESSION["user"]["email"];
         if (empty($requester))
             return "Nur angemeldete User k&ouml;nnen Zertifikate erstellen.<br />\n";
         //Intermediate uebergeben, existiert auch dieser?

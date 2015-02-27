@@ -2,14 +2,12 @@
 SESSION_START();
 
 require_once('./db.php');
+require_once('./MessageHandler.php');
 
 class UserHelper {
 
 	public static function RegisterCustomer($email, $firstname, $lastname, $pwhash) {
 		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "customer");
-	}
-	public static function RegisterAdmin($email, $firstname, $lastname, $pwhash) {
-		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "administrator");
 	}
 	private static function Register($email, $firstname, $lastname, $pwhash, $role) {
 		$db = new DBAccess();
@@ -38,28 +36,16 @@ class UserHelper {
 	}
 
 	private static function DoLogin($email, $firstname, $lastname) {
-		$_SESSION["login"] = true;
-		$_SESSION["email"] = $email;
-		$_SESSION["firstname"] = $firstname;
-		$_SESSION["lastname"] = $lastname;
+		$_SESSION["user"]["login"] = true;
+		$_SESSION["user"]["email"] = $email;
+		$_SESSION["user"]["firstname"] = $firstname;
+		$_SESSION["user"]["lastname"] = $lastname;
 		return true;
 	}
 	
 	public static function IsLoggedIn() {
-		if (isset($_SESSION["login"])) {
-			return ($_SESSION["login"] == true);
-		}
-		else {
-			return false;
-		}
-	}
-	public static function IsAdminLoggedIn() {
-		if (isset($_SESSION["login"])) {
-			$email = $_SESSION["email"];
-			$db = new DBAccess();
-			$result = $db->get_user_all_where(array("email", "=", "'".$email."'"));
-			$user = reset($result);
-			return ($user->role == "administrator");
+		if (isset($_SESSION["user"]["login"])) {
+			return ($_SESSION["user"]["login"] == true);
 		}
 		else {
 			return false;
@@ -68,7 +54,7 @@ class UserHelper {
 	
 	public static function GetUserEmail() {
 		if(UserHelper::IsLoggedIn()) {
-			return $_SESSION["email"];
+			return $_SESSION["user"]["email"];
 		} 
 		else {
 			return "";
@@ -77,7 +63,7 @@ class UserHelper {
 	
 	public static function GetUserName() {
 		if(UserHelper::IsLoggedIn()) {
-			return $_SESSION["firstname"] . " " . $_SESSION["lastname"];
+			return $_SESSION["user"]["firstname"] . " " . $_SESSION["user"]["lastname"];
 		} 
 		else {
 			return "";
@@ -98,28 +84,9 @@ function doUserRightsCheck() {
 		return true;
 	}
 	else {
-		$_SESSION['message']['info'][] = "Sie m&uuml;ssen sich zuerst einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
+		addMessageIfNew("info", "Sie m&uuml;ssen sich zuerst einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.");
 		$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
 		Header('Location: '.$backurl);
-		exit();
-	}
-}
-function doAdminRightsCheck() {
-	if(UserHelper::IsLoggedIn()) {
-		if(UserHelper::IsAdminLoggedIn()) {
-			return true;
-		}
-		else {
-			$_SESSION['message']['error'][] = "Sie haben nicht die n&ouml;tigen Berechtigungen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
-			$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
-			$backurl = (basename($backurl)=='register.php') ? 'index.php' : $basename;
-			Header('Location: '.$backurl);
-			exit();
-		}
-	}
-	else {
-		$_SESSION['message']['info'][] = "Sie m&uuml;ssen sich zuerst als Administrator einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.";
-		Header('Location: index.php');
 		exit();
 	}
 }

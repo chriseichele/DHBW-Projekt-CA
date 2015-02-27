@@ -1,13 +1,13 @@
 <?php 
 
-require_once('./UserHelper.inc');
-require_once('./CrtHelper.inc');
+require_once('./UserHelper.php');
+require_once('./CrtHelper.php');
 
 doAdminRightsCheck();
 
 $pagetitle = "Offene Zertifikatsanfragen";
 
-include('./header.inc');
+include('./header.php');
 
 ?>
 <div class="jumbotron">
@@ -22,4 +22,4 @@ echo '<div class="container table-responsive">';
 echo CrtHelper::getOpenCSRList();
 echo '</div>';
 
-include('./footer.inc'); ?>
+include('./footer.php'); ?>

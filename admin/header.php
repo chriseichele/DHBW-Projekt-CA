@@ -1,9 +1,9 @@
 <?php
 
-$pagetitle_main = "Projekt CA";
+$pagetitle_main = "Projekt CA Admin";
 
-require_once('UserHelper.inc'); 
-require_once('MessageHandler.inc');
+require_once('UserHelper.php'); 
+require_once('MessageHandler.php');
 
 $loginform = getLoginForm();
 
@@ -20,7 +20,7 @@ $messagetext = getMessages();
     <title><?php echo $pagetitle_main ?> || <?php echo $pagetitle ?></title>
     
     <!-- Web App Deklaration -->
-	<meta name="theme-color" content="#000000">
+	<meta name="theme-color" content="#600000">
   	<meta name="apple-mobile-web-app-capable" content="yes">
   	<meta name="apple-mobile-web-app-status-bar-style" content="black">
   	<meta name="apple-mobile-web-app-title" content="<?php echo $pagetitle_main ?>">
@@ -44,7 +44,7 @@ $messagetext = getMessages();
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#600000;">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -56,36 +56,12 @@ $messagetext = getMessages();
           <a class="navbar-brand" href="index.php"><?php echo $pagetitle_main ?></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-        
-        <?php 
-		if(UserHelper::IsLoggedIn()) {
-        echo'<ul class="nav navbar-nav">
-				<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Zertifikate anfordern <span class="caret"></span></a>
-				  <ul class="dropdown-menu" role="menu">
-					<li><a href="intermediate.php">Intermediate Zertifikat</a></li>
-					<li><a href="normaleszert.php">Standard Zertifikat</a></li>
-				  </ul>
-				</li>
-				<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mein Konto <span class="caret"></span></a>
-				  <ul class="dropdown-menu" role="menu">
-					<li><a href="mycsr.php">Meine Zertifikatsanfragen</a></li>
-					<li><a href="mycrt.php">Meine Zertifikate</a></li>
-				  </ul>
-				</li>
-          	</ul>';
-        }?>
         <?php 
 		if(UserHelper::IsAdminLoggedIn()) {
         echo'<ul class="nav navbar-nav">
-				<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
-				  <ul class="dropdown-menu" role="menu">
-					<li><a href="openCSRlist.php">Zertifikatanfragen bearbeiten</a></li>
-					<li><a href="validatedCSRlist.php">Von mir bearbeitete CSRs</a></li>
-				  </ul>
-				</li>
+				<li><a href="openCSRlist.php" title="Offene Zertifikatsanfragen bearbeiten">Offene CSRs</a></li>
+				<li><a href="validatedCSRlist.php" title="Von mir bearbeitete Zertifikatsanfragen">Bearbeitete CSRs</a></li>
+				<li><a href="info.php" title="Datenbank- und Session Informationssystem">Info</a></li>
           	</ul>';
         }
         else?>

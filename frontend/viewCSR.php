@@ -1,6 +1,6 @@
 <?php 
 
-require_once('./UserHelper.inc');
+require_once('./UserHelper.php');
 
 //User Eingeloggt?
 doUserRightsCheck();
@@ -10,7 +10,7 @@ if(isset($_GET['csr'])) {
 	$csr_id = $_GET['csr'];
 } else {
   	$_SESSION['message']['warning'][] = "Bitte w&auml;hlen Sie einen CSR aus!";
-  	header('Location: validatedCSRlist.php');
+  	header('Location: mycsr.php');
   	exit();
 }
 $db = new DBAccess();
@@ -20,8 +20,9 @@ $csrs = reset($dbresult);
 $csr = get_object_vars($csrs);
 
 if($dbresult == array()) {
-  	$_SESSION['message']['warning'][] = "Der gew&auml;hle CSR ist nicht vorhanden!";
-  	header('Location: validatedCSRlist.php');
+	//Kein CSR gefunden
+  	$_SESSION['message']['warning'][] = "Der gew&auml;hle CSR ist nicht vorhanden oder Sie d&uuml;rfen ihn nicht anzeigen!";
+  	header('Location: mycsr.php');
   	exit();
 }
 
@@ -32,18 +33,18 @@ if($csr['requester'] == $email) {
 }
 else {
 	$myrequest = false;
-	//Admins dürfen den Request dann trotzdem anzeigen lassen
-	doAdminRightsCheck();
-	//Ansonsten wird automatisch im Check zurück geleitet mit Fehlermeldung
+  	$_SESSION['message']['warning'][] = "Der gew&auml;hle CSR ist nicht vorhanden oder Sie d&uuml;rfen ihn nicht anzeigen!";
+  	header('Location: mycsr.php');
+  	exit();
 }
 
 $where = array("request_id","=","'".$csr_id."'");
 $sans = $db->get_sans_all_where($where);
 
 
-$pagetitle = "Zertifikatanfrage anzeigen";
+$pagetitle = 'Zertifikatsanfrage ID "'.$csr_id.'" anzeigen';
 
-include('./header.inc');
+include('./header.php');
 
 ?>
 <div class="jumbotron">
@@ -55,12 +56,17 @@ include('./header.inc');
 <div class="container">
 	<div class=" table-responsive">
 		<table class='table table-hover table-bordered'>
-			<?php foreach($csr as $key => $value){echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';}?>
+			<?php foreach($csr as $key => $value){
+				if($key != 'path_csr' && $key != 'path_cer') { //Pfade nicht mit anzeigen
+					echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';
+				}
+			}?>
 			<?php foreach($sans as $key => $value){echo'<tr><th>san '.($key+1).'</th><td>'.$value->name.'</td></tr>';}?>
 		</table>
 	</div>
 	<?php
 		if($myrequest) {
+			//Zusätzliche Prüfung, Seite sollte aber eh nicht gezeigt werden, wenn nicht mein Request
 			echo '<div class="form-inline">';
     		if($csr['status'] == 'finished') {
     			echo '<div class="form-group col-md-6">';
@@ -74,4 +80,4 @@ include('./header.inc');
 		}
 	?>
 </div>
-<?php include('./footer.inc'); ?>
+<?php include('./footer.php'); ?>

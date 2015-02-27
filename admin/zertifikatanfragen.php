@@ -1,14 +1,17 @@
 <?php 
 
-require_once('./UserHelper.inc');
+require_once('./UserHelper.php');
 
 doAdminRightsCheck();
+
+$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'validatedCSRlist.php#NoReferer';
+$backurl = (basename($backurl)=='zertifikatsanfragen.php') ? $backurl : 'openCSRlist.php#Backlink';
 
 if(isset($_GET['csr'])) {
 	$csr_id = $_GET['csr'];
 } else {
   	$_SESSION['message']['warning'][] = "Bitte w&auml;hlen Sie einen CSR aus!";
-  	header('Location: openCSRlist.php');
+  	header('Location: '.$backurl);
   	exit();
 }
 $db = new DBAccess();
@@ -16,7 +19,7 @@ $where = array("id","=","'".$csr_id."'");
 $dbresult = $db->get_request_all_where($where);
 if($dbresult == array()) {
   	$_SESSION['message']['warning'][] = "Der gew&auml;hle CSR ist nicht vorhanden!";
-  	header('Location: validatedCSRlist.php');
+  	header('Location: '.$backurl);
   	exit();
 }
 $csrs = reset($dbresult);
@@ -33,7 +36,7 @@ if($csr['status'] != 'created') {
 
 $pagetitle = "Zertifikatanfrage genehmigen";
 
-include('./header.inc');
+include('./header.php');
 
 ?>
 <div class="jumbotron">
@@ -59,4 +62,4 @@ include('./header.inc');
     	</div>
     </form>
 </div>
-<?php include('./footer.inc'); ?>
+<?php include('./footer.php'); ?>

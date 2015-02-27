@@ -1,6 +1,6 @@
 <?php 
 
-require_once('./UserHelper.inc');
+require_once('./UserHelper.php');
 if(UserHelper::IsLoggedIn()) {
 	$_SESSION['message']['info'][] = "Sie können sich nicht neu registrieren, da Sie bereits eingeloggt sind.";
 	$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
@@ -11,7 +11,7 @@ if(UserHelper::IsLoggedIn()) {
 
 $pagetitle = "Registrierung";
 
-include('./header.inc');
+include('./header.php');
 
 ?>
     
@@ -40,4 +40,4 @@ include('./header.inc');
       </form>
     </div>
       
-<?php include('./footer.inc'); ?>
+<?php include('./footer.php'); ?>

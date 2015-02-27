@@ -1,7 +1,7 @@
 <?php 
 $pagetitle = "CSR Tutorial";
 
-include('./header.inc');
+include('./header.php');
 
 ?>
 
@@ -82,4 +82,4 @@ include('./header.inc');
 	</div>
 </div>
 
-<?php include('./footer.inc'); ?>
+<?php include('./footer.php'); ?>

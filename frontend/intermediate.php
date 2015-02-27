@@ -1,11 +1,11 @@
 <?php 
-require_once('./UserHelper.inc');
+require_once('./UserHelper.php');
 
 doUserRightsCheck();
 
 $pagetitle = "Intermediate Zertifikat";
 
-include('./header.inc');
+include('./header.php');
 
 ?>
 
@@ -40,7 +40,7 @@ include('./header.inc');
  	</form>
 </div>
     
-<?php include('./footer.inc'); ?>
+<?php include('./footer.php'); ?>
 
 
 

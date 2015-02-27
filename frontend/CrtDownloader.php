@@ -1,7 +1,7 @@
 <?php
 
-require_once('./UserHelper.inc');
-require_once('./CrtHelper.inc');
+require_once('./UserHelper.php');
+require_once('./CrtHelper.php');
 
 $backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
 $backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#backlink' : $backurl;

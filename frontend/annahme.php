@@ -1,6 +1,6 @@
 <?php
 SESSION_START();
-require_once('./UserHelper.inc');
+require_once('./UserHelper.php');
 require_once('./putCSR.php');
 
 doUserRightsCheck();

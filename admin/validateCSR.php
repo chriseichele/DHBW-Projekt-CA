@@ -1,6 +1,6 @@
 <?php 
 
-include('UserHelper.inc');
+include('UserHelper.php');
 
 doAdminRightsCheck();
 

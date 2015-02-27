@@ -1,5 +1,19 @@
 <?php
 
+function addMessageIfNew($messagetype, $messagetext) {
+	$neu = true;
+	foreach($_SESSION['message'][$messagetype] as $message) {
+		if($message == $messagtext) {
+			//Nachricht schon Vorhanden
+			$neu = false;
+		}
+	}
+	if($neu) {
+		//Nachricht nur ausgeben, wenn noch nicht vorhanden
+		$_SESSION['message']['info'][] = $messagetext;
+	}
+}
+
 function getMessages() {
 
 	//Fehler & Infomeldung Überprüfung aus der Session
