@@ -1,3 +1,12 @@
+<?php
+
+if(!isset($_REQUEST['noskip'])) {
+	header('Location: ./frontend/');
+	exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="de">
 	<head>
