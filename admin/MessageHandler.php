@@ -10,7 +10,7 @@ function addMessageIfNew($messagetype, $messagetext) {
 	}
 	if($neu) {
 		//Nachricht nur ausgeben, wenn noch nicht vorhanden
-		$_SESSION['message']['info'][] = $messagetext;
+		$_SESSION['message'][$messagetype][] = $messagetext;
 	}
 }
 
