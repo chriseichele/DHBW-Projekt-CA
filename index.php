@@ -9,12 +9,18 @@
 			margin: 0;
 			width: 100%;
 			height: 100%;
+			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 		}
 		h1 {
 			text-align: center;
 			margin-top: 2.5em;
-			margin-bottom: 2em;
+			margin-bottom: 0.2em;
 			color: #fff;
+		}
+		h1 + p {
+			margin-bottom: 4em;
+			color: white;
+			text-align: center;
 		}
 		div {
 			width:50%;
@@ -24,13 +30,16 @@
 		a {
 			text-decoration: none;
 			border: none;
-			color: #222;
 		}
-		a.kunde:hover {
+		a.kunde {
 			color: #009600;
 		}
-		a.admin:hover {
+		a.admin {
 			color: #960000;
+		}
+		a.kunde:hover,
+		a.admin:hover {
+			color: white;
 		}
 		span {
 			display: block;
@@ -51,6 +60,7 @@
 	</head>
 	<body>
 		<h1>Projekt CA</h1>
+		<p>DHBW Studiengang Wirtschaftsinformatik 2012 IT Sicherheit - Gruppe 3</p>
 		<div>
 			<a href="./frontend/" class="kunde">
 				<span><img src="./frontend/icons/android-icon-192x192.png"></span>
@@ -60,7 +70,7 @@
 		<div>
 			<a href="./admin/" class="admin">
 				<span><img src="./admin/icons/android-icon-192x192.png"></span>
-				<span class="h">Admin</span>
+				<span class="h">Administrator</span>
 			</a>
 		</div>
 	</body>
