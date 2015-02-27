@@ -35,7 +35,6 @@ if(!isset($_REQUEST['noskip'])) {
 			padding: 0 10px;
 			margin: 0;
 			width: calc(100% - 20px);
-			height: 100%;
 			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 		}
 		h1 {
