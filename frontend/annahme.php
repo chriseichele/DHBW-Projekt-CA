@@ -90,10 +90,10 @@ if(UserHelper::IsLoggedIn()) {
 	
 		//Datei abspeichern
 		try {
-			putCSR($file, $jahre);
+			$csr_id = putCSR($file, $jahre);
 			
 			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
-			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen.';
+			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
 		} 
 		catch(Exception $e) {
   			$_SESSION['message']['error'][] = $e->getMessage();
