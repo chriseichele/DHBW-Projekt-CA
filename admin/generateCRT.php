@@ -12,27 +12,41 @@ require_once('./db.php');
 			$pathToCSR = $csr->path_csr;
 			$name = $csr->common_name;
 			#Prüfung ob die Select-Abfrage erfolgreich war
-			if($pathToCSR == NULL)
-				{
-					throw new Exception("Etwas blödes ist passiert. Das tut uns leid. Fehler 1");
-				}
-			else{
+			if($pathToCSR == NULL) {
+				throw new Exception("Der Pfad zur CSR Datei konnte nicht ermittelt werden!");
+			}
+			else {
 				$update = $db->update_request_status($where, 3);
 				#Prüfung ob die Update-Abfrage erfolgreich war			
 				if(isset($update['affected_rows'])){
 					#TODO: Pfad muss im Shell Skript angepasst werden
 					#TODO: Pfad muss angepasst werden an den Ort des Skriptes auf dem Server angepasst werden.
-					shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificat.cnf -in ".$pathToCSR." -out c:\apache24\htdocs\\".$name." -batch");
-					return true;
-				}
-				else{
-					throw new Exception("Etwas blödes ist passiert. Das tut uns leid. Fehler 2");
+					$pathToCRT = "c:\apache24\ca\kunden\crt\\".$name;
+					shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificat.cnf -in ".$pathToCSR." -out ".$pathToCRT." -batch");
+					if(file_exists($pathToCRT)) {
+						//Zertifikat Erstellung erfolgreich -> Pfad in DB aktualisieren
+						$update_crt_path = $db->update_request_path_cer($where, $pathToCRT);
+						if(isset($update_crt_path['affected_rows'])){
+							//Alles OK
+							return true;
+						}
+						else {
+							throw new Exception("Aktualisierung des Pfads in der Datenbank fehlgeschlagen!");
+						}
 					}
+					else {
+						throw new Exception("Zertifikatserstellung mit OpenSSL fehlgeschlagen!");
+					}
+				}
+				else {
+					throw new Exception("Aktualisierung des Status in der Datenbank fehlgeschlagen!");
+				}
 					
 			}
 
 		}
 	
 	#openssl ca -config /home/arne/ssl/certificat.cnf -in /home/arne/ssl/example.com/example.csr -out /home/arne/ssl/example.crt
+	#openssl x509 -req -in c:/apache24/ca/www-server.csr -CA c:/apache24/ca/ica-pub.pem -CAkey c:/apache24/ca/ica-key.pem -CAcreateserial -out c:/apache24/ca/kunden/server-pub-test.crt -days 1095 -sha512
 	
 ?>

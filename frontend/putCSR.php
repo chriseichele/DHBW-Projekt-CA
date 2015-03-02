@@ -8,10 +8,17 @@ require_once('./db.php');
 function putCSR($fileObject, $laufzeit){
 	#Ordner erstellen
 	#Auf einem neuen System muss die uploaddir angepasst werden
-	$uploaddir = 'C:\Apache24\htdocs\\';
+	$uploaddir = 'c:\apache24\ca\kunden\csr\\';
 	#shell_exec("mkdir ".$pathToCSR);
 
 	$uploadfile = $uploaddir . basename($fileObject['name']);
+	//Eindeutigen Namen vergeben
+	$path_parts = pathinfo($uploadfile);
+	while(file_exists($uploadfile)) {
+		//Solange versuchen bis Datei noch nicht exisitert
+		$uploadfile = $path_parts['dirname'] . "\\" . $path_parts['filename'] . "_" . $i . $path_parts['extension'];
+		$i++;
+	}
 	#echo($uploadfile);
 	#exit();
 
