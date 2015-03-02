@@ -39,7 +39,7 @@ require_once('./db.php');
 						}
 					}
 					else {
-						throw new Exception("Zertifikatserstellung mit OpenSSL fehlgeschlagen!");
+						throw new Exception("Zertifikatserstellung mit OpenSSL fehlgeschlagen!".$pathToCRT);
 					}
 				}
 				else {
