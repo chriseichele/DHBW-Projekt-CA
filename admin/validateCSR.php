@@ -58,7 +58,7 @@ else {
 		$result = $db->update_request_verifier($where, UserHelper::GetUserEmail());
 		if($result['affected_rows'] == 1) {
 			if($accept) {
-				$_SESSION['message']['success'][] = "CSR wurde erfolgreich genehmigt! <a href='viewCSR.php?csr=".$csr_id."'>Aktualisierte Zertifikatsanfrage anzeigen</a>";
+				$_SESSION['message']['success'][] = "CSR wurde erfolgreich genehmigt!";
 				try {
 					//Zertifikat generieren
 					$success = false;
@@ -76,9 +76,9 @@ else {
 					//Exceptions bei Zertifikat erstellen darstellen
 					$_SESSION['message']['error'][] = $e->getMessage();
 					//Status wieder auf inital setzten, sodass es wieder bearbeitet werden kann
-					$result = $db->update_request_status($where, $new_status);
+					$result = $db->update_request_status($where, 1);
 					//Verifier wieder zurück setzten
-					$result = $db->update_request_verifier($where, "");
+					$result = $db->update_request_verifier($where, null);
 					$_SESSION['message']['warning'][] = "CSR wurde wieder zur&uuml;ck gesetzt!</a>";
   					header('Location: zertifikatsanfragen.php?csr='.$csr_id);
   					exit();
@@ -114,7 +114,6 @@ else {
 		//Sollte nicht eintreten
   		$_SESSION['message']['error'][] = "ACHTUNG: Es wurde der Status f&uuml;r mehr Eintr&auml;ge als beabsichtigt aktualisiert! CSR ID \"".$csr_id."\".";
 	}
-	echo'<pre>';
   	header('Location: openCSRlist.php');
   	exit();
 }

@@ -14,9 +14,10 @@ function putCSR($fileObject, $laufzeit){
 	$uploadfile = $uploaddir . basename($fileObject['name']);
 	//Eindeutigen Namen vergeben
 	$path_parts = pathinfo($uploadfile);
+	$i = 0;
 	while(file_exists($uploadfile)) {
 		//Solange versuchen bis Datei noch nicht exisitert
-		$uploadfile = $path_parts['dirname'] . "\\" . $path_parts['filename'] . "_" . $i . $path_parts['extension'];
+		$uploadfile = $path_parts['dirname'] . "\\" . $path_parts['filename'] . "_" . $i . "." . $path_parts['extension'];
 		$i++;
 	}
 	#echo($uploadfile);
@@ -26,18 +27,18 @@ function putCSR($fileObject, $laufzeit){
 	#move_uploaded_file speichert die empfangene Datei
 	#Der Inhalt des Uploads muss noch geprüft werden! 
 	#Mögliche File-Upload Attack
-	echo '<pre>';
+	#echo '<pre>';
 	if (move_uploaded_file($fileObject['tmp_name'], $uploadfile)) {
-		echo "File is valid, and was successfully uploaded.\n";
+		#echo "File is valid, and was successfully uploaded.\n";
 	} else {
 		// Exception bei Fehlern, werden von Seite ausgegeben
 		throw new Exception("Possible file upload attack!");
 	}
 
-	echo 'Here is some more debugging info:';
-	print_r($fileObject);
+	#echo 'Here is some more debugging info:';
+	#print_r($fileObject);
 
-	print "</pre>";
+	#print "</pre>";
 
 
 
@@ -45,7 +46,7 @@ function putCSR($fileObject, $laufzeit){
 
 	#printCSR to website
 	$var = shell_exec('c:\apache24\bin\openssl.exe req -noout -text -in '.$uploadfile);
-	echo('<pre>'.$var.'</pre>');
+	#echo('<pre>'.$var.'</pre>');
 
 	#save to variables
 	$country = substr($var, strpos($var, "C=") + 2, strpos($var, "ST=") - strpos($var, "C=") - 4);
@@ -56,20 +57,20 @@ function putCSR($fileObject, $laufzeit){
 	$domain = substr($var, strpos($var, "CN=") + 3, strpos($var, "Subject Public Key") - strpos($var, "CN=") - 3);
 	#$email = $_GET["email"];
 
-	echo("<pre>");
-	echo('<h3>Country</h3>'.$country);
-	echo('<h3>State</h3>'.$state);
-	echo('<h3>Location</h3>'.$location);
-	echo('<h3>Org</h3>'.$org);
-	echo('<h3>OrgUnit</h3>'.$orgunit);
-	echo('<h3>Domain</h3>'.$domain);
-	echo("</pre>");
+	#echo("<pre>");
+	#echo('<h3>Country</h3>'.$country);
+	#echo('<h3>State</h3>'.$state);
+	#echo('<h3>Location</h3>'.$location);
+	#echo('<h3>Org</h3>'.$org);
+	#echo('<h3>OrgUnit</h3>'.$orgunit);
+	#echo('<h3>Domain</h3>'.$domain);
+	#echo("</pre>");
 
 	#extracting SANs from the csr file
 	$sanString = strpos($var, "X509v3 Subject Alternative Name");
 
 	if ($sanString === false){
-			echo("error");
+			#echo("SAN Error");
 		}
 		else {
 			$SANs = explode("DNS", $var);
@@ -86,15 +87,15 @@ function putCSR($fileObject, $laufzeit){
 		$temp = explode(" ",$SANs[count($SANs)]);
 		$SANs[count($SANs)] = $temp[0];
 		unlink($temp);
-		print_r($SANs);
+		#print_r($SANs);
 	
 	#writeToDB
 	$db = new DBAccess();
 	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
 	
-	echo '<pre><h3>DB Result</h3>';
-	print_r($dbresult);
-	echo '</pre>';
+	#echo '<pre><h3>DB Result</h3>';
+	#print_r($dbresult);
+	#echo '</pre>';
 	
 	//exit();
 	//Wenn hier zuvor keine Exception war: ERFOLG

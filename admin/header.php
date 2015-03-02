@@ -62,6 +62,7 @@ $messagetext = getMessages();
 				<li><a href="openCSRlist.php" title="Offene Zertifikatsanfragen bearbeiten">Offene CSRs</a></li>
 				<li><a href="validatedCSRlist.php" title="Von mir bearbeitete Zertifikatsanfragen">Bearbeitete CSRs</a></li>
 				<li><a href="info.php" title="Datenbank- und Session Informationssystem">Info</a></li>
+				<li><a href="filelists.php" title="Kontrolliste des Dateisystems von CSR und CRT Dateien">Dateisystem</a></li>
           	</ul>';
         }
         else?>
