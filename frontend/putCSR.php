@@ -93,13 +93,17 @@ function putCSR($fileObject, $laufzeit){
 	$db = new DBAccess();
 	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
 	
+	//Request ID aus DB Rückgabe holen
+	$req_id = $dbresult['id'];
+	
+	//TODO SANS zu Request in DB schreiben
+	
 	#echo '<pre><h3>DB Result</h3>';
 	#print_r($dbresult);
 	#echo '</pre>';
 	
-	//exit();
-	//Wenn hier zuvor keine Exception war: ERFOLG
-	return true;
+	//Wenn hier zuvor keine Exception war: ERFOLG -> Request ID zurück geben
+	return $req_id;
 }
 
 ?>
