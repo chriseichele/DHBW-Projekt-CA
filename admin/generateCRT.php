@@ -27,10 +27,11 @@ require_once('./db.php');
 					$pathToCRT = trim("c:\apache24\ca\kunden\crt\\".$name).".crt";
 					#shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificat.cnf -in ".$pathToCSR." -out ".$pathToCRT." -batch");
 					shell_exec("c:\apache24\bin\openssl.exe x509 -req -in ".$pathToCSR." -CA c:\apache24\ca\ica-pub.pem -CAkey c:\apache24\ca\ica-key.pem -CAcreateserial -out ".$pathToCRT." -days ".$duration."  -sha256");
-					$check = str_replace("\", "/", $pathToCRT);
+					$check = str_replace("\\", "/", $pathToCRT);
 					if(file_exists($check)) {
 						//Zertifikat Erstellung erfolgreich -> Pfad in DB aktualisieren
 						$update_crt_path = $db->update_request_path_cer($where, $pathToCRT);
+						
 						if(isset($update_crt_path['affected_rows'])){
 							//Alles OK
 							return true;
