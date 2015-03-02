@@ -40,12 +40,31 @@ class UserHelper {
 		$_SESSION["user"]["email"] = $email;
 		$_SESSION["user"]["firstname"] = $firstname;
 		$_SESSION["user"]["lastname"] = $lastname;
+		$_SESSION["user"]["timestamp"] = time();
 		return true;
 	}
 	
 	public static function IsLoggedIn() {
-		if (isset($_SESSION["user"]["login"])) {
-			return ($_SESSION["user"]["login"] == true);
+		if (isset($_SESSION["user"]["login"]) && isset($_SESSION["user"]["timestamp"])) {
+			if(($_SESSION["user"]["timestamp"] + (10 * 60)) < time()) {
+				//Alle 10 Minuten neu Prüfen ob User exisitiert
+				$email = $_SESSION["user"]["email"];
+				$db = new DBAccess();
+				$result = $db->get_user_all_where(array("email", "=", "'".$email."'"));
+				$user = reset($result);
+				if(!empty($user)) {
+					$_SESSION["user"]["timestamp"] = time();
+					return ($_SESSION["user"]["login"] == true);
+				}
+				else {
+					UserHelper::Logout();
+					addMessageIfNew("Warning", "Sie wurden automatisch ausgeloggt!");
+					return false;
+				}
+			}
+			else {
+				return ($_SESSION["user"]["login"] == true);
+			}
 		}
 		else {
 			return false;
