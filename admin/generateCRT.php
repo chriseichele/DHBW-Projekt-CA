@@ -24,10 +24,11 @@ require_once('./db.php');
 				if(isset($update['affected_rows'])){
 					#TODO: Pfad muss im Shell Skript angepasst werden
 					#TODO: Pfad muss angepasst werden an den Ort des Skriptes auf dem Server angepasst werden.
-					$pathToCRT = trim("c:\apache24\ca\kunden\crt\\".$name);
+					$pathToCRT = trim("c:\apache24\ca\kunden\crt\\".$name).".crt";
 					#shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificat.cnf -in ".$pathToCSR." -out ".$pathToCRT." -batch");
-					shell_exec("c:\apache24\bin\openssl.exe x509 -req -in ".$pathToCSR." -CA c:\apache24\ca\ica-pub.pem -CAkey c:\apache24\ca\ica-key.pem -CAcreateserial -out ".$pathToCRT.".crt -days ".$duration."  -sha256");
-					if(file_exists($pathToCRT)) {
+					shell_exec("c:\apache24\bin\openssl.exe x509 -req -in ".$pathToCSR." -CA c:\apache24\ca\ica-pub.pem -CAkey c:\apache24\ca\ica-key.pem -CAcreateserial -out ".$pathToCRT." -days ".$duration."  -sha256");
+					$check = str_replace("\", "/", $pathToCRT);
+					if(file_exists($check)) {
 						//Zertifikat Erstellung erfolgreich -> Pfad in DB aktualisieren
 						$update_crt_path = $db->update_request_path_cer($where, $pathToCRT);
 						if(isset($update_crt_path['affected_rows'])){
