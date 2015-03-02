@@ -55,7 +55,9 @@ function putCSR($fileObject, $laufzeit){
 	$org = substr($var, strpos($var, "O=") + 2, strpos($var, "OU=") - strpos($var, "O=") - 4);
 	$orgunit = substr($var, strpos($var, "OU=") + 3, strpos($var, "CN=") - strpos($var, "OU=") - 5);
 	$domain = substr($var, strpos($var, "CN=") + 3, strpos($var, "Subject Public Key") - strpos($var, "CN=") - 3);
-	#$email = $_GET["email"];
+	$temp = explode("/emailAddress=", $domain);
+	$email = temp[0];
+	unlink($temp);
 
 	#echo("<pre>");
 	#echo('<h3>Country</h3>'.$country);
@@ -91,7 +93,7 @@ function putCSR($fileObject, $laufzeit){
 	
 	#writeToDB
 	$db = new DBAccess();
-	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, NULL, NULL, NULL, NULL, NULL,$uploadfile, NULL);
+	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, NULL, NULL,$uploadfile, NULL);
 	
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
