@@ -68,8 +68,8 @@ class UserHelper {
 					return ($_SESSION["admin"]["login"] == true);
 				}
 				else {
+					//Eingeloggter User existert nicht mehr!!!
 					UserHelper::Logout();
-					addMessageIfNew("Warning", "Sie wurden automatisch ausgeloggt!");
 					return false;
 				}
 			}
@@ -113,7 +113,10 @@ class UserHelper {
 	}
 	
 	public static function Logout() {
-		session_destroy();
+		if(isset($_SESSION)) {
+			session_destroy();
+			$_SESSION = array();
+		}
 		return true;
 	}
 	
