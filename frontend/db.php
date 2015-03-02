@@ -1,5 +1,7 @@
 <?php
 
+require_once('./UserHelper.php');
+
 class DBAccess {
 
     //private $resulttype = MYSQLI_ASSOC;
@@ -40,7 +42,7 @@ class DBAccess {
         $result = $connection->query($query);
         $rows = array();
         if ($connection->errno > 0) {
-        //Alles größer 0 ist ein Fehler
+            //Alles größer 0 ist ein Fehler
             $rows[] = printf("%d: %s", $connection->errno, $connection->error);
         } else {
             //gibt ein zweidimensionales Array für alle Anwendungen aus
@@ -105,7 +107,7 @@ class DBAccess {
         $select = $connection->real_escape_string($select);
         $from = $connection->real_escape_string($from);
         $where = $this->escape_where_clause($connection, $where_clause);
-        $query = count($where_clause) == 0 ? "SELECT $select FROM $from" : "SELECT $select FROM $from WHERE $where";    
+        $query = count($where_clause) == 0 ? "SELECT $select FROM $from" : "SELECT $select FROM $from WHERE $where";
         $return = $this->query($connection, $query);
         //Verbindung sauber trennen
         $connection->close();
@@ -149,7 +151,7 @@ class DBAccess {
      * INSERT
      * NULL-Werte koennen eingefuegt werden, auch trotz Foreign-Key-Constraints
      * */
-    private function insert($table, $cols, $values) {
+    private function insert($table, $cols, $values, $return_pk = NULL) {
         $connection = $this->connect();
         //cols und values sind eindimensionale arrays, es gilt count($cols) gleich count($values) wenn nicht dann gibt es einen fehler beim query der als error ausgegeben wird
         //Escapes und Arrays auswerten
@@ -170,13 +172,15 @@ class DBAccess {
 
         $query = "INSERT INTO `$table` ($col) VALUES ($value)";
         $return = $this->query($connection, $query);
+        if ($return_pk)
+            $return["id"] = $connection->insert_id;
         $connection->close();
         return $return;
     }
 
     //spezifisch
     function insert_role($name, $read_own, $write_own, $execute_own, $read_foreign, $write_foreign, $execute_foreign) {
-        $user_email = $_SESSION["user"]["email"];
+        $user_email = UserHelper::GetUserEmail();
         $result = $this->get_user_all_where(array("email", "=", "'$user_email'"));
         $obj = reset($result);
         $role = !empty($obj) ? $obj->role : "";
@@ -191,14 +195,14 @@ class DBAccess {
     }
 
     function insert_request($start, $end, $country, $state, $city, $organisation_name, $common_name, $status, $organisation_unit_name = NULL, $responsible_email = NULL, $challenge_password = NULL, $optional_company_name = NULL, $intermediate = NULL, $verifier = NULL, $path_csr = NULL, $path_cer = NULL) {
-        $requester = $_SESSION["user"]["email"];
+        $requester = UserHelper::GetUserEmail();
         if (empty($requester))
             return "Nur angemeldete User k&ouml;nnen Zertifikate erstellen.<br />\n";
         //Intermediate uebergeben, existiert auch dieser?
         if (!empty($intermediate) and empty($this->get_request_all_where(array("id", "=", $intermediate))))
             return "Kein g&uuml;ltiges Intermediate-Zertifikat angegeben.<br />\n";
 
-        return $this->insert("request", array("requester", "start", "end", "country", "state", "city", "organisation_name", "organisation_unit_name", "common_name", "responsible_email", "challenge_password", "optional_company_name", "intermediate", "verifier", "status", "path_csr", "path_cer"), array($requester, $start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $verifier, $status, $path_csr, $path_cer));
+        return $this->insert("request", array("requester", "start", "end", "country", "state", "city", "organisation_name", "organisation_unit_name", "common_name", "responsible_email", "challenge_password", "optional_company_name", "intermediate", "verifier", "status", "path_csr", "path_cer"), array($requester, $start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $verifier, $status, $path_csr, $path_cer), true);
     }
 
     function insert_sans($request_id, $name) {
@@ -269,7 +273,7 @@ class DBAccess {
     function update_request_path_csr($where_clause, $path_csr) {
         return $this->update("request", array("path_csr"), array($path_csr), $where_clause);
     }
-    
+
     function update_request_path_cer($where_clause, $path_cer) {
         return $this->update("request", array("path_cer"), array($path_cer), $where_clause);
     }
@@ -314,6 +318,12 @@ class DBAccess {
 
     function delete_sans($request_id, $name) {
         return $this->delete("sans", array("request_id", "=", "$request_id", " and ", "name", "=", "'" . $name . "'"));
+    }
+
+    function reset_db() {
+        $connection = $this->connect();
+        $query = file_get_contents("C:\Users\Administrator\Documents\MySQL\CA.sql");
+        return $connection->multi_query($query);
     }
 
 }
