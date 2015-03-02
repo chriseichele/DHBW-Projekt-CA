@@ -51,7 +51,8 @@ class CrtHelper {
 		else {
 			throw new Exception("Dateityp \"".$filetype."\" nicht unterst&uuml;tzt!");
 		}
-		if (! file_exists($filename) ) throw new Exception("Unerwarteter Fehler beim herunterladen der Datei \"$download_bezeichner\". Bitte nehmen Sie Kontakt zu uns auf!"); 
+		$filepath_slash = str_replace("\\", "/", $filename); //Backslash für Windows, Slash für PHP im Pfad
+		if (! file_exists($filepath_slash) ) throw new Exception("Unerwarteter Fehler beim herunterladen der Datei \"$download_bezeichner\". Bitte nehmen Sie Kontakt zu uns auf!"); 
 		
 		//Passenden Datentyp im HTTP Header setzen
 		header ( "Content-Type: application/octet-stream" );
