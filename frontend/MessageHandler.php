@@ -3,7 +3,7 @@
 function addMessageIfNew($messagetype, $messagetext) {
 	$neu = true;
 	foreach($_SESSION['message'][$messagetype] as $message) {
-		if($message == $messagtext) {
+		if($message == $messagetext) {
 			//Nachricht schon Vorhanden
 			$neu = false;
 		}
