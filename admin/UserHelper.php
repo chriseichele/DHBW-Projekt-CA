@@ -27,11 +27,18 @@ class UserHelper {
 		
 		if ($user == null) {
 			return false;
-		} else {
-			//Check PW and do Login
-			if($pwhash == $user->passwordhash) {
-				return UserHelper::DoLogin($user->email, $user->firstname, $user->surname);
-			} 
+		} 
+		else {
+			//Check AdminRole
+			if($user->role == "administrator") {
+				//Check PW and do Login
+				if($pwhash == $user->passwordhash) {
+					return UserHelper::DoLogin($user->email, $user->firstname, $user->surname);
+				} 
+				else {
+					return false;
+				}
+			}
 			else {
 				return false;
 			}
