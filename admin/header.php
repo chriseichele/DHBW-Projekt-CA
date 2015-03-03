@@ -61,13 +61,7 @@ $messagetext = getMessages();
         echo'<ul class="nav navbar-nav">
 				<li><a href="openCSRlist.php" title="Offene Zertifikatsanfragen bearbeiten">Offene CSRs</a></li>
 				<li><a href="validatedCSRlist.php" title="Von mir bearbeitete Zertifikatsanfragen">Bearbeitete CSRs</a></li>
-				<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Info <span class="caret"></span></a>
-				  <ul class="dropdown-menu" role="menu">
-					<li><a href="info.php" title="Datenbank- und Session Informationssystem">DB- & Session Info</a></li>
-					<li><a href="filelists.php" title="Kontrolliste des Dateisystems von CSR und CRT Dateien">Dateisystem</a></li>
-				  </ul>
-				</li>
+				<li><a href="info.php" title="Informationssystem">Info</a></li>
           	</ul>';
         }
         else?>
