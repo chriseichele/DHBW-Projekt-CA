@@ -18,7 +18,7 @@ echo '<nav><ul>';
 echo '  <li><a href="#db">Datenbank</a><ul>';
 echo '    <li><a href="#db_role">Rollen</a></li>';
 echo '    <li><a href="#db_user">User</a></li>';
-echo '    <li><a href="#db_requests">Requests</a></li>';
+echo '    <li><a href="#db_request">Requests</a></li>';
 echo '    <li><a href="#db_sans">SANs</a></li>';
 echo '  </ul></li>';
 echo '  <li><a href="#session">SESSION</a></li>';

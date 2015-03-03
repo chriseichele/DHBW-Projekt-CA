@@ -39,7 +39,7 @@ if(!UserHelper::IsAdminLoggedIn()) {
        </div>
         <div class="col-md-4">
           <h2>Informationssystem</h2>
-          <p><a class="btn btn-default" href="info.php" role="button" title="Datenbank- &amp; Session Informationssystem">DB- & Session Info anzeigen »</a></p>
+          <p><a class="btn btn-default" href="info.php" role="button" title="Datenbank-, Session- &amp; File-Informationssystem">Informationen anzeigen »</a></p>
         </div>
       </div>
     </div>
