@@ -116,15 +116,4 @@ else {
 	exit();
 }
 
-
-
-
-
-
-
-
-
-
-//Datenbank eintrag anlegen
-
 ?>

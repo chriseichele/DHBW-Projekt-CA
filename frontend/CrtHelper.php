@@ -98,11 +98,10 @@ class CrtHelper {
 		$files = CrtHelper::getUserFiles(CrtHelper::getUser());
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th>Status</th><th><!-- Action --></th></tr>";
+		$out .= "<tr><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th>Status</th><th><!-- Action --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
-				$out .= "<td>Certificate Signing Request ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
 				$out .= "<td>$file->start</td>";
 				$out .= "<td>$file->end</td>";
@@ -128,15 +127,17 @@ class CrtHelper {
 		$files = CrtHelper::getUserFiles(CrtHelper::getUser(), "finished");
 		
 		$out = "<table class='table table-bordered'>";
-		$out .= "<tr><th>Anfrage</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Action --></th></tr>";
+		$out .= "<tr><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Action --></th></tr>";
 		if(!empty($files)) {
 			foreach($files as $id => $file) {
 				$out .= "<tr>";
-				$out .= "<td>Certificate ID $file->id</td>";
 				$out .= "<td>$file->common_name</td>";
 				$out .= "<td>$file->start</td>";
 				$out .= "<td>$file->end</td>";
-				$out .= "<td><a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success' title='Zertifikat(CRT) herunterladen'>Zertifikat herunterladen</a></td>";
+				$out .= "<td style='min-width:350px;'>";
+				$out .= "<a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success' title='Zertifikat(CRT) herunterladen'>Zertifikat herunterladen</a>&nbsp;&nbsp;";
+				$out .= "<a href=\"renewCRT.php?csr=$file->id\" class='btn btn-info' title='Zertifikat verl&auml;ngern'>Zertifikat verl&auml;ngern</a>";
+				$out .= "</td>";
 				$out .= "</tr>";
 			}
 		}
