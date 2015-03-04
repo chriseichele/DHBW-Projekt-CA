@@ -65,9 +65,17 @@ else {
 					$success = createCertificate($csr_id);
 					if($success) {
 						$_SESSION['message']['success'][] = "Zertifikat wurde erfolgreich erstellt! <a href='viewCSR.php?csr=".$csr_id."'>Aktualisierte Zertifikatsanfrage anzeigen</a>";
+						
+						//Mail an User schicken und ihn informieren
+						require_once('./MailHelper.php');
+						try {
+							send_cert_notification_mail($email, $csr_id);
+						} catch(Exception $e) {
+							$_SESSION['message']['error'][] = "Fehler beim Senden der Benachrichtigungsmail an den Kunden!";
+						}
 					}
 					else {
-						//Falls ein fehler ohne Exception Auftritt, sollte aber nicht vorkommen
+						//Falls ein Fehler ohne Exception Auftritt, sollte aber nicht vorkommen
 						$_SESSION['message']['error'][] = "Unerwarteter Fehler beim Erstellen des Zertifikats, bitte manuell nachbessern!";
 					}
 				}
