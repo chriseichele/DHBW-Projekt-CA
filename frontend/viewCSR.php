@@ -57,7 +57,7 @@ include('./header.php');
 	<div class=" table-responsive">
 		<table class='table table-hover table-bordered'>
 			<?php foreach($csr as $key => $value){
-				if($key != 'id' && $key != 'requester' && $key != 'path_csr' && $key != 'path_cer') { //ID & Requester & Pfade nicht mit anzeigen
+				if($key != 'id' && $key != 'requester' && $key != 'verifier' && $key != 'path_csr' && $key != 'path_cer') { //ID & Requester & Verifier & Pfade nicht mit anzeigen
 					echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';
 				}
 			}?>
