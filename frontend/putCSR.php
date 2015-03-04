@@ -56,7 +56,8 @@ function putCSR($fileObject, $laufzeit){
 	$orgunit = substr($var, strpos($var, "OU=") + 3, strpos($var, "CN=") - strpos($var, "OU=") - 5);
 	$domain = substr($var, strpos($var, "CN=") + 3, strpos($var, "Subject Public Key") - strpos($var, "CN=") - 3);
 	$temp = explode("/emailAddress=", $domain);
-	$email = temp[0];
+	$domain = $temp[0];
+	$email = $temp[1];
 	unlink($temp);
 
 	#echo("<pre>");
