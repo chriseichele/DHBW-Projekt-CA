@@ -43,7 +43,7 @@ else {
 }
 
 if(isset($_POST['laufzeit'])){
-	$jahre = $_POST['laufzeit'];
+	$laufzeit = $_POST['laufzeit'];
 }
 else {
 	$_SESSION['message']['error'][] = 'Keine Laufzeit ausgew&auml;hlt.';
@@ -52,13 +52,13 @@ else {
 }
 
 if($zerttype == 'intermediate') {
-	if($jahre == '3') {
+	if($laufzeit == '3') {
 		$jahre = 3;
 	}
-	elseif($jahre == '5') {
+	elseif($laufzeit == '5') {
 		$jahre = 5;
 	}
-	elseif($jahre == '10') {
+	elseif($laufzeit == '10') {
 		$jahre = 10;
 	}
 	else {
@@ -69,13 +69,13 @@ if($zerttype == 'intermediate') {
 	}
 }
 elseif($zerttype == 'normal') {
-	if($jahre == '1') {
+	if($laufzeit == '1') {
 		$jahre = 1;
 	}
-	elseif($jahre == '3') {
+	elseif($laufzeit == '3') {
 		$jahre = 3;
 	}
-	elseif($jahre == '5') {
+	elseif($laufzeit == '5') {
 		$jahre = 5;
 	}
 	else {
