@@ -96,7 +96,7 @@ else {
 if(UserHelper::IsLoggedIn()) {
 
 	//Datenbankeintrag zum CSR mit neuem Datum Kopieren.
-	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $request->country, $request->state, $request->city, $request->organisation_name, $request->common_name, "1", $request->organisation_unit_name, $request->responsible_email, $request->challenge_password, $request->optional_company_name, $request->intermediate, NULL, $request->path_csr, NULL);
+	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$jahre)." day")), $request->country, $request->state, $request->city, $request->organisation_name, $request->common_name, "1", $request->organisation_unit_name, $request->responsible_email, $request->challenge_password, $request->optional_company_name, $request->intermediate, NULL, $request->path_csr, NULL);
     
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
