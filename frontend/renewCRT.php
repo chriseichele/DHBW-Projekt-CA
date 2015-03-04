@@ -51,7 +51,7 @@ include('./header.php');
 	<div class=" table-responsive">
 		<table class='table table-hover table-bordered'>
 			<?php foreach($request as $key => $value){
-				if($key != 'id' && $key != 'requester' && $key != 'verifier' && $key != 'path_csr' && $key != 'path_cer' && $key != 'status') { //ID & Requester & Verifier & Pfade nicht mit anzeigen //Status auch uninteressant
+				if($key != 'id' && $key != 'requester' && $key != 'verifier' && $key != 'path_csr' && $key != 'path_cer' && $key != 'status' && $key != 'start' && $key != 'end') { //ID & Requester & Verifier & Pfade nicht mit anzeigen //Status & Alte Zeiten auch uninteressant
 					echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';
 				}
 			}?>
