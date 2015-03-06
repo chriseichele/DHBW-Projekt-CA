@@ -3,7 +3,7 @@
 function send_cert_notification_mail($email, $csr_id) {
 	$link = 'wwi12-05.dhbw-heidenheim.de/frontend/viewCSR.php?csr='.$csr_id;
 
-	require_once('./PHP-Mailer/PHPMailerAutoload.php');
+	require_once('../PHP-Mailer/PHPMailerAutoload.php');
 	
 	$mail = new PHPMailer;
 

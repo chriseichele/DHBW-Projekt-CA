@@ -3,7 +3,7 @@
 function send_activision_mail($email, $code) {
 	$activision_link = 'wwi12-05.dhbw-heidenheim.de/frontend/activate.php?email='.$email.'&code='.$code;
 
-	require_once('./PHP-Mailer/PHPMailerAutoload.php');
+	require_once('../PHP-Mailer/PHPMailerAutoload.php');
 	
 	$mail = new PHPMailer;
 
@@ -29,7 +29,7 @@ function send_activision_mail($email, $code) {
 
 	if(!$mail->send()) {
 		//throw new Exception('Mailer Error: ' . $mail->ErrorInfo);
-		throw new Exception('Beim senden der Account Aktivierungsmail ist ein unerwarteter Fehler aufgetreten. Bitte kontaktieren Sie uns!');
+		throw new Exception('Beim Senden der Account Aktivierungsmail ist ein unerwarteter Fehler aufgetreten. Bitte kontaktieren Sie uns!');
 		return false;
 	} else {
 		return true;
