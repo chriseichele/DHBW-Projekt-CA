@@ -20,7 +20,7 @@ class UserHelper {
 			try {
 				send_activision_mail($email, $code);
 			} catch(Exception $e) {
-				$_SESSION['message']['error'][] = "Fehler beim Senden der Aktivierungsmail. Bitte kontaktieren sie uns!"
+				$_SESSION['message']['error'][] = $e->getMessage();
 			}
 			//Registrieren war hier in jedem Fall erfolgreich
 			return true;
@@ -47,7 +47,7 @@ class UserHelper {
 					return UserHelper::DoLogin($user->email, $user->firstname, $user->surname);
 				}
 				else {
-					throw new Exception("Account ist nicht aktiviert! Bitte &uuml;berprüfen Sie ihr Email Postfach auf die Aktivierungsmail.")
+					throw new Exception("Account ist nicht aktiviert! Bitte &uuml;berprüfen Sie ihr Email Postfach auf die Aktivierungsmail.");
 				}
 			} 
 			else {
