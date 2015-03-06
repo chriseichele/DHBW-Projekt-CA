@@ -23,7 +23,7 @@ function send_cert_notification_mail($email, $csr_id) {
 
 	$mail->isHTML(true);                                       // Set email format to HTML
 
-	$mail->Subject = 'Projekt CA || Account Verifizieren';
+	$mail->Subject = 'Projekt CA || Zertifikat genehmigt';
 	$mail->Body    = 'Ihr Zertifikat wurde genehmigt. Sie k&ouml;nnen es unter folgendem Link abrufen: <br/><a href="'.$link.'">'.$link.'</a>';
 	$mail->AltBody = 'Ihr Zertifikat wurde genehmigt. Sie können es unter folgendem Link abrufen: '.$link;
 
