@@ -10,8 +10,24 @@ class UserHelper {
 		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "customer");
 	}
 	private static function Register($email, $firstname, $lastname, $pwhash, $role) {
+		$code = hash('sha512', rand(1,10000).$email.date()); //Zufällige Zeichenfolge
+	
 		$db = new DBAccess();
-		return $db->insert_user($email, $firstname, $lastname, $pwhash, $role) == array(); //erfolg liefert ein leeres array
+		$db_success = $db->insert_user($email, $firstname, $lastname, $pwhash, $role, $code) == array(); //erfolg liefert ein leeres array
+		if($db_success) {
+			//Aktivierungsmail schicken
+			require_once('./MailHelper.php');
+			try {
+				send_activision_mail($email, $code);
+			} catch(Exception $e) {
+				$_SESSION['message']['error'][] = $e->getMessage();
+			}
+			//Registrieren war hier in jedem Fall erfolgreich
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public static function Login($email, $pwhash) {
@@ -26,7 +42,13 @@ class UserHelper {
 		} else {
 			//Check PW and do Login
 			if($pwhash == $user->passwordhash) {
-				return UserHelper::DoLogin($user->email, $user->firstname, $user->surname);
+				//Check Account Activiated
+				if($user->activision_code == null) {
+					return UserHelper::DoLogin($user->email, $user->firstname, $user->surname);
+				}
+				else {
+					throw new Exception("Account ist nicht aktiviert! Bitte &uuml;berprüfen Sie ihr Email Postfach auf die Aktivierungsmail.");
+				}
 			} 
 			else {
 				return false;
@@ -173,9 +195,14 @@ else {
 			
 		} else {
 		  //Login
-		  $success = UserHelper::Login($email, $pwhash);
-		  if(!$success) {
-		  	$_SESSION['message']['error'][] = "Der Benutzername oder das Passwort ist falsch.";
+		  try {
+		  	$success = UserHelper::Login($email, $pwhash);
+		  	if(!$success) {
+		  		$_SESSION['message']['error'][] = "Der Benutzername oder das Passwort ist falsch.";
+		  	}
+  		  } catch (Exception $e) {
+  		  	//Exception bei Accountakivierung
+  			$_SESSION['message']['warning'][] = $e->getMessage();
 		  }
 		  $backurl = $_SERVER['PHP_SELF'];
 		  $backurl = (basename($backurl)=='register.php') ? 'index.php#backlink' : $backurl;
