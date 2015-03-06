@@ -107,15 +107,9 @@ class CrtHelper {
 				$out .= "<td>$file->end</td>";
 				$out .= CrtHelper::getStatusColorfulTD($file->status);
 				$out .= "<td style='min-width: 350px;'>";
-				$out .= "<a href=\"viewCSR.php?csr=$file->id\" class='btn btn-primary'>CSR anzeigen</a> &nbsp;";
-				$out .= "<div class='btn-group'>";
-				if($file->status == 'finished') {
-					$out .= "<a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success' title='Zertifikat herunterladen'>CRT</a>";
-					$out .= "<a href=\"CrtDownloader.php?downloadCSR=$file->id\" class='btn btn-default' title='Certificate-Signing-Request herunterladen'>CSR herunterladen</a>";
-				} else {
-					$out .= "<a href=\"CrtDownloader.php?downloadCSR=$file->id\" style='width:200px;' class='btn btn-default' title='Certificate-Signing-Request herunterladen'>CSR herunterladen</a>";
-				}
-				$out .= "</div></td>";
+				$out .= "<a href=\"viewCSR.php?csr=$file->id\" class='btn btn-primary' title='Certificate-Signing-Request anzeigen'>CSR anzeigen</a> &nbsp;";
+				$out .= "<a href=\"CrtDownloader.php?downloadCSR=$file->id\" class='btn btn-default' title='Certificate-Signing-Request herunterladen'>CSR herunterladen</a>";
+				$out .= "</td>";
 				$out .= "</tr>";
 			}
 		}
@@ -134,8 +128,8 @@ class CrtHelper {
 				$out .= "<td>$file->common_name</td>";
 				$out .= "<td>$file->start</td>";
 				$out .= "<td>$file->end</td>";
-				$out .= "<td style='min-width:350px;'>";
-				$out .= "<a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success' title='Zertifikat(CRT) herunterladen'>Zertifikat herunterladen</a>&nbsp;&nbsp;";
+				$out .= "<td style='min-width:290px;'>";
+				$out .= "<a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success' title='Zertifikat(CRT) herunterladen'>Zertifikat herunterladen</a> &nbsp;";
 				$out .= "<a href=\"renewCRT.php?csr=$file->id\" class='btn btn-info' title='Zertifikat verl&auml;ngern'>Zertifikat verl&auml;ngern</a>";
 				$out .= "</td>";
 				$out .= "</tr>";
