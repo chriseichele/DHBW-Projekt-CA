@@ -190,8 +190,8 @@ class DBAccess {
             return FALSE; //print("Sie besitzen nicht die notwendigen Berechtigungen, um eine Benutzerrolle anzulegen.<br />\n");
     }
 
-    function insert_user($email, $firstname, $surname, $passwordhash, $role) {
-        return $this->insert("user", array("email", "firstname", "surname", "passwordhash", "role"), array($email, $firstname, $surname, $passwordhash, $role));
+    function insert_user($email, $firstname, $surname, $passwordhash, $role, $activation_code = NULL) {
+        return $this->insert("user", array("email", "firstname", "surname", "passwordhash", "role", "activation_code"), array($email, $firstname, $surname, $passwordhash, $role, $activation_code));
     }
 
     function insert_request($start, $end, $country, $state, $city, $organisation_name, $common_name, $status, $organisation_unit_name = NULL, $responsible_email = NULL, $challenge_password = NULL, $optional_company_name = NULL, $intermediate = NULL, $verifier = NULL, $path_csr = NULL, $path_cer = NULL) {
@@ -250,8 +250,12 @@ class DBAccess {
         return $this->update("role", array("read_own", "write_own", "execute_own", "read_foreign", "write_foreign", "execute_foreign"), array($read_own, $write_own, $execute_own, $read_foreign, $write_foreign, $execute_foreign), $where_clause);
     }
 
-    function update_user($where_clause, $firstname, $surname, $passwordhash, $role) {
-        return $this->update("user", array("firstname", "surname", "passwordhash", "role"), array($firstname, $surname, $passwordhash, $role), $where_clause);
+    function update_user($where_clause, $firstname, $surname, $passwordhash, $role, $activation_code) {
+        return $this->update("user", array("firstname", "surname", "passwordhash", "role", "activation_code"), array($firstname, $surname, $passwordhash, $role), $where_clause, $activation_code);
+    }
+
+    function update_user_activation_code($where_clause, $activation_code) {
+        return $this->update("user", array("activation_code"), $activation_code, $where_clause);
     }
 
     function update_request_all($where_clause, $start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $verifier, $status, $path_csr, $path_cer) {
