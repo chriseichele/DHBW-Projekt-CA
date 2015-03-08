@@ -1,7 +1,7 @@
 <?php
 
 function send_activision_mail($email, $code) {
-	$activision_link = 'wwi12-05.dhbw-heidenheim.de/frontend/activate.php?email='.$email.'&code='.$code;
+	$activision_link = 'wwi12-05.dhbw-heidenheim.de/frontend/activate.php?email='.urlencode($email).'&code='.urlencode($code);
 
 	require_once('../PHP-Mailer/PHPMailerAutoload.php');
 	

@@ -34,14 +34,14 @@ $u = reset($user);
 if($u->email == $email) {
 	if($u->activation_code == $code) {
 		//User aktivieren
-		$dbresult = $db->update_user_activation_code($email, null);
+		$dbresult = $db->update_user_activation_code($where, null);
 		if($dbresult['affected_rows'] == 1) {
 			$_SESSION['message']['success'][] = "Ihr Account wurde erfolgreich aktiviert. Sie k&ouml;nnen sich jetzt einloggen.";
 			header('Location: index.php');
 			exit();
 		}
 		else {
-			$_SESSION['message']['error'][] = "Aktivierungslink fehlgeschlagen! Bitte kontaktieren sie uns.";
+			$_SESSION['message']['error'][] = "Aktivierung fehlgeschlagen! Bitte kontaktieren sie uns.";
 			header('Location: index.php');
 			exit();
 		}
