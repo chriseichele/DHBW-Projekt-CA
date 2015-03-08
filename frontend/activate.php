@@ -32,9 +32,9 @@ $u = reset($user);
 // Code Prüfen
 
 if($u->email == $email) {
-	if($u->activision_code == $code) {
+	if($u->activation_code == $code) {
 		//User aktivieren
-		$dbresult = $db->update_user_code($email, null);
+		$dbresult = $db->update_user_activation_code($email, null);
 		if($dbresult['affected_rows'] == 1) {
 			$_SESSION['message']['success'][] = "Ihr Account wurde erfolgreich aktiviert. Sie k&ouml;nnen sich jetzt einloggen.";
 			header('Location: index.php');

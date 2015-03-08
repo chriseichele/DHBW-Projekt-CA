@@ -43,7 +43,7 @@ class UserHelper {
 			//Check PW and do Login
 			if($pwhash == $user->passwordhash) {
 				//Check Account Activiated
-				if($user->activision_code == null) {
+				if($user->activation_code == null) {
 					return UserHelper::DoLogin($user->email, $user->firstname, $user->surname);
 				}
 				else {
