@@ -10,7 +10,7 @@ class UserHelper {
 		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "customer");
 	}
 	private static function Register($email, $firstname, $lastname, $pwhash, $role) {
-		$code = hash('sha512', rand(1,10000).$email.date()); //Zufällige Zeichenfolge
+		$code = hash('sha512', rand(1,100000).$email.date("YmdHis").rand(1,100000)); //Zufällige Zeichenfolge
 	
 		$db = new DBAccess();
 		$db_success = $db->insert_user($email, $firstname, $lastname, $pwhash, $role, $code) == array(); //erfolg liefert ein leeres array
@@ -175,7 +175,13 @@ else {
 				$success = UserHelper::RegisterCustomer($email, $firstname, $lastname, $pwhash);
 				//$success = UserHelper::RegisterAdmin($email, $firstname, $lastname, $pwhash); //Befehl nur zu Testzwecken enthalten, wird auskommentiert und Admins später manuell angelegt
 				if($success) {
-		  	  		UserHelper::Login($email, $pwhash);
+					//Login
+					try {
+						UserHelper::Login($email, $pwhash);
+					} catch (Exception $e) {
+						//Exception bei Accountakivierung
+						$_SESSION['message']['warning'][] = $e->getMessage();
+					}
 		  	  		$_SESSION['message']['success'][] = "Registrierung erfolgreich.";
 					$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
 					$backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#backlink' : $backurl;
