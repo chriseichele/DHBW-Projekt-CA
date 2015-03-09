@@ -26,12 +26,11 @@ require_once('./db.php');
 					
 					#dealing with SANs
 					$db_result = $db->get_sans_all_where(array("request_id","=","'".$id."'"));
-					$checkSAN = reset($db_result);
-					if(isset($checkSAN)){
+					$checkSAN = $db_result[0]->name;
+					if($checkSAN != NULL){
 						getSANs($id);
-						#shell_exec("c:\apache24\bin\openssl.exe ca -out ".$pathToCRT." -batch -config c:\apache24\htdocs\dev\arne\openssl.cnf -extensions v3_req -infiles ".$pathToCSR." ");
 						shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf");
-						#unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
+						unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 					}
 					else{
 					#if no SANs where found, sign anyway
