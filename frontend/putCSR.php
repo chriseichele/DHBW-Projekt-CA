@@ -90,6 +90,7 @@ function putCSR($fileObject, $laufzeit){
 		$temp = explode(" ",$SANs[count($SANs)]);
 		$SANs[count($SANs)] = $temp[0];
 		unlink($temp);
+		$SANs = array_values(array_filter($SANs));
 		#print_r($SANs);
 	
 	#writeToDB
@@ -106,6 +107,10 @@ function putCSR($fileObject, $laufzeit){
 	#echo '</pre>';
 	
 	//Wenn hier zuvor keine Exception war: ERFOLG -> Request ID zurück geben
+	
+	for($i = 0; $i < count($SANs); $i++){
+		$db->insert_sans($req_id, $SANs[$i]);
+	}
 	return $req_id;
 }
 
