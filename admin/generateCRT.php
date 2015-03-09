@@ -22,11 +22,21 @@ require_once('./db.php');
 				$update = $db->update_request_status($where, 3);
 				#Prüfung ob die Update-Abfrage erfolgreich war			
 				if(isset($update['affected_rows'])){
-					#TODO: Pfad muss im Shell Skript angepasst werden
-					#TODO: Pfad muss angepasst werden an den Ort des Skriptes auf dem Server angepasst werden.
 					$pathToCRT = trim("c:\apache24\ca\kunden\crt\\".$name).".crt";
-					#shell_exec("c:\apache24\bin\openssl.exe ca -config c:\apache24\htdocs\dev\arne\certificate.cnf -in ".$pathToCSR." -out ".$pathToCRT." -batch");
-					shell_exec("c:\apache24\bin\openssl.exe x509 -req -config c:\apache24\htdocs\dev\arne\intermediate.cnf -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256");
+					
+					#dealing with SANs
+					$db_result = $db->get_sans_all_where(array("request_id","=","'".$id."'"));
+					$checkSAN = reset($db_result);
+					if(isset($checkSAN)){
+						getSANs($id);
+						#shell_exec("c:\apache24\bin\openssl.exe ca -out ".$pathToCRT." -batch -config c:\apache24\htdocs\dev\arne\openssl.cnf -extensions v3_req -infiles ".$pathToCSR." ");
+						shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf");
+						#unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
+					}
+					else{
+					#if no SANs where found, sign anyway
+					shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256");
+					}
 					$check = str_replace("\\", "/", $pathToCRT);
 					if(file_exists($check)) {
 						//Zertifikat Erstellung erfolgreich -> Pfad in DB aktualisieren
@@ -40,7 +50,7 @@ require_once('./db.php');
 						}
 					}
 					else {
-						throw new Exception("Zertifikatserstellung mit OpenSSL fehlgeschlagen!" . "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$pathToCRT);
+						throw new Exception("Zertifikatserstellung mit OpenSSL fehlgeschlagen!" . "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 					}
 				}
 				else {
@@ -51,7 +61,26 @@ require_once('./db.php');
 
 		}
 	
-	#openssl ca -config /home/arne/ssl/certificat.cnf -in /home/arne/ssl/example.com/example.csr -out /home/arne/ssl/example.crt
-	#openssl x509 -req -in c:/apache24/ca/www-server.csr -CA c:/apache24/ca/ica-pub.pem -CAkey c:/apache24/ca/ica-key.pem -CAcreateserial -out c:/apache24/ca/kunden/server-pub-test.crt -days 1095 -sha512
+	function getSANs($id){	
+		file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "
+[ v3_req ]
+# Extensions to add to a certificate request
 	
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+[ alt_names ]".PHP_EOL
+	
+		);
+	
+		$db = new DBAccess();
+		$where = array("request_id","=","'".$id."'");
+		$db_result = $db->get_sans_all_where($where);
+		for($i = 0; $i < count($db_result); $i++){
+			file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "DNS.".$i." = ".$db_result[$i]->name.PHP_EOL, FILE_APPEND);
+		}
+		
+
+	}	
+
 ?>
