@@ -36,7 +36,7 @@ function send_cert_notification_mail($email, $csr_id) {
 		return false;
 	} else {
 		$log = new MailLogger();
-		$log->addNotice('Mail erfolgreich versendet an: <'.$email.'>');
+		$log->addNotice('Mail erfolgreich versendet an: &lt;'.$email.'&gt;');
 		return true;
 	}
 }

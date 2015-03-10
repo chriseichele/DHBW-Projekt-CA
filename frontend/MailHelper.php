@@ -36,7 +36,7 @@ function send_activision_mail($email, $code) {
 		return false;
 	} else {
 		$log = new MailLogger();
-		$log->addNotice('Mail erfolgreich versendet an: <'.$email.'>');
+		$log->addNotice('Mail erfolgreich versendet an: &lt;'.$email.'&gt;');
 		return true;
 	}
 }
@@ -71,7 +71,7 @@ function send_new_cert_mail_to_admins($csr_id) {
 			if(strlen($admin_email_string > 0)) {
 				$admin_email_string .= ", ";
 			}
-			$admin_email_string .= "<".$admin->email.">";
+			$admin_email_string .= "&lt;".$admin->email."&gt;";
 		}
 	}
 	else {
