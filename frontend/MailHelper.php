@@ -3,7 +3,7 @@
 require_once('./LogHelper.php');
 
 function send_activision_mail($email, $code) {
-	$activision_link = 'https://wwi12-05.dhbw-heidenheim.de/frontend/activate.php?email='.urlencode($email).'&code='.urlencode($code);
+	$activision_link = 'https://wwi12-05.dhbw-heidenheim.de/frontend/activate.php?code='.urlencode($code);
 
 	require_once('../PHP-Mailer/PHPMailerAutoload.php');
 	

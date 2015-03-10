@@ -26,7 +26,12 @@ echo '  <li><a href="#files">Filesystem</a><ul>';
 echo '    <li><a href="#files_csr">CSRs</a></li>';
 echo '    <li><a href="#files_crt">CRTs</a></li>';
 echo '  </ul></li>';
+echo '  <li><a href="#files">Logs</a><ul>';
+echo '    <li><a href="#logs_admin_maillog">Admin Mail-Log</a></li>';
+echo '    <li><a href="#logs_frontend_maillog">Frontend Mail-Log</a></li>';
+echo '  </ul></li>';
 echo '</ul></nav>';
+
 
 echo '<h2 id="db">DB-Info</h2>';
 
@@ -71,9 +76,9 @@ echo '<pre>';
 print_r(scandir($pathToCRT));
 echo '</pre>';
 
-echo '<h2 id="files">Logs</h2>';
+echo '<h2 id="logs">Logs</h2>';
 
-echo '<h3 id="files_csr">Admin Maillog</h3>';
+echo '<h3 id="logs_admin_maillog">Admin Mail-Log</h3>';
 echo '<pre>';
 $admin_maillog = "c:\apache24\logs\admin_maillog.log";
 if(file_exists($admin_maillog)) {
@@ -81,7 +86,7 @@ if(file_exists($admin_maillog)) {
 }
 echo '</pre>';
 
-echo '<h3 id="files_csr">Frontend Maillog</h3>';
+echo '<h3 id="logs_frontend_maillog">Frontend Mail-Log</h3>';
 echo '<pre>';
 $frontend_maillog = "c:\apache24\logs\frontend_maillog.log";
 if(file_exists($frontend_maillog)) {
