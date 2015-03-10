@@ -30,13 +30,13 @@ function send_cert_notification_mail($email, $csr_id) {
 	$mail->AltBody = 'Ihr Zertifikat wurde genehmigt. Sie können es unter folgendem Link abrufen: '.$link;
 
 	if(!$mail->send()) {
-		$log = new MailLog();
+		$log = new MailLogger();
 		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
 		throw new Exception('Beim Versenden der Benachrichtigungsmail an den Kunden ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
-		$log = new MailLog();
-		$log->addNotice('Mail erfolgreich versendet an: '.$email);
+		$log = new MailLogger();
+		$log->addNotice('Mail erfolgreich versendet an: <'.$email.'>');
 		return true;
 	}
 }

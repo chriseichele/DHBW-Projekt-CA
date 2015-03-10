@@ -88,7 +88,7 @@ echo '</pre>';
 
 echo '<h3 id="logs_frontend_maillog">Frontend Mail-Log</h3>';
 echo '<pre>';
-$frontend_maillog = "c:\apache24\logs\frontend_maillog.log";
+$frontend_maillog = "c:\apache24\logs\\frontend_maillog.log";//Achtung '\f' ist eine definierte PHP Escape Sewuenz
 if(file_exists($frontend_maillog)) {
 	print_r(file_get_contents($frontend_maillog));
 }

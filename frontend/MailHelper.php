@@ -30,13 +30,13 @@ function send_activision_mail($email, $code) {
 	$mail->AltBody = 'Bitte Kopieren sie folgenden Link in ihre Browserzeile um ihren Account zu aktivieren: $activision_link';
 
 	if(!$mail->send()) {
-		$log = new MailLog();
+		$log = new MailLogger();
 		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
 		throw new Exception('Beim Senden der Account Aktivierungsmail ist ein unerwarteter Fehler aufgetreten. Bitte kontaktieren Sie uns!');
 		return false;
 	} else {
-		$log = new MailLog();
-		$log->addNotice('Mail erfolgreich versendet an: '.$email);
+		$log = new MailLogger();
+		$log->addNotice('Mail erfolgreich versendet an: <'.$email.'>');
 		return true;
 	}
 }
@@ -64,13 +64,18 @@ function send_new_cert_mail_to_admins($csr_id) {
 	require_once('db.php');
 	$db = new DBAccess();
 	$admins = $db->get_user_all_where(array("role","=","'administrator'"));
+	$admin_email_string = '';
 	if(!empty($admins)) {	
 		foreach($admins as $admin) {
 			$mail->addAddress($admin->email);
+			if(strlen($admin_email_string > 0)) {
+				$admin_email_string .= ", ";
+			}
+			$admin_email_string .= "<".$admin->email.">";
 		}
 	}
 	else {
-		$log = new MailLog();
+		$log = new MailLogger();
 		$log->addError('Mailer Error: Kein Admin gefunden - keine Mails an Admins verschickt');
 		throw new Exception('Es wurde kein Administrator gefunden!');
 	}
@@ -82,13 +87,13 @@ function send_new_cert_mail_to_admins($csr_id) {
 	$mail->AltBody = 'Ein Kunde hat eine neue Zertifikatsanfrage gestellt: '.$link;
 
 	if(!$mail->send()) {
-		$log = new MailLog();
+		$log = new MailLogger();
 		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
 		throw new Exception('Beim Versenden der Benachrichtigungsmail an die Administratoren ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
-		$log = new MailLog();
-		$log->addNotice('Mail erfolgreich versendet an alle Admins');
+		$log = new MailLogger();
+		$log->addNotice('Mail erfolgreich versendet an: '.$admin_email_string);
 		return true;
 	}
 }

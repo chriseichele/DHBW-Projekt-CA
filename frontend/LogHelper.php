@@ -1,6 +1,6 @@
 <?php
 
-class MailLog extends Logger {
+class MailLogger extends Logger {
 	
 	public function __construct() {
 		$this->file = $this->dir . "frontend_maillog.log";
