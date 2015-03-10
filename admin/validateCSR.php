@@ -69,7 +69,7 @@ else {
 						//Mail an User schicken und ihn informieren
 						require_once('./MailHelper.php');
 						try {
-							send_cert_notification_mail(UserHelper::GetUserEmail(), $csr_id);
+							send_cert_notification_mail($csr->requester, $csr_id);
 						} catch(Exception $e) {
 							$_SESSION['message']['error'][] = $e->getMessage();
 						}
