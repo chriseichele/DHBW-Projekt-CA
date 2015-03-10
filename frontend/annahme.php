@@ -104,6 +104,7 @@ if(UserHelper::IsLoggedIn()) {
 				send_new_cert_mail_to_admins($csr_id);
 			} catch(Exception $e) {
   				//trotzdem keine fehlermeldung ausgeben, da sie den Kunden nix angehen
+  				//MailHelper sollte schon ins Log geschrieben haben
 			} 
 		} 
 		catch(Exception $e) {

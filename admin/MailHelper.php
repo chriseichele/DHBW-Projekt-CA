@@ -31,12 +31,12 @@ function send_cert_notification_mail($email, $csr_id) {
 
 	if(!$mail->send()) {
 		$log = new MailLog();
-		$log->addLine('Mailer Error: ' . $mail->ErrorInfo);
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
 		throw new Exception('Beim Versenden der Benachrichtigungsmail an den Kunden ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
 		$log = new MailLog();
-		$log->addLine('Mail erfolgreich versendet an: '.$email);
+		$log->addNotice('Mail erfolgreich versendet an: '.$email);
 		return true;
 	}
 }

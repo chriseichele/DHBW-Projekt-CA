@@ -31,12 +31,12 @@ function send_activision_mail($email, $code) {
 
 	if(!$mail->send()) {
 		$log = new MailLog();
-		$log->addLine('Mailer Error: ' . $mail->ErrorInfo);
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
 		throw new Exception('Beim Senden der Account Aktivierungsmail ist ein unerwarteter Fehler aufgetreten. Bitte kontaktieren Sie uns!');
 		return false;
 	} else {
 		$log = new MailLog();
-		$log->addLine('Mail erfolgreich versendet an: '.$email);
+		$log->addNotice('Mail erfolgreich versendet an: '.$email);
 		return true;
 	}
 }
@@ -71,7 +71,7 @@ function send_new_cert_mail_to_admins($csr_id) {
 	}
 	else {
 		$log = new MailLog();
-		$log->addLine('Mailer Error: Kein Admin gefunden - keine Mails an Admins verschickt');
+		$log->addError('Mailer Error: Kein Admin gefunden - keine Mails an Admins verschickt');
 		throw new Exception('Es wurde kein Administrator gefunden!');
 	}
 
@@ -83,12 +83,12 @@ function send_new_cert_mail_to_admins($csr_id) {
 
 	if(!$mail->send()) {
 		$log = new MailLog();
-		$log->addLine('Mailer Error: ' . $mail->ErrorInfo);
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
 		throw new Exception('Beim Versenden der Benachrichtigungsmail an die Administratoren ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
 		$log = new MailLog();
-		$log->addLine('Mail erfolgreich versendet an alle Admins');
+		$log->addNotice('Mail erfolgreich versendet an alle Admins');
 		return true;
 	}
 }
