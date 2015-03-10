@@ -101,7 +101,7 @@ if(UserHelper::IsLoggedIn()) {
 			//Admins über neue Datei benachrichtigen
 			require_once('./MailHelper.php');
 			try {
-			send_new_cert_mail_to_admins($csr_id)
+				send_new_cert_mail_to_admins($csr_id);
 			} catch(Exception $e) {
   				//trotzdem keine fehlermeldung ausgeben, da sie den Kunden nix angehen
 			} 
