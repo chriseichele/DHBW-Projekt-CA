@@ -97,6 +97,14 @@ if(UserHelper::IsLoggedIn()) {
 			
 			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
+			
+			//Admins über neue Datei benachrichtigen
+			require_once('./MailHelper.php');
+			try {
+			send_new_cert_mail_to_admins($csr_id)
+			} catch(Exception $e) {
+  				//trotzdem keine fehlermeldung ausgeben, da sie den Kunden nix angehen
+			} 
 		} 
 		catch(Exception $e) {
   			$_SESSION['message']['error'][] = $e->getMessage();

@@ -10,23 +10,31 @@ class UserHelper {
 		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "customer");
 	}
 	private static function Register($email, $firstname, $lastname, $pwhash, $role) {
-		$code = hash('sha512', rand(1,100000).$email.date("YmdHis").rand(1,100000)); //Zufällige Zeichenfolge
-	
 		$db = new DBAccess();
-		$db_success = $db->insert_user($email, $firstname, $lastname, $pwhash, $role, $code) == array(); //erfolg liefert ein leeres array
-		if($db_success) {
-			//Aktivierungsmail schicken
-			require_once('./MailHelper.php');
-			try {
-				send_activision_mail($email, $code);
-			} catch(Exception $e) {
-				$_SESSION['message']['error'][] = $e->getMessage();
-			}
-			//Registrieren war hier in jedem Fall erfolgreich
-			return true;
+		//Prüfen ob user bereits existiert
+		$db_result = $db->get_user_all_where(array("email","=","'".$email."'"));
+		if(!empty($db_result)) {
+			//Es existiert bereits ein User mit der Mailadresse (ID)
+			throw new Exception("Sie haben sich bereits mit dieser Email Adresse registriert. Bitte loggen Sie sich stattdessen in ihren Account ein.");
 		}
 		else {
-			return false;
+			//User registrieren
+			$code = hash('sha512', rand(1,100000).$email.date("YmdHis").rand(1,100000)); //Zufällige Zeichenfolge
+			$db_success = $db->insert_user($email, $firstname, $lastname, $pwhash, $role, $code) == array(); //erfolg liefert ein leeres array
+			if($db_success) {
+				//Aktivierungsmail schicken
+				require_once('./MailHelper.php');
+				try {
+					send_activision_mail($email, $code);
+				} catch(Exception $e) {
+					$_SESSION['message']['error'][] = $e->getMessage();
+				}
+				//Registrieren war hier in jedem Fall erfolgreich
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 
@@ -172,24 +180,27 @@ else {
 			&& strlen($email)>0 
 			&& strlen($firstname)>0
 			&& strlen($lastname)>0 ) {
-				$success = UserHelper::RegisterCustomer($email, $firstname, $lastname, $pwhash);
-				//$success = UserHelper::RegisterAdmin($email, $firstname, $lastname, $pwhash); //Befehl nur zu Testzwecken enthalten, wird auskommentiert und Admins später manuell angelegt
-				if($success) {
-					//Login
-					try {
-						UserHelper::Login($email, $pwhash);
-					} catch (Exception $e) {
-						//Exception bei Accountakivierung
-						$_SESSION['message']['warning'][] = $e->getMessage();
+				try {
+					$success = UserHelper::RegisterCustomer($email, $firstname, $lastname, $pwhash);
+					if($success) {
+						//Login
+						try {
+							UserHelper::Login($email, $pwhash);
+						} catch (Exception $e) {
+							//Exception bei Accountakivierung
+							$_SESSION['message']['warning'][] = $e->getMessage();
+						}
+						$_SESSION['message']['success'][] = "Registrierung erfolgreich.";
+						$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
+						$backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#backlink' : $backurl;
+						Header('Location: '.$backurl);
+						exit();
+					} 
+					else {
+						$_SESSION['message']['error'][] = "Registrierung fehlgeschlagen!";
 					}
-		  	  		$_SESSION['message']['success'][] = "Registrierung erfolgreich.";
-					$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
-					$backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#backlink' : $backurl;
-					Header('Location: '.$backurl);
-					exit();
-		    	} 
-		    	else {
-		  	  		$_SESSION['message']['error'][] = "Registrierung fehlgeschlagen!";
+		    	} catch Exception($e) {
+		    		$_SESSION['message']['warning'][] = $e->getMessage();
 		    	}
 			}
 			else {

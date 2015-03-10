@@ -71,6 +71,24 @@ echo '<pre>';
 print_r(scandir($pathToCRT));
 echo '</pre>';
 
+echo '<h2 id="files">Logs</h2>';
+
+echo '<h3 id="files_csr">Admin Maillog</h3>';
+echo '<pre>';
+$admin_maillog = "c:\apache24\logs\admin_maillog.log";
+if(file_exists($admin_maillog)) {
+	print_r(file_get_contents($admin_maillog));
+}
+echo '</pre>';
+
+echo '<h3 id="files_csr">Frontend Maillog</h3>';
+echo '<pre>';
+$frontend_maillog = "c:\apache24\logs\frontend_maillog.log";
+if(file_exists($frontend_maillog)) {
+	print_r(file_get_contents($frontend_maillog));
+}
+echo '</pre>';
+
 echo '</div>';
 
 include('./footer.php'); ?>
