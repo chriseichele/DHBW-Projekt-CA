@@ -11,7 +11,7 @@ require_once('./db.php');
 			$db_result = $db->get_request_all_where($where);
 			$csr = reset($db_result);
 			$pathToCSR = $csr->path_csr;
-			$name = date("Y-m-d H:i:s")."_".$csr->common_name;
+			$name = date("Y-m-d-H-i-s")."_".$csr->common_name;
 			$start = $csr->start;
 			$end = $csr->end;
 			$duration = 365 * ($end - $start);
@@ -90,7 +90,7 @@ subjectAltName = @alt_names
 	$db_result = $db->get_request_all_where($where);
 	$csr = reset($db_result);
 	$pathToCSR = $csr->path_csr;
-	$name = date("Y-m-d H:i:s")."_".$csr->common_name;
+	$name = date("Y-m-d-H-i-s")."_".$csr->common_name;
 	$start = $csr->start;
 	$end = $csr->end;
 	$duration = 365 * ($end - $start);
