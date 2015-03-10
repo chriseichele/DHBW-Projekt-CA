@@ -5,7 +5,7 @@ class MailLog {
 	private $dir = "c:\apache24\logs\\";
 	private $file = "c:\apache24\logs\admin_maillog.log";
 	
-	public function add($entry) {
+	public function addLine($entry) {
 		if (!file_exists($dir) && !is_dir($dir)) {
 			//Log Verzeichnis erstellen wenn es noch nicht existiert
     		mkdir($dir);         
