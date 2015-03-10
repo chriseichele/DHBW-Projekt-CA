@@ -68,7 +68,7 @@ function send_new_cert_mail_to_admins($csr_id) {
 	if(!empty($admins)) {	
 		foreach($admins as $admin) {
 			$mail->addAddress($admin->email);
-			if(strlen($admin_email_string > 0)) {
+			if(strlen($admin_email_string) > 0) {
 				$admin_email_string .= ", ";
 			}
 			$admin_email_string .= "&lt;".$admin->email."&gt;";
