@@ -29,6 +29,7 @@ else {
 }
 
 if($zerttype == 'intermediate') {
+	$is_intermediate = true;
 	if($jahre == '3') {
 		$jahre = 3;
 	}
@@ -46,6 +47,7 @@ if($zerttype == 'intermediate') {
 	}
 }
 elseif($zerttype == 'normal') {
+	$is_intermediate = false;
 	if($jahre == '1') {
 		$jahre = 1;
 	}
@@ -63,6 +65,7 @@ elseif($zerttype == 'normal') {
 	}
 }
 else {
+	$is_intermediate = false;
 	$_SESSION['message']['error'][] = 'Ung&uuml;ltiger Zertifikatstyp.';
 	Header('Location: '.$backurl);
 	exit();
@@ -90,7 +93,7 @@ if(UserHelper::IsLoggedIn()) {
 	
 		//Datei abspeichern
 		try {
-			$csr_id = putCSR($file, $jahre);
+			$csr_id = putCSR($file, $jahre, $is_intermediate);
 			
 			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';

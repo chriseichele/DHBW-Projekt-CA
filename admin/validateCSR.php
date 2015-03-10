@@ -62,7 +62,14 @@ else {
 					//Zertifikat generieren
 					$success = false;
 					require_once('./generateCRT.php');
-					$success = createCertificate($csr_id);
+					if($csr->intermediate == '1') {
+						//Intermediate Zertifikat Signieren
+						$success = createIntermediate($csr_id);
+					}
+					else {
+						//Standard Zertifikat Signieren
+						$success = createCertificate($csr_id);
+					}
 					if($success) {
 						$_SESSION['message']['success'][] = "Zertifikat wurde erfolgreich erstellt! <a href='viewCSR.php?csr=".$csr_id."'>Aktualisierte Zertifikatsanfrage anzeigen</a>";
 						
