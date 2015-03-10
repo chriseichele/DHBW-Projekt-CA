@@ -255,7 +255,7 @@ class DBAccess {
     }
 
     function update_user_activation_code($where_clause, $activation_code) {
-        return $this->update("user", array("activation_code"), $activation_code, $where_clause);
+        return $this->update("user", array("activation_code"), array($activation_code), $where_clause);
     }
 
     function update_request_all($where_clause, $start, $end, $country, $state, $city, $organisation_name, $organisation_unit_name, $common_name, $responsible_email, $challenge_password, $optional_company_name, $intermediate, $verifier, $status, $path_csr, $path_cer) {
