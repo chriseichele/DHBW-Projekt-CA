@@ -199,7 +199,7 @@ else {
 					else {
 						$_SESSION['message']['error'][] = "Registrierung fehlgeschlagen!";
 					}
-		    	} catch Exception($e) {
+		    	} catch (Exception $e) {
 		    		$_SESSION['message']['warning'][] = $e->getMessage();
 		    	}
 			}
