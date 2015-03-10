@@ -3,7 +3,7 @@
 class MailLog {
 	
 	private $dir = "c:\apache24\logs\\";
-	private $file = $path . "admin_maillog.log";
+	private $file = "c:\apache24\logs\admin_maillog.log";
 	
 	public function add($entry) {
 		if (!file_exists($dir) && !is_dir($dir)) {
