@@ -29,7 +29,7 @@ require_once('./db.php');
 					$db_result = $db->get_sans_all_where(array("request_id","=","'".$id."'"));
 					$checkSAN = $db_result[0]->name;
 					if($checkSAN != NULL){
-						getSANs($id);
+						getSANs1($id);
 						shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf");
 						unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 					}
@@ -61,7 +61,7 @@ require_once('./db.php');
 
 		}
 	
-	function getSANs($id){	
+	function getSANs1($id){	
 		file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "
 [ v3_req ]
 # Extensions to add to a certificate request
@@ -107,7 +107,7 @@ subjectAltName = @alt_names
 		$db_result = $db->get_sans_all_where(array("request_id","=","'".$id."'"));
 		$checkSAN = $db_result[0]->name;
 		if($checkSAN != NULL){
-		getSANs($id);
+		getSANs2($id);
 		shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf");
 		unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 		}
@@ -143,7 +143,7 @@ subjectAltName = @alt_names
 		}
 		}
 	}
-	function getSANs($id){
+	function getSANs2($id){
 	file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "
 	[ v3_req ]
 	# Extensions to add to a certificate request
