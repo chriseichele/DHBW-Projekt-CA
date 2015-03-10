@@ -6,12 +6,12 @@ class MailLog {
 	private $file = "c:\apache24\logs\admin_maillog.log";
 	
 	public function addLine($entry) {
-		if (!file_exists($dir) && !is_dir($dir)) {
+		if (!file_exists($this->dir) && !is_dir($this->dir)) {
 			//Log Verzeichnis erstellen wenn es noch nicht existiert
-    		mkdir($dir);         
+    		mkdir($this->dir);         
 		}
 		//Logeintrag unten dran setzen, in neue Zeile und mit Timestamp
-		file_put_contents($file, date("Y-m-d H:i:s") . " # " . $entry . PHP_EOL, FILE_APPEND);
+		file_put_contents($this->file, date("Y-m-d H:i:s") . " # " . $entry . PHP_EOL, FILE_APPEND);
 	}
 	
 }

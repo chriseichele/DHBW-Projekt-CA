@@ -24,6 +24,10 @@ $pathToCRT = 'c:\apache24\ca\kunden\crt\\';
 system("rmdir ".escapeshellarg($pathToCSR) . " /s /q");
 system("rmdir ".escapeshellarg($pathToCRT) . " /s /q");
 
+//Löschen der Logs
+unlink("c:\apache24\logs\admin_maillog.log");
+unlink("c:\apache24\logs\frontend_maillog.log");
+
 echo '<h1>Verzeichnisse werden wieder angelegt...</h1>';
 
 echo '<br/>CSR Ordner: ';
