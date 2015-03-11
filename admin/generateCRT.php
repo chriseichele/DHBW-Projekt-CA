@@ -114,9 +114,13 @@ subjectAltName = @alt_names
 		else{
 			#if no SANs where found, sign anyway
 			file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "
+			
 			[ v3_req ]
 			# Extensions to add to a certificate request
 			basicConstraints = CA:TRUE
+			subjectKeyIdentifier=hash
+
+			authorityKeyIdentifier=keyid:always,issuer
 			keyUsage = nonRepudiation, digitalSignature, keyEncipherment");
 			shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf");
 			unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
@@ -148,6 +152,9 @@ subjectAltName = @alt_names
 	[ v3_req ]
 	# Extensions to add to a certificate request
 	basicConstraints = CA:TRUE
+	subjectKeyIdentifier=hash
+
+	authorityKeyIdentifier=keyid:always,issuer
 	keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 	subjectAltName = @alt_names
 	[ alt_names ]".PHP_EOL
