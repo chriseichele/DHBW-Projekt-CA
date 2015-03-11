@@ -31,7 +31,7 @@ function send_activision_mail($email, $code) {
 
 	if(!$mail->send()) {
 		$log = new MailLogger();
-		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Zertifikat genehmigt) an den Kunden &lt;'.$email.'&gt;');
 		throw new Exception('Beim Senden der Account Aktivierungsmail ist ein unerwarteter Fehler aufgetreten. Bitte kontaktieren Sie uns!');
 		return false;
 	} else {
@@ -88,7 +88,7 @@ function send_new_cert_mail_to_admins($csr_id) {
 
 	if(!$mail->send()) {
 		$log = new MailLogger();
-		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Neue Zertifikatsanfrage) an die Adminsitratoren.');
 		throw new Exception('Beim Versenden der Benachrichtigungsmail (Neue Zertifikatsanfrage) an die Administratoren ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
