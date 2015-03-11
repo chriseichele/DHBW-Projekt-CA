@@ -18,12 +18,18 @@ abstract class Logger {
 	
 	public function addError($entry) {
 		if($this->show_error) {
-			$this->addLine($entry, "ERROR");
+			return $this->addLine($entry, "ERROR");
+		}
+		else {
+			return false;
 		}
 	}
 	public function addNotice($entry) {
 		if($this->show_notice) {
-			$this->addLine($entry, "NOTICE");
+			return $this->addLine($entry, "NOTICE");
+		}
+		else {
+			return false;
 		}
 	}
 
@@ -34,6 +40,8 @@ abstract class Logger {
 		}
 		//Logeintrag unten dran setzen, in neue Zeile und mit Timestamp
 		file_put_contents($this->file, date("Y-m-d H:i:s") . " #" . $type . " - " . $entry . PHP_EOL, FILE_APPEND);
+		//Erfolgreich
+		return true;
 	}
 	
 }
