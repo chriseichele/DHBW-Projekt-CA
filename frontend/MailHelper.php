@@ -36,7 +36,7 @@ function send_activision_mail($email, $code) {
 		return false;
 	} else {
 		$log = new MailLogger();
-		$log->addNotice('Mail erfolgreich versendet an: &lt;'.$email.'&gt;');
+		$log->addNotice('Mail (Account Verifizieren) erfolgreich versendet an: &lt;'.$email.'&gt;');
 		return true;
 	}
 }
@@ -76,7 +76,7 @@ function send_new_cert_mail_to_admins($csr_id) {
 	}
 	else {
 		$log = new MailLogger();
-		$log->addError('Mailer Error: Kein Admin gefunden - keine Mails an Admins verschickt');
+		$log->addError('Mailer Error: Kein Admin gefunden - keine Mails (Neue Zertifikatsanfrage) an Admins verschickt');
 		throw new Exception('Es wurde kein Administrator gefunden!');
 	}
 
@@ -89,11 +89,11 @@ function send_new_cert_mail_to_admins($csr_id) {
 	if(!$mail->send()) {
 		$log = new MailLogger();
 		$log->addError('Mailer Error: ' . $mail->ErrorInfo);
-		throw new Exception('Beim Versenden der Benachrichtigungsmail an die Administratoren ist ein unerwarteter Fehler aufgetreten!');
+		throw new Exception('Beim Versenden der Benachrichtigungsmail (Neue Zertifikatsanfrage) an die Administratoren ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
 		$log = new MailLogger();
-		$log->addNotice('Mail erfolgreich versendet an: '.$admin_email_string);
+		$log->addNotice('Mail (Neue Zertifikatsanfrage) erfolgreich versendet an: '.$admin_email_string);
 		return true;
 	}
 }
