@@ -20,19 +20,19 @@ include('./header.php');
       	<h3>Bitte f&uuml;llen sie das Registrierungsformular aus</h3>
         <input type="hidden" name="register" value="true"/>
   		<div class="form-group">
-        	<input type="email" name="email" placeholder="Email" class="form-control">
+        	<input type="email" name="email" placeholder="Email" class="form-control" required="required">
     	</div>
   		<div class="form-group">
-        	<input type="text" name="firstname" placeholder="Vorname" class="form-control">
+        	<input type="text" name="firstname" placeholder="Vorname" class="form-control" required="required">
     	</div>
   		<div class="form-group">
-        	<input type="text" name="lastname" placeholder="Nachname" class="form-control">
+        	<input type="text" name="lastname" placeholder="Nachname" class="form-control" required="required">
     	</div>
   		<div class="form-group">
-    		<input type="password" name="pw" placeholder="Passwort" class="form-control">
+    		<input type="password" name="pw" placeholder="Passwort" class="form-control" required="required">
     	</div>
   		<div class="form-group">
-    		<input type="password" name="pw2" placeholder="Passwort wiederholen" class="form-control">
+    		<input type="password" name="pw2" placeholder="Passwort wiederholen" class="form-control" required="required">
     	</div>
   		<div class="form-group">
         	<input type="submit" class="btn btn-success" name="register" value="Registrieren"/>

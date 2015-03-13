@@ -52,13 +52,19 @@ include('./header.php');
 			<?php foreach($sans as $key => $value){echo'<tr><th>san '.($key+1).'</th><td>'.$value->name.'</td></tr>';}?>
 		</table>
 	</div>
-    <form method="post" action="validateCSR.php" class="form-inline">
-    	<input type="hidden" name="csr" value="<?php echo $csr_id; ?>">
-    	<div class="form-group col-md-6">
-    		<button type="submit" name="accept" value="true" class="btn btn-success btn-lg btn-block" role="button">Anfrage annehmen</a>
-    	</div>
-    	<div class="form-group col-md-6">
-    		<button type="submit" name="accept" value="false" class="btn btn-danger btn-lg btn-block" role="button">Anfrage ablehnen</a>
+    <form method="post" action="validateCSR.php" class="clearfix" style="border:1px solid #ccc;padding-top:15px;">
+    	<div style="margin:0 15px 0.5em 15px;">
+    		<textarea name="comment" placeholder="Entscheidungsbegr&uuml;ndung" style="width:100%;min-width:100%;max-width:100%;" required="required"></textarea>
+		</div>
+		<style>.form-inline .form-group {margin-bottom:15px;}</style>
+		<div class="form-inline">
+			<input type="hidden" name="csr" value="<?php echo $csr_id; ?>">
+			<div class="form-group col-md-6">
+				<button type="submit" name="accept" value="true" class="btn btn-success btn-lg btn-block" role="button">Anfrage annehmen</a>
+			</div>
+			<div class="form-group col-md-6">
+				<button type="submit" name="accept" value="false" class="btn btn-danger btn-lg btn-block" role="button">Anfrage ablehnen</a>
+			</div>
     	</div>
     </form>
 </div>

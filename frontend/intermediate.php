@@ -20,7 +20,7 @@ include('./header.php');
         <input type="hidden" name="zerttype" value="intermediate" />
         <div class="form-group">
     		<label for="laufzeit">W&auml;hlen Sie die gew&uuml;nschte Laufzeit(ab heute) f&uuml;r das Zertifikat aus:</label>
-    		<select id="laufzeit" name="laufzeit" class="form-control">
+    		<select id="laufzeit" name="laufzeit" class="form-control" required="required">
   				<option value="3">3 Jahre Laufzeit</option>
   				<option value="5">5 Jahre Laufzeit</option>
   				<option value="10">10 Jahre Laufzeit</option>
@@ -28,7 +28,7 @@ include('./header.php');
   		</div>  
         <div class="form-group">  
     		<label for="dateihochladen">W&auml;hlen Sie eine CSR-Datei von Ihrem Rechner aus:</label>
-    		<input type="file" name="userfile"id="dateihochladen" size="50" maxlength="100000" />
+    		<input type="file" name="userfile"id="dateihochladen" size="50" maxlength="100000" required="required" />
   		</div>  
   		<br />
         <div class="form-horizontal"> 

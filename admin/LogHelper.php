@@ -8,6 +8,14 @@ class MailLogger extends Logger {
 	
 }
 
+class CrtLogger extends Logger {
+	
+	public function __construct() {
+		$this->file = $this->dir . "admin_crtlog.log";
+	}
+	
+}
+
 abstract class Logger {
 	
 	protected $dir = "c:\apache24\logs\\";

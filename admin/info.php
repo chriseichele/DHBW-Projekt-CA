@@ -27,6 +27,7 @@ echo '    <li><a href="#files_csr">CSRs</a></li>';
 echo '    <li><a href="#files_crt">CRTs</a></li>';
 echo '  </ul></li>';
 echo '  <li><a href="#files">Logs</a><ul>';
+echo '    <li><a href="#logs_admin_crtlog">Admin CRT-Log</a></li>';
 echo '    <li><a href="#logs_admin_maillog">Admin Mail-Log</a></li>';
 echo '    <li><a href="#logs_frontend_maillog">Frontend Mail-Log</a></li>';
 echo '  </ul></li>';
@@ -80,6 +81,14 @@ print_r(scandir($pathToCRT));
 echo '</pre></div>';
 
 echo '<h2 id="logs">Logs</h2>';
+
+echo '<h3 id="logs_admin_crtlog">Admin CRT-Log</h3>';
+echo '<div class="table-responsive"><pre>';
+$admin_crtlog = "c:\apache24\logs\admin_crtlog.log";
+if(file_exists($admin_crtlog)) {
+	print_r(file_get_contents($admin_crtlog));
+}
+echo '</pre></div>';
 
 echo '<h3 id="logs_admin_maillog">Admin Mail-Log</h3>';
 echo '<div class="table-responsive"><pre>';
