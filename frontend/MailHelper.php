@@ -26,8 +26,8 @@ function send_activision_mail($email, $code) {
 	$mail->isHTML(true);                                       // Set email format to HTML
 
 	$mail->Subject = 'Projekt CA || Account Verifizieren';
-	$mail->Body    = 'Bitte klicken sie folgenden Link an, um ihren Account zu aktivieren: <br/><a href="'.$activision_link.'">'.$activision_link.'</a>';
-	$mail->AltBody = 'Bitte Kopieren sie folgenden Link in ihre Browserzeile um ihren Account zu aktivieren: $activision_link';
+	$mail->Body    = '<p>Sehr geehrter Kunde,</p><p>Bitte klicken sie folgenden Link an, um ihren Account zu aktivieren: <br/><a href="'.$activision_link.'">'.$activision_link.'</a></p>';
+	$mail->AltBody = 'Sehr geehrter Kunde, bitte kopieren sie folgenden Link in ihre Browserzeile um ihren Account zu aktivieren: $activision_link';
 
 	if(!$mail->send()) {
 		$log = new MailLogger();
@@ -83,7 +83,7 @@ function send_new_cert_mail_to_admins($csr_id) {
 	$mail->isHTML(true);                                       // Set email format to HTML
 
 	$mail->Subject = 'Projekt CA || Neue Zertifikatsanfrage';
-	$mail->Body    = 'Ein Kunde hat eine neue Zertifikatsanfrage gestellt: <br/><a href="'.$link.'">'.$link.'</a>';
+	$mail->Body    = '<p>Ein Kunde hat eine neue Zertifikatsanfrage gestellt: <br/><a href="'.$link.'">'.$link.'</a></p>';
 	$mail->AltBody = 'Ein Kunde hat eine neue Zertifikatsanfrage gestellt: '.$link;
 
 	if(!$mail->send()) {

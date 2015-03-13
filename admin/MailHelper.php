@@ -26,7 +26,7 @@ function send_cert_notification_mail($email, $csr_id) {
 	$mail->isHTML(true);                                       // Set email format to HTML
 
 	$mail->Subject = 'Projekt CA || Zertifikat genehmigt';
-	$mail->Body    = '<p>Ihr Zertifikat wurde genehmigt.</p><p>Sie k&ouml;nnen es unter folgendem Link abrufen: <br/><a href="'.$link.'">'.$link.'</a></p>';
+	$mail->Body    = '<p>Sehr geehrter Kunde,</p><p>Ihr Zertifikat wurde genehmigt.</p><p>Sie k&ouml;nnen es unter folgendem Link abrufen: <br/><a href="'.$link.'">'.$link.'</a></p>';
 	$mail->AltBody = 'Ihr Zertifikat wurde genehmigt. Sie können es unter folgendem Link abrufen: '.$link;
 
 	if(!$mail->send()) {
@@ -65,17 +65,17 @@ function send_cert_abbortion_mail($email, $csr_id, $reason) {
 	$mail->isHTML(true);                                       // Set email format to HTML
 
 	$mail->Subject = 'Projekt CA || Zertifikat leider abgelehnt';
-	$mail->Body    = '<p>Ihr Zertifikat wurde leider abgelehnt.</p><p><strong>Begr&uuml;ndung:</strong><br/>"'.$reason.'"</p><p>Sie k&ouml;nnen ihre Anfrage unter folgendem Link nochmal anschauen: <br/><a href="'.$link.'">'.$link.'</a></p><p>Bitte senden Sie uns eine neue Anfrage.</p>';
+	$mail->Body    = '<p>Sehr geehrter Kunde,</p><p>Ihr Zertifikat wurde leider abgelehnt.</p><p><strong>Begr&uuml;ndung:</strong><br/>"'.$reason.'"</p><p>Sie k&ouml;nnen ihre Anfrage unter folgendem Link nochmal anschauen: <br/><a href="'.$link.'">'.$link.'</a></p><p>Bitte senden Sie uns eine neue Anfrage.</p>';
 	$mail->AltBody = 'Ihr Zertifikat wurde leider abgelehnt. Begr&uuml;ndung: "'.$reason.'" Sie können ihre Anfrage unter folgendem Link nochmal anschauen: '.$link.'  Bitte senden Sie und eine neue Anfrage.';
 
 	if(!$mail->send()) {
 		$log = new MailLogger();
-		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Zertifikat genehmigt) an den Kunden &lt;'.$email.'&gt;');
-		throw new Exception('Beim Versenden der Benachrichtigungsmail (Zertifikat genehmigt) an den Kunden &lt;'.$email.'&gt; ist ein unerwarteter Fehler aufgetreten!');
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Zertifikat abgelehnt) an den Kunden &lt;'.$email.'&gt;');
+		throw new Exception('Beim Versenden der Benachrichtigungsmail (Zertifikat abgelent) an den Kunden &lt;'.$email.'&gt; ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
 		$log = new MailLogger();
-		$log->addNotice('Mail (Zertifikat genehmigt) erfolgreich versendet an: &lt;'.$email.'&gt;');
+		$log->addNotice('Mail (Zertifikat abgelehnt) erfolgreich versendet an: &lt;'.$email.'&gt;');
 		return true;
 	}
 }
