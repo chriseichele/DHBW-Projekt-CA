@@ -108,6 +108,12 @@ if(UserHelper::IsLoggedIn()) {
 		exit();
 	}
 	else {
+		//SANS mit kopieren
+		$sans = $db->get_sans_all_where(array("request_id","=","'".$csr_id."'"));
+		foreach($sans as $san) {
+			$db->insert_sans($csr_id,$san->name);
+		}
+	
 		$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 		$_SESSION['message']['success'][] = 'Der CSR wurde erfolgreich um die gew&uuml;nschte Laufzeit '.$laufzeit_string.' verl&auml;ngert.';
 		
