@@ -36,7 +36,18 @@ if(isset($_POST['csr'])) {
 }
 
 if(isset($_POST['comment'])) {
-	$comment = htmlentities($_POST['comment']);
+	if(!empty($_POST['comment'])) {
+		$comment = htmlentities($_POST['comment']);
+	}
+	else {
+		//Kommentar zwar übergeben aber leer
+		if(!$accept) {
+			//Ablehnen muss begründet werden
+			$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
+			header('Location: '.$backurl);
+			exit();
+		}
+	}
 } else {
 	$comment = "";
 	if(!$accept) {
