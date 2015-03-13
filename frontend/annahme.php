@@ -2,6 +2,7 @@
 SESSION_START();
 require_once('./UserHelper.php');
 require_once('./putCSR.php');
+require_once('./LogHelper.php');
 
 doUserRightsCheck();
 
@@ -83,6 +84,7 @@ else {
 	exit();
 }
 
+$log = new CsrLogger();
 
 
 if(UserHelper::IsLoggedIn()) {
@@ -97,6 +99,7 @@ if(UserHelper::IsLoggedIn()) {
 			
 			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
+			$log->addNotice("CSR ID ".$csr_id." erfolgreich hochgeladen.");
 			
 			//Admins über neue Datei benachrichtigen
 			require_once('./MailHelper.php');
@@ -109,6 +112,7 @@ if(UserHelper::IsLoggedIn()) {
 		} 
 		catch(Exception $e) {
   			$_SESSION['message']['error'][] = $e->getMessage();
+  			$log->addError('Fehler bei CSR Upload: '.$e->getMessage());
 		}
 		
 		Header('Location: '.$backurl);

@@ -1,6 +1,7 @@
 <?php 
 
 require_once('./UserHelper.php');
+require_once('./LogHelper.php');
 
 //User Eingeloggt?
 doUserRightsCheck();
@@ -51,7 +52,7 @@ else {
 $where = array("request_id","=","'".$csr_id."'");
 $sans = $db->get_sans_all_where($where);
 
-
+$log = LogHelper();
 
 //Löschen vornehmen
 
@@ -61,6 +62,7 @@ $where = array("path_csr","=","'".$csr['path_csr']."'");
 $csr_with_same_path = $db->get_request_all_where($where);
 if(count($csr_with_same_path) <= 1) {
 	unlink($csr['path_csr']);
+	$log->addNotice('CSR-Datei zu CSR ID '.$csr_id.' gel&ouml;scht.');
 }
 else {
   	$_SESSION['message']['warning'][] = "CSR Datei wurde nicht gel&ouml;scht, da sie noch von einem anderen Ihrer CSRs ben&ouml;tigt wird (Durch die Verl&auml;ngern Funktion)!";
@@ -74,12 +76,14 @@ foreach($sans as $san) {
 //CSR Löschen
 $result = $db->delete_request($csr_id);
 if($result != array()) {
+	$log->addError('DB-Eintrag zu CSR ID '.$csr_id.' nicht gel&ouml;scht. Fehler: '.$result[0]);
 	$_SESSION['message']['error'][] = 'Fehler beim L&ouml;schen des CSRs!';
   	header('Location: viewCSR.php?csr='.$csr_id);
   	exit();
 }
 else {
 	//Erfolg
+	$log->addNotice('DB-Eintrag zu CSR ID '.$csr_id.' gel&ouml;scht.');
 	$_SESSION['message']['success'][] = 'Der CSR "'.$csr['common_name'].'" wurde erfolgreich gel&ouml;scht!';
 	header('Location: mycsr.php');
 	exit();

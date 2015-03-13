@@ -28,6 +28,7 @@ echo '    <li><a href="#files_crt">CRTs</a></li>';
 echo '  </ul></li>';
 echo '  <li><a href="#files">Logs</a><ul>';
 echo '    <li><a href="#logs_admin_crtlog">Admin CRT-Log</a></li>';
+echo '    <li><a href="#logs_frontend_csrlog">Frontend CSR-Log</a></li>';
 echo '    <li><a href="#logs_admin_maillog">Admin Mail-Log</a></li>';
 echo '    <li><a href="#logs_frontend_maillog">Frontend Mail-Log</a></li>';
 echo '  </ul></li>';
@@ -87,6 +88,14 @@ echo '<div class="table-responsive"><pre>';
 $admin_crtlog = "c:\apache24\logs\admin_crtlog.log";
 if(file_exists($admin_crtlog)) {
 	print_r(file_get_contents($admin_crtlog));
+}
+echo '</pre></div>';
+
+echo '<h3 id="logs_frontend_csrlog">Frontend CSR-Log</h3>';
+echo '<div class="table-responsive"><pre>';
+$frontend_csrlog = "c:\apache24\logs\\frontend_csrlog.log";//Achtung '\f' ist eine definierte PHP Escape Sewuenz
+if(file_exists($frontend_csrlog)) {
+	print_r(file_get_contents($frontend_csrlog));
 }
 echo '</pre></div>';
 

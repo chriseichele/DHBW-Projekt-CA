@@ -8,6 +8,14 @@ class MailLogger extends Logger {
 	
 }
 
+class CsrLogger extends Logger {
+	
+	public function __construct() {
+		$this->file = $this->dir . "frontend_csrlog.log";
+	}
+	
+}
+
 abstract class Logger {
 	
 	protected $dir = "c:\apache24\logs\\";
