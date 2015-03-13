@@ -35,9 +35,9 @@ if(isset($_POST['csr'])) {
   	exit();
 }
 
-if(isset($_POST['comment'])) {
-	if(!empty($_POST['comment'])) {
-		$comment = htmlentities($_POST['comment']);
+if(isset($_POST['comment_abbort'])) {
+	if(!empty($_POST['comment_abbort'])) {
+		$comment = htmlentities($_POST['comment_abbort']);
 	}
 	else {
 		//Kommentar zwar übergeben aber leer

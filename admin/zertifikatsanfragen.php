@@ -53,8 +53,13 @@ include('./header.php');
 		</table>
 	</div>
     <form method="post" action="validateCSR.php" class="clearfix" style="border:1px solid #ccc;padding-top:15px;">
-    	<div style="margin:0 15px 0.5em 15px;">
-    		<textarea name="comment" placeholder="Entscheidungsbegr&uuml;ndung (geht bei Ablehnung an den Kunden)" style="width:100%;min-width:100%;max-width:100%;padding:5px;"></textarea>
+    	<div  class="form-inline" style="margin-bottom:0.5em;">
+    	<div class="form-group col-md-6">
+    		<textarea name="comment_accept" disabled="disabled" placeholder="Entscheidungsbegr&uuml;ndung für die Annahme" style="width:100%;min-width:100%;max-width:100%;padding:5px;"></textarea>
+    	</div>
+    	<div class="form-group col-md-6">
+    		<textarea name="comment_abbort" placeholder="Entscheidungsbegr&uuml;ndung für die Ablehnung" style="width:100%;min-width:100%;max-width:100%;padding:5px;"></textarea>
+    	</div>
 		</div>
 		<style>.form-inline .form-group {margin-bottom:15px;}</style>
 		<div class="form-inline">
