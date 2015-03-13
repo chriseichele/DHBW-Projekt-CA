@@ -44,7 +44,7 @@ if(isset($_POST['comment'])) {
 		if(!$accept) {
 			//Ablehnen muss begründet werden
 			$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
-			$backurl = isset($csr_id) ? "zertifikatsanfragen.php?csr="$csr_id : $backurl;
+			$backurl = isset($csr_id) ? ("zertifikatsanfragen.php?csr=".$csr_id) : $backurl;
 			header('Location: '.$backurl);
 			exit();
 		}
@@ -54,7 +54,7 @@ if(isset($_POST['comment'])) {
 	if(!$accept) {
 		//Ablehnen muss begründet werden
   		$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
-		$backurl = isset($csr_id) ? "zertifikatsanfragen.php?csr="$csr_id : $backurl;
+		$backurl = isset($csr_id) ? ("zertifikatsanfragen.php?csr=".$csr_id) : $backurl;
   		header('Location: '.$backurl);
   		exit();
   	}
