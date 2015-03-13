@@ -111,7 +111,7 @@ if(UserHelper::IsLoggedIn()) {
 		//SANS mit kopieren
 		$sans = $db->get_sans_all_where(array("request_id","=","'".$csr_id."'"));
 		foreach($sans as $san) {
-			$db->insert_sans($csr_id,$san->name);
+			$db->insert_sans($req_id, $san->name);
 		}
 	
 		$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
@@ -120,7 +120,7 @@ if(UserHelper::IsLoggedIn()) {
 		//Admins über neue Datei benachrichtigen
 		require_once('./MailHelper.php');
 		try {
-			send_new_cert_mail_to_admins($csr_id);
+			send_new_cert_mail_to_admins($req_id);
 		} catch(Exception $e) {
   			//trotzdem keine fehlermeldung ausgeben, da sie den Kunden nix angehen
   			//MailHelper sollte schon ins Log geschrieben haben
