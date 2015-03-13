@@ -142,13 +142,13 @@ else {
 			}
 			else {
   				$_SESSION['message']['error'][] = "ACHTUNG: Der Status wurde f&uuml;r zu viele Einträge zur&uuml;ck auf \"created\" gesetzt!";
-  				$log->addError("Der Status wurde f&uuml;r zu viele Einträge zur&uuml;ck auf \"created\" gesetzt! Selektor CSR ID "$csr_id);
+  				$log->addError("Der Status wurde f&uuml;r zu viele Einträge zur&uuml;ck auf \"created\" gesetzt! Selektor CSR ID ".$csr_id);
 			}
 		}
 		else {
 			//Sollte nicht eintreten
   			$_SESSION['message']['error'][] = "ACHTUNG: Es wurde der Verifier &fuuml;r mehr Eintr&auml;ge als beabsichtigt aktualisiert!<br/>Der Status ist bereits aktualisiert! CSR ID \"".$csr_id."\".";
-  			$log->addError("Es wurde der Verifier &fuuml;r mehr Eintr&auml;ge als beabsichtigt aktualisiert! Selektor CSR ID "$csr_id);
+  			$log->addError("Es wurde der Verifier &fuuml;r mehr Eintr&auml;ge als beabsichtigt aktualisiert! Selektor CSR ID ".$csr_id);
 		}
 	}
 	elseif($result['affected_rows'] < 1) {
@@ -157,7 +157,7 @@ else {
 	else {
 		//Sollte nicht eintreten
   		$_SESSION['message']['error'][] = "ACHTUNG: Es wurde der Status f&uuml;r mehr Eintr&auml;ge als beabsichtigt aktualisiert! CSR ID \"".$csr_id."\".";
-  		$log->addError("Es wurde der Status f&uuml;r mehr Eintr&auml;ge als beabsichtigt aktualisiert! Selektor CSR ID "$csr_id);
+  		$log->addError("Es wurde der Status f&uuml;r mehr Eintr&auml;ge als beabsichtigt aktualisiert! Selektor CSR ID ".$csr_id);
 	}
   	header('Location: openCSRlist.php');
   	exit();
