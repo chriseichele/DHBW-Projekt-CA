@@ -26,7 +26,7 @@ echo '  <li><a href="#files">Filesystem</a><ul>';
 echo '    <li><a href="#files_csr">CSRs</a></li>';
 echo '    <li><a href="#files_crt">CRTs</a></li>';
 echo '  </ul></li>';
-echo '  <li><a href="#files">Logs</a><ul>';
+echo '  <li><a href="#logs">Logs</a><ul>';
 echo '    <li><a href="#logs_admin_crtlog">Admin CRT-Log</a></li>';
 echo '    <li><a href="#logs_frontend_csrlog">Frontend CSR-Log</a></li>';
 echo '    <li><a href="#logs_admin_maillog">Admin Mail-Log</a></li>';

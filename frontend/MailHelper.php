@@ -88,12 +88,12 @@ function send_new_cert_mail_to_admins($csr_id) {
 
 	if(!$mail->send()) {
 		$log = new MailLogger();
-		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Neue Zertifikatsanfrage) an die Adminsitratoren.');
-		throw new Exception('Beim Versenden der Benachrichtigungsmail (Neue Zertifikatsanfrage) an die Administratoren ist ein unerwarteter Fehler aufgetreten!');
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Neue Zertifikatsanfrage ID '.$csr_id.') an die Adminsitratoren.');
+		throw new Exception('Beim Versenden der Benachrichtigungsmail (Neue Zertifikatsanfrage ID '.$csr_id.') an die Administratoren ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
 		$log = new MailLogger();
-		$log->addNotice('Mail (Neue Zertifikatsanfrage) erfolgreich versendet an: '.$admin_email_string);
+		$log->addNotice('Mail (Neue Zertifikatsanfrage ID '.$csr_id.') erfolgreich versendet an: '.$admin_email_string);
 		return true;
 	}
 }

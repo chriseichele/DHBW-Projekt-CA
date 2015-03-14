@@ -31,12 +31,12 @@ function send_cert_notification_mail($email, $csr_id) {
 
 	if(!$mail->send()) {
 		$log = new MailLogger();
-		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Zertifikat genehmigt) an den Kunden &lt;'.$email.'&gt;');
-		throw new Exception('Beim Versenden der Benachrichtigungsmail (Zertifikat genehmigt) an den Kunden &lt;'.$email.'&gt; ist ein unerwarteter Fehler aufgetreten!');
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Zertifikat ID '.$csr_id.' genehmigt) an den Kunden &lt;'.$email.'&gt;');
+		throw new Exception('Beim Versenden der Benachrichtigungsmail (Zertifikat ID '.$csr_id.' genehmigt) an den Kunden &lt;'.$email.'&gt; ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
 		$log = new MailLogger();
-		$log->addNotice('Mail (Zertifikat genehmigt) erfolgreich versendet an: &lt;'.$email.'&gt;');
+		$log->addNotice('Mail (Zertifikat ID '.$csr_id.' genehmigt) erfolgreich versendet an: &lt;'.$email.'&gt;');
 		return true;
 	}
 }
@@ -70,12 +70,12 @@ function send_cert_abbortion_mail($email, $csr_id, $reason) {
 
 	if(!$mail->send()) {
 		$log = new MailLogger();
-		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Zertifikat abgelehnt) an den Kunden &lt;'.$email.'&gt;');
-		throw new Exception('Beim Versenden der Benachrichtigungsmail (Zertifikat abgelent) an den Kunden &lt;'.$email.'&gt; ist ein unerwarteter Fehler aufgetreten!');
+		$log->addError('Mailer Error: ' . $mail->ErrorInfo . ' bei Benachrichtigungsmail (Zertifikat ID '.$csr_id.' abgelehnt) an den Kunden &lt;'.$email.'&gt;');
+		throw new Exception('Beim Versenden der Benachrichtigungsmail (Zertifikat ID '.$csr_id.' abgelent) an den Kunden &lt;'.$email.'&gt; ist ein unerwarteter Fehler aufgetreten!');
 		return false;
 	} else {
 		$log = new MailLogger();
-		$log->addNotice('Mail (Zertifikat abgelehnt) erfolgreich versendet an: &lt;'.$email.'&gt;');
+		$log->addNotice('Mail (Zertifikat ID '.$csr_id.' abgelehnt) erfolgreich versendet an: &lt;'.$email.'&gt;');
 		return true;
 	}
 }
