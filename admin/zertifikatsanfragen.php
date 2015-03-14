@@ -52,25 +52,17 @@ include('./header.php');
 			<?php foreach($sans as $key => $value){echo'<tr><th>san '.($key+1).'</th><td>'.$value->name.'</td></tr>';}?>
 		</table>
 	</div>
-    <form method="post" action="validateCSR.php" class="clearfix" style="border:1px solid #ccc;padding-top:15px;">
-    	<div  class="form-inline" style="margin-bottom:0.5em;">
-    	<div class="form-group col-md-6">
-    		<textarea name="comment_accept" disabled="disabled" placeholder="Entscheidungsbegr&uuml;ndung für die Annahme" style="width:100%;min-width:100%;max-width:100%;padding:5px;"></textarea>
-    	</div>
-    	<div class="form-group col-md-6">
-    		<textarea name="comment_abbort" placeholder="Entscheidungsbegr&uuml;ndung für die Ablehnung" style="width:100%;min-width:100%;max-width:100%;padding:5px;"></textarea>
-    	</div>
-		</div>
-		<style>.form-inline .form-group {margin-bottom:15px;}</style>
-		<div class="form-inline">
+	<div class="clearfix" style="border:1px solid #ccc;padding-bottom:15px;">
+		<form method="post" action="validateCSR.php" class="col-md-6">
 			<input type="hidden" name="csr" value="<?php echo $csr_id; ?>">
-			<div class="form-group col-md-6">
-				<button type="submit" name="accept" value="true" class="btn btn-success btn-lg btn-block" role="button">Anfrage annehmen</a>
-			</div>
-			<div class="form-group col-md-6">
-				<button type="submit" name="accept" value="false" class="btn btn-danger btn-lg btn-block" role="button">Anfrage ablehnen</a>
-			</div>
-    	</div>
-    </form>
+			<textarea name="comment_accept" disabled="disabled" placeholder="Entscheidungsbegr&uuml;ndung für die Annahme" style="width:100%;min-width:100%;max-width:100%;padding:5px;margin-top:15px;" required="required"></textarea>
+			<button type="submit" name="accept" value="true" class="btn btn-success btn-lg btn-block" role="button">Anfrage annehmen</button>
+		</form>
+		<form method="post" action="validateCSR.php" class="col-md-6">
+			<input type="hidden" name="csr" value="<?php echo $csr_id; ?>">
+			<textarea name="comment_abbort" placeholder="Entscheidungsbegr&uuml;ndung für die Ablehnung" style="width:100%;min-width:100%;max-width:100%;padding:5px;margin-top:15px;" required="required"></textarea>
+			<button type="submit" name="accept" value="false" class="btn btn-danger btn-lg btn-block" role="button">Anfrage ablehnen</button>
+		</form>
+    </div>
 </div>
 <?php include('./footer.php'); ?>
