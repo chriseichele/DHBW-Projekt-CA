@@ -1,5 +1,6 @@
 <?php
-require_once('./db.php');	
+require_once('./db.php');
+require_once('./Logger.php');
 #input id: id für das Zertifikat in der DB
 #output .crt Datei:  
 		
@@ -26,16 +27,26 @@ require_once('./db.php');
 					$pathToCRT = trim("c:\apache24\ca\kunden\crt\\".$name).".crt";
 					
 					#dealing with SANs
+					#check if SANs exist in DB
 					$db_result = $db->get_sans_all_where(array("request_id","=","'".$id."'"));
 					$checkSAN = $db_result[0]->name;
 					if($checkSAN != NULL){
-						getSANs1($id);
-						shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf");
+						#create certificate with SANs
+						getSANs($id, 0);
+						$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf";
+						shell_exec($opensslcmd);
+						#write Command and config to log
+						log($opensslcmd);
+						log(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
+						#delete config created in getSANs($id, 0)
 						unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 					}
 					else{
 					#if no SANs where found, sign anyway
-					shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256");
+					#write command and config used to log file
+					$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256";
+					shell_exec($opensslcmd);
+					log($opensslcmd);
 					}
 					$check = str_replace("\\", "/", $pathToCRT);
 					if(file_exists($check)) {
@@ -61,28 +72,6 @@ require_once('./db.php');
 
 		}
 	
-	function getSANs1($id){	
-		file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "
-[ v3_req ]
-# Extensions to add to a certificate request
-	
-basicConstraints = CA:FALSE
-keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-subjectAltName = @alt_names
-[ alt_names ]".PHP_EOL
-	
-		);
-	
-		$db = new DBAccess();
-		$where = array("request_id","=","'".$id."'");
-		$db_result = $db->get_sans_all_where($where);
-		for($i = 0; $i < count($db_result); $i++){
-			file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "DNS.".$i." = ".$db_result[$i]->name.PHP_EOL, FILE_APPEND);
-		}
-		
-
-	}	
-	
 	function createIntermediate($id){
 	#TODO: Abfragen ob der User eingeloggt ist
 	$db = new DBAccess();
@@ -107,12 +96,15 @@ subjectAltName = @alt_names
 		$db_result = $db->get_sans_all_where(array("request_id","=","'".$id."'"));
 		$checkSAN = $db_result[0]->name;
 		if($checkSAN != NULL){
-		getSANs2($id);
-		shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf");
+		getSANs($id, 1);
+		$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf";
+		shell_exec($opensslcmd);
+		log($opensslcmd);
+		log(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
 		unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 		}
 		else{
-			#if no SANs where found, sign anyway
+			#if no SANs where found, sign normally
 			file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "
 			
 			[ v3_req ]
@@ -120,20 +112,27 @@ subjectAltName = @alt_names
 			basicConstraints = CA:TRUE
 			subjectKeyIdentifier=hash
 
-			authorityKeyIdentifier=keyid:always,issuer
+			authorityKeyIdentifier=issuer
 			keyUsage = nonRepudiation, digitalSignature, keyEncipherment");
-			shell_exec("c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf");
+			$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf";
+			shell_exec($opensslcmd);
+			log($opensslcmd);
+			log(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
 			unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 			
 		}
+			#add CA-Intermediate and Root certificate to the intermediate for chain
+			file_put_contents($pathToCRT, file_get_contents("c:\Apache24\ca\ica.crt") , FILE_APPEND);
+			file_put_contents($pathToCRT, file_get_contents("c:\Apache24\ca\ca.crt") , FILE_APPEND);
+			
 			$check = str_replace("\\", "/", $pathToCRT);
 			if(file_exists($check)) {
-			//Zertifikat Erstellung erfolgreich -> Pfad in DB aktualisieren
+			//Zertifikat Erstellung erfolgreich -> Crt-Pfad in DB aktualisieren
 			$update_crt_path = $db->update_request_path_cer($where, $pathToCRT);
-			if(isset($update_crt_path['affected_rows'])){
-			//Alles OK
-			return true;
-			}
+				if(isset($update_crt_path['affected_rows'])){
+				//Alles OK
+				return true;
+				}
 			else {
 				throw new Exception("Aktualisierung des Pfads in der Datenbank fehlgeschlagen!");
 			}
@@ -147,24 +146,46 @@ subjectAltName = @alt_names
 		}
 		}
 	}
-	function getSANs2($id){
-	file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "
-	[ v3_req ]
-	# Extensions to add to a certificate request
-	basicConstraints = CA:TRUE
-	subjectKeyIdentifier=hash
+	
+	function getSANs($id, $isIntermediate){
+		#create a temporary config for certificate signing. 
+		#Use different constraints for non-intermediate and intermediate certificates
+		if($isIntermediate == 0){
+			$configContent = "
+		[ v3_req ]
+		# Extensions to add to a certificate request
+			
+		basicConstraints = CA:FALSE
+		keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+		subjectAltName = @alt_names
+		[ alt_names ]".PHP_EOL;
+			
+		}
+		else{
+			$configContent = "
+			[ v3_req ]
+			# Extensions to add to a certificate request
+			basicConstraints = CA:TRUE
+			subjectKeyIdentifier=hash
+		
+			authorityKeyIdentifier=issuer
+			keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+			subjectAltName = @alt_names
+			[ alt_names ]".PHP_EOL;	
+			
+		}
+		file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", $configContent);
+		#lookup SANs in DB and attach them to the config file
+		$db = new DBAccess();
+		$where = array("request_id","=","'".$id."'");
+		$db_result = $db->get_sans_all_where($where);
+		for($i = 0; $i < count($db_result); $i++){
+			file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "DNS.".$i." = ".$db_result[$i]->name.PHP_EOL, FILE_APPEND);
+		}
+		
 
-	authorityKeyIdentifier=keyid:always,issuer
-	keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-	subjectAltName = @alt_names
-	[ alt_names ]".PHP_EOL
-	);
-	$db = new DBAccess();
-	$where = array("request_id","=","'".$id."'");
-	$db_result = $db->get_sans_all_where($where);
-	for($i = 0; $i < count($db_result); $i++){
-	file_put_contents("c:\apache24\htdocs\dev\arne\openssl.cnf", "DNS.".$i." = ".$db_result[$i]->name.PHP_EOL, FILE_APPEND);
 	}
+
 } 
 
 ?>
