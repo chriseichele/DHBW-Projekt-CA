@@ -46,7 +46,7 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 
 
 	#printCSR to website
-	$opensslcmd = "c:\apache24\bin\openssl.exe req -noout -text -in ".$uploadfile
+	$opensslcmd = "c:\apache24\bin\openssl.exe req -noout -text -in ".$uploadfile;
 	$var = shell_exec($opensslcmd);
 	logOS($opensslcmd);
 	#echo('<pre>'.$var.'</pre>');
