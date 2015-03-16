@@ -92,7 +92,6 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	
 	#writeToDB
 	$db = new DBAccess();
-	$dbqueue = 
 	$dbresult = $db->insert_requestdate(("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);
 	logOS("Ergebnis : ".$dbresult);
 	
@@ -104,8 +103,14 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	for($i = 0; $i < count($SANs); $i++){
 		$db->insert_sans($req_id, $SANs[$i]);
 	}
-	
+	if($req_id == "0"){
+		throw new Exception("Die Aktualisierung der DB war nicht erfolgreich!");
+		#del csr from file system
+		unlink($uploadfile);
+	}
+	else{
 	return $req_id;
+	}
 }
 
 ?>
