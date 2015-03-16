@@ -15,12 +15,12 @@ include('./header.php');
 	<h3>Rufen Sie das Programm <b>openssl</b> auf, um die Aufforderung zu erzeugen:</h3>
 	<br />
 	
-	<pre>openssl req -nodes -new -newkey rsa:2048 -sha256 -out csr.pem</pre>
+	<pre class="bg-info">openssl req -nodes -new -newkey rsa:2048 -sha256 -out csr.pem</pre>
 	<p>
 		Dies erzeugt einen privaten Schl&uuml;ssel und eine zugeh&ouml;rige Zertifikatsanfrage. 
 		Es erscheint nun folgende Ausgabe auf ihrem Bildschirm:
 	</p>
-	<pre># Generating a 2048 bit RSA private key
+	<pre class="bg-info"># Generating a 2048 bit RSA private key
 # ...............................................++++++
 # ............................++++++
 # writing new private key to 'privkey.pem'
@@ -37,36 +37,37 @@ include('./header.php');
 	<h3>Im Anschluss werden Ihnen nun Fragen zu den Registrierungsinformationen gestellt</h3>
 	<br />
 	
-	<h4>Tragen Sie hier den 2-stellingen L&auml;ndercode (DE = Deutschland) ein:</h4>
-	<pre># Country Name (2 letter code) [AU]: DE</pre>
+	<h4>Tragen Sie hier den 2-stelligen L&auml;ndercode (DE = Deutschland) ein:</h4>
+	
+	<pre class="bg-info"># Country Name (2 letter code) [AU]: DE</pre>
 	<br />
 	
 	<h4>Geben Sie hier Ihr Bundesland an:</h4>
-	<pre># State or Province Name (full name) [Some-State]: Baden-Wuerttemberg</pre>
+	<pre class="bg-info"># State or Province Name (full name) [Some-State]: Baden-Wuerttemberg</pre>
 	<br />
 	
 	<h4>Geben Sie hier Ihre Stadt an:</h4>
-	<pre># Locality Name (eg, city) []: Heidenheim an der Brenz</pre>
+	<pre class="bg-info"># Locality Name (eg, city) []: Heidenheim an der Brenz</pre>
 	<br />
 	
 	<h4>Geben Sie hier Ihren Namen bzw. Firmennamen an:</h4>
-	<pre># Organization Name (eg, company) [Internet Widgits Pty Ltd]: DHBW Heidenheim</pre>
+	<pre class="bg-info"># Organization Name (eg, company) [Internet Widgits Pty Ltd]: DHBW Heidenheim</pre>
 	<br />
 	
-	<h4>Geben Sie hier Ihre Abteilung (falls vorhanden) an:</h4>
+	<h4>Geben Sie optional Ihre Abteilung an:</h4>
 	<pre># Organizational Unit Name (eg, section) []: ---</pre>
 	<br />
 	
 	<h4>Geben Sie hier den genauen Domainnamen an, welcher durch das Zertifikat gesch&uuml;tzt werden soll:</h4>
-	<pre># Common Name (eg, YOUR name) []: example.com</pre>
+	<pre class="bg-info"># Common Name (eg, YOUR name) []: example.com</pre>
 	<p>Wichtig: Zertifikat ist dann auch nur f&uuml;r diese Eingabe g&uuml;ltig!</p>
 	<br />
 
 	<h4>Geben Sie hier die E-Mailadresse des Verantwortlichen ein:</h4>
-	<pre># Email Address []: hostmaster@example.org</pre>
+	<pre class="bg-info"># Email Address []: hostmaster@example.org</pre>
 	<br />
 	
-	<h4>Folgende, weitere Angaben sind optional und k&ouml;nnen auch leer gelassen werden</h4>
+	<h4>Folgende, weitere Angaben sind optional:</h4>
 	<pre># Please enter the following 'extra' attributes
 # to be sent with your certificate request
 # A challenge password []: 
