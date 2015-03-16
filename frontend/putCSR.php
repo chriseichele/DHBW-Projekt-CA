@@ -36,15 +36,6 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 		throw new Exception("Possible file upload attack!");
 	}
 
-	#echo 'Here is some more debugging info:';
-	#print_r($fileObject);
-
-	#print "</pre>";
-
-
-
-
-
 	#printCSR to website
 	$opensslcmd = "c:\apache24\bin\openssl.exe req -noout -text -in ".$uploadfile;
 	$var = shell_exec($opensslcmd);
@@ -61,7 +52,7 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	$temp = explode("/emailAddress=", $domain);
 	$domain = $temp[0];
 	$email = $temp[1];
-	unlink($temp);
+	unset($temp);
 	
 	
 
@@ -86,13 +77,13 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 		unset($SANs[0]);
 		$temp = explode(" ",$SANs[count($SANs)]);
 		$SANs[count($SANs)] = $temp[0];
-		unlink($temp);
+		unset($temp);
 		#Array neu schreiben
-		$SANs = array_values(array_filter($SANs));
+		$SANs = array_values(array_filter($SANs);)
 	
 	#writeToDB
 	$db = new DBAccess();
-	$dbresult = $db->insert_requestdate(("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);
+	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);
 	logOS("Ergebnis : ".$dbresult);
 	
 	//Request ID aus DB Rückgabe holen
