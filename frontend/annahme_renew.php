@@ -2,6 +2,7 @@
 SESSION_START();
 require_once('./UserHelper.php');
 require_once('./db.php');
+require_once('./LogHelper.php');
 
 doUserRightsCheck();
 
@@ -91,7 +92,7 @@ else {
 	exit();
 }
 
-
+$log = new CsrLogger();
 
 if(UserHelper::IsLoggedIn()) {
 
@@ -104,6 +105,7 @@ if(UserHelper::IsLoggedIn()) {
 	if($req_id == null) {
 		//Fehler
 		$_SESSION['message']['error'][] = 'Unerwarteter Fehler bei der Zertifikatsbestellung!';
+		$log->addError("Unerwarteter Fehler beim verlängern von CSR ID ".$csr_id.".");
 		Header('Location: renewCRT.php?csr='.$csr_id);
 		exit();
 	}
@@ -116,6 +118,7 @@ if(UserHelper::IsLoggedIn()) {
 	
 		$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 		$_SESSION['message']['success'][] = 'Der CSR wurde erfolgreich um die gew&uuml;nschte Laufzeit '.$laufzeit_string.' verl&auml;ngert.';
+		$log->addNotice("CSR ID ".$csr_id." erfolgreich als CSR ID ".$req_id." verl&auml;ngert.");
 		
 		//Admins über neue Datei benachrichtigen
 		require_once('./MailHelper.php');
