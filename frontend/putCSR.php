@@ -79,7 +79,7 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 		$SANs[count($SANs)] = $temp[0];
 		unset($temp);
 		#Array neu schreiben
-		$SANs = array_values(array_filter($SANs);)
+		$SANs = array_values(array_filter($SANs));
 	
 	#writeToDB
 	$db = new DBAccess();
