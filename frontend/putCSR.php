@@ -1,5 +1,6 @@
 <?php
 require_once('./db.php');
+require_once('./Logger.php');
 
 #This function saves a given .csr file to the filesystem 
 #and writes its content to a database
@@ -45,7 +46,9 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 
 
 	#printCSR to website
-	$var = shell_exec('c:\apache24\bin\openssl.exe req -noout -text -in '.$uploadfile);
+	$opensslcmd = "c:\apache24\bin\openssl.exe req -noout -text -in ".$uploadfile
+	$var = shell_exec($opensslcmd);
+	logOS($opensslcmd);
 	#echo('<pre>'.$var.'</pre>');
 
 	#save to variables
@@ -59,21 +62,15 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	$domain = $temp[0];
 	$email = $temp[1];
 	unlink($temp);
+	
+	
 
-	#echo("<pre>");
-	#echo('<h3>Country</h3>'.$country);
-	#echo('<h3>State</h3>'.$state);
-	#echo('<h3>Location</h3>'.$location);
-	#echo('<h3>Org</h3>'.$org);
-	#echo('<h3>OrgUnit</h3>'.$orgunit);
-	#echo('<h3>Domain</h3>'.$domain);
-	#echo("</pre>");
 
 	#extracting SANs from the csr file
 	$sanString = strpos($var, "X509v3 Subject Alternative Name");
 
 	if ($sanString === false){
-			#echo("SAN Error");
+			#if no SANs were found, skip this paragraph
 		}
 		else {
 			$SANs = explode("DNS", $var);
@@ -90,27 +87,24 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 		$temp = explode(" ",$SANs[count($SANs)]);
 		$SANs[count($SANs)] = $temp[0];
 		unlink($temp);
+		#Array neu schreiben
 		$SANs = array_values(array_filter($SANs));
-		#print_r($SANs);
 	
 	#writeToDB
 	$db = new DBAccess();
-	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);
+	$dbqueue = date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL;
+	$dbresult = $db->insert_request($dbqueue);
+	logOS("Db-Queue : ".$dbqueue." mit dem Ergebnis : ".$dbresult);
 	
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
-	
-	//TODO SANS zu Request in DB schreiben
-	
-	#echo '<pre><h3>DB Result</h3>';
-	#print_r($dbresult);
-	#echo '</pre>';
 	
 	//Wenn hier zuvor keine Exception war: ERFOLG -> Request ID zurück geben
 	
 	for($i = 0; $i < count($SANs); $i++){
 		$db->insert_sans($req_id, $SANs[$i]);
 	}
+	
 	return $req_id;
 }
 
