@@ -53,6 +53,9 @@ require_once('./Logger.php');
 						//Zertifikat Erstellung erfolgreich -> Pfad in DB aktualisieren
 						$update_crt_path = $db->update_request_path_cer($where, $pathToCRT);
 						if(isset($update_crt_path['affected_rows'])){
+							//ADD certificate chain to the certificate
+							file_put_contents($pathToCRT, file_get_contents("c:\Apache24\ca\ica.crt") , FILE_APPEND);
+							file_put_contents($pathToCRT, file_get_contents("c:\Apache24\ca\ca.crt") , FILE_APPEND);
 							//Alles OK
 							return true;
 						}
