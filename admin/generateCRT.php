@@ -2,11 +2,11 @@
 require_once('./db.php');
 require_once('./Logger.php');
 #input id: id für das Zertifikat in der DB
-#output .crt Datei:  
+#output .crt Datei 
 		
 		function createCertificate($id){
 			#TODO: Abfragen ob der User eingeloggt  ist
-			
+			#get various informations from database used for signing the certificate
 			$db = new DBAccess();
 			$where = array("id","=","'".$id."'");
 			$db_result = $db->get_request_all_where($where);
@@ -21,12 +21,11 @@ require_once('./Logger.php');
 				throw new Exception("Der Pfad zur CSR Datei konnte nicht ermittelt werden!");
 			}
 			else {
+				#update the request status to finished. Then it will be displayed in the frontend
 				$update = $db->update_request_status($where, 3);
 				#Prüfung ob die Update-Abfrage erfolgreich war			
 				if(isset($update['affected_rows'])){
 					$pathToCRT = trim("c:\apache24\ca\kunden\crt\\".$name).".crt";
-					
-					#dealing with SANs
 					#check if SANs exist in DB
 					$db_result = $db->get_sans_all_where(array("request_id","=","'".$id."'"));
 					$checkSAN = $db_result[0]->name;
@@ -34,6 +33,7 @@ require_once('./Logger.php');
 						#create certificate with SANs
 						getSANs($id, 0);
 						$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf";
+						#sign certificate
 						shell_exec($opensslcmd);
 						#write Command and config to log
 						logOS($opensslcmd);
@@ -42,7 +42,7 @@ require_once('./Logger.php');
 						unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 					}
 					else{
-					#if no SANs where found, sign anyway
+					#if no SANs where found, sign normally
 					#write command and config used to log file
 					$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256";
 					shell_exec($opensslcmd);
