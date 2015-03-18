@@ -155,7 +155,7 @@ if(UserHelper::IsLoggedIn()) {
 
 	if(isset($_GET['logout'])) {
 		UserHelper::Logout();
-		Header('Location: '.$_SERVER['PHP_SELF']);
+		Header('Location: index.php');
 		exit();
 	}
 	else {
