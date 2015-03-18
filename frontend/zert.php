@@ -43,7 +43,7 @@ if(isset($_GET['wildcard'])) {
     		</label>
   		</div>
 		<div class="form-group" id="add_sans">
-			<style>#add_sans input, #add_sans button {display: block;min-width:200px}</style>
+			<style>#add_sans input, #add_sans button {display: block;min-width:200px;padding:3px;}</style>
 			<label>Weitere SANs hinzuf&uuml;gen:</label>
 			<input type="text" name="sans[san0]" placeholder="weiterer SAN" />
 			<input type="text" name="sans[san1]" placeholder="weiterer SAN" />
