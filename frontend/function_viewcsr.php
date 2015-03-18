@@ -63,6 +63,8 @@ function displayCSRtable($csr, $sans, $showall = true) {
 			$out .= "<th>".$title."</th>";
 			if($key == "status") {
 				$out .= CrtHelper::getStatusColorfulTD($value);
+			} else {
+				$out .= "<td>".$value."</td>";
 			}
 			$out .= "</tr>";
 		}
