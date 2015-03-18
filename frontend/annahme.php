@@ -30,7 +30,7 @@ else {
 }
 
 if($zerttype == 'intermediate') {
-	$is_intermediate = true;
+	$is_intermediate = 1;
 	if($jahre == '3') {
 		$jahre = 3;
 	}
@@ -48,7 +48,7 @@ if($zerttype == 'intermediate') {
 	}
 }
 elseif($zerttype == 'normal') {
-	$is_intermediate = false;
+	$is_intermediate = 0;
 	if($jahre == '1') {
 		$jahre = 1;
 	}
@@ -66,7 +66,7 @@ elseif($zerttype == 'normal') {
 	}
 }
 else {
-	$is_intermediate = false;
+	$is_intermediate = 0;
 	$_SESSION['message']['error'][] = 'Ung&uuml;ltiger Zertifikatstyp.';
 	Header('Location: '.$backurl);
 	exit();
