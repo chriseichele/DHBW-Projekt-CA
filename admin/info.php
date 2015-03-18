@@ -84,6 +84,7 @@ print_r(scandir($pathToCRT));
 echo '</pre></div>';
 
 echo '<h2 id="logs">Logs</h2>';
+echo '<p>c:\apache24\logs\...</p>';
 
 echo '<h3 id="logs_admin_crtlog">Admin CRT-Log</h3>';
 echo '<div class="table-responsive"><pre>';
