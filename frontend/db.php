@@ -1,6 +1,8 @@
 <?php
 
 require_once('./UserHelper.php');
+require_once('./LogHelper.php');
+$log = new DBLogger();
 
 class DBAccess {
 
@@ -22,6 +24,7 @@ class DBAccess {
     }
 
     private function query($connection_handler, $query) {
+        $log->addLine($query, "QUERY");
         if ($connection_handler == NULL)
             $connection = $this->connect();
         else
