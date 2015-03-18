@@ -54,16 +54,10 @@ include('./header.php');
       </div>
 </div>
 <div class="container">
-	<div class=" table-responsive">
-		<table class='table table-hover table-bordered'>
-			<?php foreach($csr as $key => $value){
-				if($key != 'id' && $key != 'requester' && $key != 'verifier' && $key != 'path_csr' && $key != 'path_cer') { //ID & Requester & Verifier & Pfade nicht mit anzeigen
-					echo'<tr><th>'.$key.'</th><td>'.$value.'</td></tr>';
-				}
-			}?>
-			<?php foreach($sans as $key => $value){echo'<tr><th>san '.($key+1).'</th><td>'.$value->name.'</td></tr>';}?>
-		</table>
-	</div>
+	<?php
+		require_once('./function_viewcsr.php');
+		echo displayCSRtable($csr, $sans);
+	?>
 	<?php
 		if($myrequest) {
 			//Zusätzliche Prüfung, Seite sollte aber eh nicht gezeigt werden, wenn nicht mein Request
