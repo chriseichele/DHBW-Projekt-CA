@@ -17,12 +17,13 @@ include('./header.php');
 </div>
 <div class="container">
 	<form enctype="multipart/form-data" action="annahme.php" method="post">
-		<input type="hidden" name="zerttype" value="normal" />
 		<div class="form-group">
     		<label for="laufzeit">W&auml;hlen Sie die gew&uuml;nschte Laufzeit(ab heute) f&uuml;r das Zertifikat aus:</label>
     		<select id="laufzeit" name="laufzeit" class="form-control" required="required">
   				<option value="1">1 Jahr Laufzeit</option>
+  				<option value="2">2 Jahre Laufzeit</option>
   				<option value="3">3 Jahre Laufzeit</option>
+  				<option value="4">4 Jahre Laufzeit</option>
   				<option value="5">5 Jahre Laufzeit</option>
 			</select>
 		</div> 

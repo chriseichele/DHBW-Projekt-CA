@@ -11,50 +11,21 @@ $backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#
 
 $email = UserHelper::GetUserEmail();
 
-if(isset($_POST['zerttype'])){
-	$zerttype = htmlentities($_POST['zerttype']);
-}
-else {
-	$_SESSION['message']['error'][] = 'Kein Zertifikatstyp gesetzt.';
-	Header('Location: '.$backurl);
-	exit();
-}
-
 if(isset($_POST['laufzeit'])){
 	$jahre = $_POST['laufzeit'];
-}
-else {
-	$_SESSION['message']['error'][] = 'Keine Laufzeit ausgew&auml;hlt.';
-	Header('Location: '.$backurl);
-	exit();
-}
-
-if($zerttype == 'intermediate') {
-	$is_intermediate = 1;//true
-	if($jahre == '3') {
-		$jahre = 3;
-	}
-	elseif($jahre == '5') {
-		$jahre = 5;
-	}
-	elseif($jahre == '10') {
-		$jahre = 10;
-	}
-	else {
-		$jahre = null;
-		$_SESSION['message']['error'][] = 'Ung&uuml;ltige Laufzeit.';
-		Header('Location: '.$backurl);
-		exit();
-	}
-}
-elseif($zerttype == 'normal') {
-	$is_intermediate = 0;//false
+	
 	if($jahre == '1') {
 		$jahre = 1;
+	}
+	elseif($jahre == '2') {
+		$jahre = 2;
 	}
 	elseif($jahre == '3') {
 		$jahre = 3;
 	}
+	elseif($jahre == '4') {
+		$jahre = 4;
+	}
 	elseif($jahre == '5') {
 		$jahre = 5;
 	}
@@ -66,8 +37,7 @@ elseif($zerttype == 'normal') {
 	}
 }
 else {
-	$is_intermediate = false;
-	$_SESSION['message']['error'][] = 'Ung&uuml;ltiger Zertifikatstyp.';
+	$_SESSION['message']['error'][] = 'Keine Laufzeit ausgew&auml;hlt.';
 	Header('Location: '.$backurl);
 	exit();
 }
@@ -100,7 +70,7 @@ if(UserHelper::IsLoggedIn()) {
 		
 		//Datei abspeichern
 		try {
-			$csr_id = putCSR($file, $jahre, $is_intermediate);
+			$csr_id = putCSR($file, $jahre);
 			
 			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
@@ -117,7 +87,7 @@ if(UserHelper::IsLoggedIn()) {
 		} 
 		catch(Exception $e) {
   			$_SESSION['message']['error'][] = $e->getMessage();
-  			$log->addError('Fehler bei CSR-(Typ "'.$zerttype.'")-Upload: '.$e->getMessage());
+  			$log->addError('Fehler bei CSR-Upload: '.$e->getMessage());
 		}
 		
 		Header('Location: '.$backurl);

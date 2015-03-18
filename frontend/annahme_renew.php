@@ -34,60 +34,33 @@ else {
 	exit();
 }
 
-if(isset($_POST['zerttype'])){
-	$zerttype = $_POST['zerttype'];
-}
-else {
-	$_SESSION['message']['error'][] = 'Kein Zertifikatstyp gesetzt.';
-	Header('Location: '.$backurl);
-	exit();
-}
-
 if(isset($_POST['laufzeit'])){
 	$laufzeit = $_POST['laufzeit'];
+	
+	if($jahre == '1') {
+		$jahre = 1;
+	}
+	elseif($jahre == '2') {
+		$jahre = 2;
+	}
+	elseif($jahre == '3') {
+		$jahre = 3;
+	}
+	elseif($jahre == '4') {
+		$jahre = 4;
+	}
+	elseif($jahre == '5') {
+		$jahre = 5;
+	}
+	else {
+		$jahre = null;
+		$_SESSION['message']['error'][] = 'Ung&uuml;ltige Laufzeit.';
+		Header('Location: '.$backurl);
+		exit();
+	}
 }
 else {
 	$_SESSION['message']['error'][] = 'Keine Laufzeit ausgew&auml;hlt.';
-	Header('Location: '.$backurl);
-	exit();
-}
-
-if($zerttype == 'intermediate') {
-	if($laufzeit == '3') {
-		$jahre = 3;
-	}
-	elseif($laufzeit == '5') {
-		$jahre = 5;
-	}
-	elseif($laufzeit == '10') {
-		$jahre = 10;
-	}
-	else {
-		$jahre = null;
-		$_SESSION['message']['error'][] = 'Ung&uuml;ltige Laufzeit.';
-		Header('Location: '.$backurl);
-		exit();
-	}
-}
-elseif($zerttype == 'normal') {
-	if($laufzeit == '1') {
-		$jahre = 1;
-	}
-	elseif($laufzeit == '3') {
-		$jahre = 3;
-	}
-	elseif($laufzeit == '5') {
-		$jahre = 5;
-	}
-	else {
-		$jahre = null;
-		$_SESSION['message']['error'][] = 'Ung&uuml;ltige Laufzeit.';
-		Header('Location: '.$backurl);
-		exit();
-	}
-}
-else {
-	$_SESSION['message']['error'][] = 'Ung&uuml;ltiger Zertifikatstyp.';
 	Header('Location: '.$backurl);
 	exit();
 }

@@ -61,11 +61,7 @@ $messagetext = getMessages();
 		if(UserHelper::IsLoggedIn()) {
         echo'<ul class="nav navbar-nav">
 				<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Zertifikate anfordern <span class="caret"></span></a>
-				  <ul class="dropdown-menu" role="menu">
-					<li><a href="intermediate.php">Intermediate Zertifikat</a></li>
-					<li><a href="normaleszert.php">Standard Zertifikat</a></li>
-				  </ul>
+				  <a href="zert.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Zertifikat</a>
 				</li>
 				<li class="dropdown">
 				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mein Konto <span class="caret"></span></a>
