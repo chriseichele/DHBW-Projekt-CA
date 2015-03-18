@@ -32,7 +32,7 @@ include('./header.php');
         <div class="col-md-4">
           <h2>Unsere Zertifikate</h2>
           <p>Laden Sie unsere Zertifikate herunter, um diese bei Bedarf in ihren Server einzubinden und die Zertifikatskette zu vervollst&auml;ndigen</p>
-          <p><a class="btn btn-default" href="downloadIntermediate.php" role="button">Intermediate Zertifikate »</a></p>
+          <p><a class="btn btn-default" href="downloadProjektCA.php" role="button">Zertifikate herunterladen »</a></p>
         </div>
       </div>
     </div>
