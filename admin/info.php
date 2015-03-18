@@ -29,7 +29,7 @@ echo '  </ul></li>';
 echo '  <li><a href="#logs">Logs</a><ul>';
 echo '    <li><a href="#logs_admin_crtlog">Admin CRT-Log</a></li>';
 echo '    <li><a href="#logs_frontend_csrlog">Frontend CSR-Log</a></li>';
-echo '    <li><a href="#logs_openssl">Openssl Log</a></li>';
+echo '    <li><a href="#logs_openssl">OpenSSL Log</a></li>';
 echo '    <li><a href="#logs_maillog">Mail-Log</a></li>';
 echo '    <li><a href="#logs_dblog">DB-Log</a></li>';
 echo '    <li><a href="#logs_accountlog">User-Account-Log</a></li>';
@@ -101,7 +101,7 @@ if(file_exists($log_path)) {
 }
 echo '</pre></div>';
 
-echo '<h3 id="logs_openssl">OpenSSl Log</h3>';
+echo '<h3 id="logs_openssl">OpenSSL Log</h3>';
 echo '<div class="table-responsive"><pre>';
 $log_path = "c:\apache24\logs\openssl.log";
 if(file_exists($log_path)) {
