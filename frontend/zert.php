@@ -3,7 +3,7 @@ require_once('./UserHelper.php');
 
 doUserRightsCheck();
 
-$pagetitle = "Standard Zertifikat";
+$pagetitle = "Zertifikat bestellen";
 
 include('./header.php');
 
@@ -11,8 +11,8 @@ include('./header.php');
 
 <div class="jumbotron">
     <div class="container">
-        <h1>Standard Zertifikat bestellen</h1>
-        <p>Bitte laden Sie daf&uuml;r Ihre CSR-Datei f&uuml;r das Standard-Zertifikat hoch.</p>
+        <h1><?php echo $pagetitle; ?></h1>
+        <p>Bitte laden Sie daf&uuml;r Ihre CSR-Datei f&uuml;r das Zertifikat hoch.</p>
     </div>
 </div>
 <div class="container">
@@ -36,6 +36,13 @@ include('./header.php');
       			<input type="checkbox" name="wildcard"> Wildcard Zertifikat f&uuml;r meine Domain erstellen
     		</label>
   		</div>
+		<div class="form-group" id="add_sans">
+			<style>#add_sans input, #add_sans button {display: block;min-width:200px}</style>
+			<label>Weitere SANs hinzuf&uuml;gen:</label>
+			<input type="text" name="sans[san0]" placeholder="SAN" />
+			<input type="text" name="sans[san1]" placeholder="SAN" />
+			<button type="button" id="add_san_line" class="btn btn-default btn-sm" onclick="addSANline();false;">Zeile hinzuf&uuml;gen</button>
+		</div> 
 		<br />
         <div class="form-horizontal"> 
         	<div class="form-group container">  
@@ -47,3 +54,9 @@ include('./header.php');
 </div>
 
 <?php include('./footer.php'); ?>
+
+<script>
+function addSANline() {
+	$("#add_sans button").before('<input type="text" name="sans[san' + $("#add_sans input").length + ']" placeholder="SAN" />');
+}
+</script>

@@ -48,6 +48,14 @@ if(isset($_POST['wildcard'])){
 	$wildcard = false;
 }
 
+if(isset($_POST['sans'])) {
+	$additional_sans = array();
+	foreach($_POST['sans'] as $san) {
+		//alle SANs durchgehen, die gefüllt sind
+		$additional_sans[] = $san;
+	}
+}
+
 
 if(isset($_FILES['userfile'])){
 	$file = $_FILES['userfile'];
@@ -76,7 +84,7 @@ if(UserHelper::IsLoggedIn()) {
 		
 		//Datei abspeichern
 		try {
-			$csr_id = putCSR($file, $jahre, $wildcard);
+			$csr_id = putCSR($file, $jahre, $wildcard, $additional_sans);
 			
 			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
