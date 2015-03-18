@@ -111,7 +111,7 @@ else {
 					if($success) {
 						$_SESSION['message']['success'][] = "Zertifikat wurde erfolgreich erstellt! <a href='viewCSR.php?csr=".$csr_id."'>Aktualisierte Zertifikatsanfrage anzeigen</a>";
 						//Erstellung mit Begründung Loggen
-						$log->addNotice("Zertifikat zu CSR ID ".$csr_id." von Admin &lt;".UserHelper::GetUserEmail()."&gt; genehmigt.");
+						$log->addNotice("Zertifikat zu CSR ID ".$csr_id." von Admin &lt;".UserHelper::GetUserEmail()."&gt; mit dem Kommentar \"".$comment."\" genehmigt.");
 						
 						//Mail an User schicken und ihn informieren
 						require_once('./MailHelper.php');
