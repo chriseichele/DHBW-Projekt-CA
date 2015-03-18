@@ -55,7 +55,7 @@ include('./header.php');
 	<div class="clearfix" style="border:1px solid #ccc;padding-bottom:15px;">
 		<form method="post" action="validateCSR.php" class="col-md-6">
 			<input type="hidden" name="csr" value="<?php echo $csr_id; ?>">
-			<textarea name="comment_accept" disabled="disabled" placeholder="Entscheidungsbegr&uuml;ndung für die Annahme" style="width:100%;min-width:100%;max-width:100%;padding:5px;margin-top:15px;" required="required"></textarea>
+			<textarea name="comment_accept" placeholder="Entscheidungsbegr&uuml;ndung für die Annahme" style="width:100%;min-width:100%;max-width:100%;padding:5px;margin-top:15px;" required="required"></textarea>
 			<button type="submit" name="accept" value="true" class="btn btn-success btn-lg btn-block" role="button">Anfrage annehmen</button>
 		</form>
 		<form method="post" action="validateCSR.php" class="col-md-6">

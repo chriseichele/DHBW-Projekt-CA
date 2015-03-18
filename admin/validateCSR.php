@@ -35,29 +35,38 @@ if(isset($_POST['csr'])) {
   	exit();
 }
 
-if(isset($_POST['comment_abbort'])) {
-	if(!empty($_POST['comment_abbort'])) {
+if($accept) {
+	if(isset($_POST['comment_accept'])) {
+		$comment = htmlentities($_POST['comment_accept']);
+	}
+	else {
+		$comment = "";
+	}
+		
+	if(empty($comment)) {
+		//Kommentar zwar übergeben aber leer
+		//Akzeptieren muss begründet werden
+		$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
+		$backurl = isset($csr_id) ? ("zertifikatsanfragen.php?csr=".$csr_id) : $backurl;
+		header('Location: '.$backurl);
+		exit();
+	}
+} else {
+	if(isset($_POST['comment_abbort'])) {
 		$comment = htmlentities($_POST['comment_abbort']);
 	}
 	else {
-		//Kommentar zwar übergeben aber leer
-		if(!$accept) {
-			//Ablehnen muss begründet werden
-			$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
-			$backurl = isset($csr_id) ? ("zertifikatsanfragen.php?csr=".$csr_id) : $backurl;
-			header('Location: '.$backurl);
-			exit();
-		}
+		$comment = "";
 	}
-} else {
-	$comment = "";
-	if(!$accept) {
-		//Ablehnen muss begründet werden
-  		$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
+		
+	if(empty($comment)) {
+		//Kommentar zwar übergeben aber leer
+		//Akzeptieren muss begründet werden
+		$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
 		$backurl = isset($csr_id) ? ("zertifikatsanfragen.php?csr=".$csr_id) : $backurl;
-  		header('Location: '.$backurl);
-  		exit();
-  	}
+		header('Location: '.$backurl);
+		exit();
+	}
 }
 
 
@@ -84,6 +93,7 @@ else {
 	$result = $db->update_request_status($where, $new_status);
 	if($result['affected_rows'] == 1) {
 		$result = $db->update_request_verifier($where, UserHelper::GetUserEmail());
+		$result = $db->update_request_log($where, $comment);
 		if($result['affected_rows'] == 1) {
 			if($accept) {
 				try {
