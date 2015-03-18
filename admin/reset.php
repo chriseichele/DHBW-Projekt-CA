@@ -25,8 +25,13 @@ system("rmdir ".escapeshellarg($pathToCSR) . " /s /q");
 system("rmdir ".escapeshellarg($pathToCRT) . " /s /q");
 
 //Löschen der Logs
-unlink("c:\apache24\logs\admin_maillog.log");
-unlink("c:\apache24\logs\frontend_maillog.log");
+unlink("c:\apache24\logs\\"."admin_maillog.log");
+unlink("c:\apache24\logs\\"."frontend_maillog.log");
+unlink("c:\apache24\logs\\"."admin_crtlog.log");
+unlink("c:\apache24\logs\\"."frontend_csrlog.log");
+unlink("c:\apache24\logs\\"."dblog.log");
+unlink("c:\apache24\logs\\"."maillog.log");
+unlink("c:\apache24\logs\\"."openssllog.log");
 
 echo '<h1>Verzeichnisse werden wieder angelegt...</h1>';
 
