@@ -48,7 +48,7 @@ if($zerttype == 'intermediate') {
 	}
 }
 elseif($zerttype == 'normal') {
-	$is_intermediate = 0;
+	$is_intermediate = 2;
 	if($jahre == '1') {
 		$jahre = 1;
 	}
