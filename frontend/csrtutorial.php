@@ -8,11 +8,14 @@ include('./header.php');
 <div class="jumbotron">
     <div class="container">
         <h1>CSR Tutorial</h1>
-        <p>Schritt f&uuml;r Schritt Anleitung zur Erstellung eines <b>C</b>ertificate-<b>S</b>igning-<b>R</b>equests mit OpenSSL.</p>
-        <br/>
-        <p>Wollten Sie stattdessen ein Zertifikat mit mehreren Hostnamen erstellen?</p>
-        <a class="btn btn-primary btn-lg" href="./csrsanstutorial.php" title="CSR-Tutorial mit SANs ansehen">CSR-Tutorial mit SANs</a>
+        <p>Schritt f&uuml;r Schritt Anleitung zur Erstellung eines <b>C</b>ertificate-<b>S</b>igning-<b>R</b>equests mit Hilfe von OpenSSL.</p>
     </div>
+</div>
+<div class="container alert alert-warning">
+    <p>
+    	<span style="float:right;margin-right:10px;padding-top:5px;">Wollten Sie stattdessen ein Zertifikat mit mehreren Hostnamen erstellen?</span>
+    	<a style="float:right;" class="btn btn-default btn-sm" href="./csrsanstutorial.php" title="CSR-Tutorial mit SANs ansehen">CSR-Tutorial mit SANs ansehen</a>
+    </p>
 </div>
 <div class="container">
 	<h3>Rufen Sie das Programm <b>openssl</b> auf, um die Aufforderung zu erzeugen:</h3>
