@@ -50,7 +50,7 @@ include('./header.php');
 <div class="container">
 	<?php
 		require_once('./function_viewcsr.php');
-		echo displayCSRtable($csr, $sans, false);
+		echo displayCSRtable($request, $sans, false);
 	?>
 </div>
 <div class="container">

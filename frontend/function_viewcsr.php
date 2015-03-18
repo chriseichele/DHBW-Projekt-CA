@@ -1,5 +1,7 @@
 <?php
 
+require_once('./CrtHelper.php');
+
 function displayCSRtable($csr, $sans, $showall = true) {
 	$out = "<div class='table-responsive'>";
 	$out = "<table class='table table-hover table-bordered'>";
@@ -59,7 +61,9 @@ function displayCSRtable($csr, $sans, $showall = true) {
 		if($row_valid) {
 			$out .= "<tr>";
 			$out .= "<th>".$title."</th>";
-			$out .= "<td>".$value."</td>";
+			if($key == "status") {
+				$out .= getStatusColorfulTD($value);
+			}
 			$out .= "</tr>";
 		}
 	}

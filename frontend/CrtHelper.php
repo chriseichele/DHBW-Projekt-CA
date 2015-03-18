@@ -143,13 +143,13 @@ class CrtHelper {
 	private static function getStatusColorfulTD($status) {
 		switch($status) {
 			case 'created':
-				return "<td class='bg-info'>$status</td>";
+				return "<td class='bg-info'>Erstellt</td>";
 			case 'validating':
-				return "<td class='bg-warning'>$status</td>";
+				return "<td class='bg-warning'>In Bearbeitung</td>";
 			case 'finished':
-				return "<td class='bg-success'>$status</td>";
+				return "<td class='bg-success'>Fertig gestellt</td>";
 			case 'aborted':
-				return "<td class='bg-danger'>$status</td>";
+				return "<td class='bg-danger'>Abgebrochen</td>";
 			default:
 				return "<td>$status</td>";
 		}
