@@ -76,6 +76,11 @@ class CrtHelper {
 		
 		// Datei ausgeben.
 		readfile ( $filename );
+		
+		//Datei wieder löschen, wenn spezielle Datei für Dateityp erstellt wurde
+		if($fileformat != NULL) {
+			unlink( $filename );
+		}
 	}
 	
 	private static function getUser() {
