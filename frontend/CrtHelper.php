@@ -140,7 +140,7 @@ class CrtHelper {
 		return $out;
 	}
 	
-	private static function getStatusColorfulTD($status) {
+	public static function getStatusColorfulTD($status) {
 		switch($status) {
 			case 'created':
 				return "<td class='bg-info'>Erstellt</td>";
