@@ -56,7 +56,7 @@ function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 	#writeToDB
 	#create an entry in the request table
 	$db = new DBAccess();
-	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);	
+	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, NULL, NULL,$uploadfile, NULL);	
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
 	
@@ -108,11 +108,12 @@ function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 		if($is_www === false){
 			$db->insert_sans($req_id, "*.".$domain);	
 		}
-	else{
-		$array = explode("www.", $domain);
-		$db->insert_sans($req_id, "*.".$array[1]);
-		unset($array);
-	}
+		else{
+			$array = explode("www.", $domain);
+			$db->insert_sans($req_id, "*.".$array[1]);
+			unset($array);
+		}
+	}	
 	
 	#insert frontend SANs, if present
 	foreach($frontendSANs as $SAN ){
