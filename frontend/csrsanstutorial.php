@@ -62,7 +62,7 @@ IP.2 = 192.168.69.14</pre>
 	<div class="alert alert-success">
 		<h3 style="margin-top:0;">CSR Erstellung abgeschlossen</h3>
 		<p>
-			Nachdem Sie diese Schritte ausgef&uuml;hrt haben, wurden die Dateien <b>san_domain_com.key/b> und <b>san_domain_com.csr</b> erstellt, 
+			Nachdem Sie diese Schritte ausgef&uuml;hrt haben, wurden die Dateien <b>san_domain_com.key</b> und <b>san_domain_com.csr</b> erstellt, 
 			welche den privaten Schl&uuml;ssel und die Zertifikatsanforderung beinhalten.
 		</p>
 	</div>
