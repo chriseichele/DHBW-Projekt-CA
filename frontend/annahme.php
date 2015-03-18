@@ -77,6 +77,7 @@ if(isset($_FILES['userfile'])){
 	$file = $_FILES['userfile'];
 	$dateiname = $_FILES['userfile']['name'];
 	$dateityp = $_FILES['userfile']['type'];
+	$dateigroesse = $_FILES['userfile']['size'];
 }
 else {
 	$_SESSION['message']['error'][] = 'Keine Datei hochgeladen.';
@@ -88,11 +89,15 @@ $log = new CsrLogger();
 
 
 if(UserHelper::IsLoggedIn()) {
+	if ($dateigroesse < 10000){
+
 
 	if($dateityp == "application/x-x509-ca-cert" 
 	|| $dateityp == "application/octet-stream" 
 	|| $dateityp == "application/pkcs10") {
 	
+	
+		
 		//Datei abspeichern
 		try {
 			$csr_id = putCSR($file, $jahre, $is_intermediate);
@@ -118,9 +123,18 @@ if(UserHelper::IsLoggedIn()) {
 		Header('Location: '.$backurl);
 		exit();
 	}
+	
+	
 	else {
 		// Fehlermeldung
 		$_SESSION['message']['error'][] = 'Keine CSR-Datei.';
+		Header('Location: '.$backurl);
+		exit();
+	}
+	}
+	else {
+	// Fehlermeldung
+		$_SESSION['message']['error'][] = 'Die hochgeladene Datei ist zu groß.';
 		Header('Location: '.$backurl);
 		exit();
 	}

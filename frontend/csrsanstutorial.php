@@ -18,6 +18,11 @@ include('./header.php');
     </p>
 </div>
 <div class="container">
+<h3>Aufrufen der OpenSSL-Konfigurationsdatei</h3>
+<p>Bitte rufen Sie die OpenSSL-Konfigurationsdatei (openssl.cnf) auf.
+<br/>Diese befindet sich im Ordner "openssl".
+<br/>
+
 <h3>Anpassung der OpenSSL-Konfigurationsdatei</h3>
 <p>Um mehrere SANs zu erzeugen muss die openssl Konfigurationsdatei angepasst werden.
 <br/>Als Erstes wird der [req]-Bereich bearbeitet. Es muss mitgegeben werden, dass der zu erstellende CSR die "x509 V3 extensions" beinhalten soll.
