@@ -3,8 +3,10 @@
 require_once('./CrtHelper.php');
 
 function displayCSRtable($csr, $sans, $showall = true) {
+
 	$out = "<div class='table-responsive'>";
 	$out = "<table class='table table-hover table-bordered'>";
+	
 	foreach($csr as $key => $value) {
 		$row_valid = true;
 		if (empty($value)) {
@@ -70,13 +72,17 @@ function displayCSRtable($csr, $sans, $showall = true) {
 				$out .= "<td>".$value."</td>";
 			}
 			$out .= "</tr>";
+			if($key == "common_name") {
+				foreach($sans as $key => $value) {
+					$out .= "<tr><th>SAN ".($key+1)."</th><td>".$value->name."</td></tr>";
+				}
+			}
 		}
 	}
-	foreach($sans as $key => $value) {
-		$out .= "<tr><th>SAN ".($key+1)."</th><td>".$value->name."</td></tr>";
-	}
+	
 	$out .= "</table>";
 	$out .= "</div>";
+	
 	return $out;
 }
 
