@@ -13,28 +13,6 @@ $db = new DBAccess();
 echo '<div class="container">';
 
 echo '<h1>'.$pagetitle.'</h1>';
-//Inhaltsverzeichnis
-echo '<nav><ul>';
-echo '  <li><a href="#db">Datenbank</a><ul>';
-echo '    <li><a href="#db_role">Rollen</a></li>';
-echo '    <li><a href="#db_user">User</a></li>';
-echo '    <li><a href="#db_request">Requests</a></li>';
-echo '    <li><a href="#db_sans">SANs</a></li>';
-echo '  </ul></li>';
-echo '  <li><a href="#session">SESSION</a></li>';
-echo '  <li><a href="#files">Filesystem</a><ul>';
-echo '    <li><a href="#files_csr">CSRs</a></li>';
-echo '    <li><a href="#files_crt">CRTs</a></li>';
-echo '  </ul></li>';
-echo '  <li><a href="#logs">Logs</a><ul>';
-echo '    <li><a href="#logs_admin_crtlog">Admin CRT-Log</a></li>';
-echo '    <li><a href="#logs_frontend_csrlog">Frontend CSR-Log</a></li>';
-echo '    <li><a href="#logs_openssl">OpenSSL Log</a></li>';
-echo '    <li><a href="#logs_maillog">Mail-Log</a></li>';
-echo '    <li><a href="#logs_dblog">DB-Log</a></li>';
-echo '    <li><a href="#logs_accountlog">User-Account-Log</a></li>';
-echo '  </ul></li>';
-echo '</ul></nav>';
 
 //CSS
 echo '<style>pre{display:inline-block;min-width:100%;transition:height 0.7s;}</style>';
