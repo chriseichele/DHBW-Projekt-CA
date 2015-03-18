@@ -53,7 +53,7 @@ include('./header.php');
 </div>
 <div class="container">
 	<a href="CrtDownloader.php?downloadCRT=<?php echo $csr_id; ?>&fileformat=Apache2" class="btn btn-success btn-lg btn-block" role="button">Zertifikat f&uuml;r <b>Apache2</b> herunterladen</a>
-	<a href="CrtDownloader.php?downloadCRT=<?php echo $csr_id; ?>&fileformat=nginx" class="btn btn-success btn-lg btn-block" role="button">Zertifikat f&uuml;r <b>ngnix</b> herunterladen</a>
+	<a href="CrtDownloader.php?downloadCRT=<?php echo $csr_id; ?>&fileformat=ngnix" class="btn btn-success btn-lg btn-block" role="button">Zertifikat f&uuml;r <b>ngnix</b> herunterladen</a>
 	<a href="CrtDownloader.php?downloadCRT=<?php echo $csr_id; ?>&fileformat=generic" class="btn btn-success btn-lg btn-block" role="button">Zertifikat im <b>Generischen Format</b> herunterladen</a>
 </div>
 
