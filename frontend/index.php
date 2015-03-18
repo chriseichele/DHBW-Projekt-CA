@@ -10,7 +10,8 @@ include('./header.php');
     <div class="jumbotron">
       <div class="container">
         <h1>Sichere Daten&uuml;bertragung</h1>
-        <p>Verschl&uuml;sseln Sie die Daten&uuml;bertragung ihrer Webseiten, und vieles mehr! Fragen sie noch heute Ihr eigenes Zertifikat mithilfe eines CSRs bei uns an!</p>
+        <p>Wir haben es uns auf die Fahne geschrieben, die Daten&uuml;bertragung im Internet sicherer zu machen.
+        <br/>Fragen sie noch heute Ihr eigenes und <b>kostenloses</b> Zertifikat mithilfe eines CSRs bei uns an!</p>
         <p><a class="btn btn-primary btn-lg" href="csrtutorial.php" role="button">Wie erstelle ich ein CSR?</a></p>
       </div>
     </div>

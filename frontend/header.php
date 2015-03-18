@@ -60,9 +60,7 @@ $messagetext = getMessages();
         <?php 
 		if(UserHelper::IsLoggedIn()) {
         echo'<ul class="nav navbar-nav">
-				<li class="dropdown">
-				  <a href="zert.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Zertifikat</a>
-				</li>
+				<li class="dropdown"><a href="zert.php">Zertifikat bestellen</a></li>
 				<li class="dropdown">
 				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mein Konto <span class="caret"></span></a>
 				  <ul class="dropdown-menu" role="menu">
