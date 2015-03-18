@@ -7,6 +7,12 @@ $pagetitle = "Zertifikat bestellen";
 
 include('./header.php');
 
+if(isset($_GET['wildcard'])) {
+	$wildcard_checked = 'checked="checked"';
+} else {
+	$wildcard_checked;
+}
+
 ?>
 
 <div class="jumbotron">
@@ -33,7 +39,7 @@ include('./header.php');
 		</div> 
 		<div class="checkbox">
     		<label>
-      			<input type="checkbox" name="wildcard"> Wildcard Zertifikat f&uuml;r meine Domain erstellen
+      			<input type="checkbox" name="wildcard" <?php echo $wildcard_checked; ?>> Wildcard Zertifikat f&uuml;r meine Domain erstellen
     		</label>
   		</div>
 		<div class="form-group" id="add_sans">

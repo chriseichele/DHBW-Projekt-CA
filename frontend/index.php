@@ -25,7 +25,7 @@ include('./header.php');
         </div>
         <div class="col-md-4">
           <h2>Wildcard Zertifikate</h2>
-          <p><a class="btn btn-default" href="zert.php" role="button">Wildcard Zertifikat bestellen »</a></p>
+          <p><a class="btn btn-default" href="zert.php?wildcard" role="button">Wildcard Zertifikat bestellen »</a></p>
        </div>
         <div class="col-md-4">
           <h2>Und noch mehr in K&uuml;rze</h2>
