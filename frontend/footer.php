@@ -2,7 +2,8 @@
 
       <footer class="container clearfix" style="color:#666;margin-bottom:1em;">
         <p class="pull-left">&copy; 2015 - Projektgruppe 3 - DHBW WWI12</p>
-        <p class="pull-right"><a href="impressum.php">Impressum</a></p>
+        <p class="pull-right" style="padding-left:15px"><a href="impressum.php">Impressum</a></p>
+        <p class="pull-right" style="padding-left:15px"><a href="downloadProjektCA.php">Unsere Zertifikate</a></p>
       </footer>
 
 
