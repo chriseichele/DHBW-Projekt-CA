@@ -52,7 +52,9 @@ if(isset($_POST['sans'])) {
 	$additional_sans = array();
 	foreach($_POST['sans'] as $san) {
 		//alle SANs durchgehen, die gefüllt sind
-		$additional_sans[] = $san;
+		if(!empty($san)) {
+			$additional_sans[] = $san;
+		}
 	}
 } else {
 	$additional_sans = array();
