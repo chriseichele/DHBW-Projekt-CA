@@ -31,6 +31,11 @@ include('./header.php');
 			<label for="dateihochladen">W&auml;hlen Sie eine CSR-Datei von Ihrem Rechner aus:</label>
 			<input type="file" name="userfile"id="dateihochladen" size="50" maxlength="100000" required="required">
 		</div> 
+		<div class="checkbox">
+    		<label>
+      			<input type="checkbox" name="wildcard"> Wildcard Zertifikat f&uuml;r meine Domain erstellen
+    		</label>
+  		</div>
 		<br />
         <div class="form-horizontal"> 
         	<div class="form-group container">  
