@@ -2,7 +2,6 @@
 require_once('./db.php');
 require_once('./LogHelper.php');
 
-$log = new OpensslLogger();
 
 #db.php database class
 #Logger.php class is used to Log any openssl related actions
@@ -15,6 +14,7 @@ $log = new OpensslLogger();
 
 function putCSR($fileObject, $laufzeit, $intermediate){
 	$uploaddir = 'c:\apache24\ca\kunden\csr\\';
+	$log = new OpensslLogger();
 
 	$uploadfile = $uploaddir . basename($fileObject['name']);
 	//Eindeutigen Namen vergeben
