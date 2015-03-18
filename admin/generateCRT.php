@@ -1,6 +1,9 @@
 <?php
 require_once('./db.php');
-require_once('./Logger.php');
+require_once('./LogHelper.php');
+
+$log = new OpensslLogger();
+
 #input id: id für das Zertifikat in der DB
 #output .crt Datei 
 		
@@ -36,8 +39,8 @@ require_once('./Logger.php');
 						#sign certificate
 						shell_exec($opensslcmd);
 						#write Command and config to log
-						logOS($opensslcmd);
-						logOS(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
+						$log->addNotice($opensslcmd);
+						$log->addNotice(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
 						#delete config created in getSANs($id, 0)
 						unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 					}
@@ -46,7 +49,7 @@ require_once('./Logger.php');
 					#write command and config used to log file
 					$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256";
 					shell_exec($opensslcmd);
-					logOS($opensslcmd);
+					$log->addNotice($opensslcmd);
 					}
 					$check = str_replace("\\", "/", $pathToCRT);
 					if(file_exists($check)) {
@@ -102,8 +105,8 @@ require_once('./Logger.php');
 		getSANs($id, 1);
 		$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf";
 		shell_exec($opensslcmd);
-		logOS($opensslcmd);
-		logOS(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
+		$log->addNotice($opensslcmd);
+		$log->addNotice(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
 		unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 		}
 		else{
@@ -119,8 +122,8 @@ require_once('./Logger.php');
 			keyUsage = nonRepudiation, digitalSignature, keyEncipherment");
 			$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\htdocs\dev\arne\openssl.cnf";
 			shell_exec($opensslcmd);
-			logOS($opensslcmd);
-			logOS(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
+			$log->addNotice($opensslcmd);
+			$log->addNotice(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
 			unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
 			
 		}

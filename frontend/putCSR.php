@@ -1,6 +1,9 @@
 <?php
 require_once('./db.php');
-require_once('./Logger.php');
+require_once('./LogHelper.php');
+
+$log = new OpensslLogger();
+
 #db.php database class
 #Logger.php class is used to Log any openssl related actions
 
@@ -36,7 +39,7 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	#open request and save it to a variable
 	$opensslcmd = "c:\apache24\bin\openssl.exe req -noout -text -in ".$uploadfile;
 	$var = shell_exec($opensslcmd);
-	logOS($opensslcmd);
+	$log->addNotice($opensslcmd);
 
 	#split the string and save to variables
 	$country = substr($var, strpos($var, "C=") + 2, strpos($var, "ST=") - strpos($var, "C=") - 4);
@@ -86,8 +89,8 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
 	
-	logOS("Ergebnis DB-Queue : ".print_r($dbresult));
-	logOS("req_id = ".$req_id);
+	$log->addNotice("Ergebnis DB-Queue : ".print_r($dbresult));
+	$log->addNotice("req_id = ".$req_id);
 
 	if($req_id == "0"){
 		#if db queue failed, return Exception

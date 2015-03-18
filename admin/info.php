@@ -100,9 +100,9 @@ if(file_exists($frontend_csrlog)) {
 }
 echo '</pre></div>';
 
-echo '<h3 id="logs_openssl">Openssl Log</h3>';
+echo '<h3 id="logs_openssl">OpenSSl Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$openssl_log = "c:\apache24\ca\openssl.log";
+$openssl_log = "c:\apache24\logs\openssl.log";
 if(file_exists($openssl_log)) {
 	print_r(file_get_contents($openssl_log));
 }
