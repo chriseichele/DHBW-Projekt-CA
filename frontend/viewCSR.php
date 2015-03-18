@@ -63,7 +63,7 @@ include('./header.php');
 			echo '<div class="form-inline container">';
     		if($csr['status'] == 'finished') {
     			echo '<div class="form-group col-md-6">';
-    			echo '<a href="CrtDownloader.php?downloadCRT='.$csr_id.'" class="btn btn-success btn-lg btn-block" role="button">Zertifikat herunterladen</a>';
+    			echo '<a href="download.php?csr='.$csr_id.'" class="btn btn-success btn-lg btn-block" role="button">Zertifikat herunterladen</a>';
     			echo '</div>';
     		}
     		echo '<div class="form-group col-md-6">';

@@ -21,12 +21,20 @@ if(isset($_GET['downloadCSR'])) {
 } 
 elseif(isset($_GET['downloadCRT'])) {
   $download = $_GET['downloadCRT'];
-  //Datei downloaden
-  try {
-    $loader = New CrtHelper();
-    $loader->downloadCRT($download);
-  } catch (Exception $e) {
-  	$_SESSION['message']['error'][] = $e->getMessage();
+  if(isset($_GET['fileformat'])) {
+  	  $fileformat = $_GET['fileformat'];
+	  //Datei downloaden
+	  try {
+		$loader = New CrtHelper();
+		$loader->downloadCRT($download, $fileformat);
+	  } catch (Exception $e) {
+		$_SESSION['message']['error'][] = $e->getMessage();
+		//zurück leiten
+		Header('Location: '.$backurl);
+	  }
+  }
+  else {
+	$_SESSION['message']['warning'][] = "Sie haben keinen Dateityp zum Download ausgew&auml;hlt!";
 	//zurück leiten
 	Header('Location: '.$backurl);
   }

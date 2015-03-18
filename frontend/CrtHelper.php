@@ -14,11 +14,11 @@ class CrtHelper {
 		$this->download($download_bezeichner, "CSR");
 	}
 	
-	public function downloadCRT($download_bezeichner) {
-		$this->download($download_bezeichner, "CRT");
+	public function downloadCRT($download_bezeichner, $fileformat) {
+		$this->download($download_bezeichner, "CRT", $fileformat);
 	}
 	
-	private function download($download_bezeichner, $filetype) {
+	private function download($download_bezeichner, $filetype, $fileformat = NULL) {
 	
 		//Angemeldeten User prüfen/holen
 		$user = CrtHelper::getUser();
@@ -53,6 +53,19 @@ class CrtHelper {
 		}
 		$filepath_slash = str_replace("\\", "/", $filename); //Backslash für Windows, Slash für PHP im Pfad
 		if (! file_exists($filepath_slash) ) throw new Exception("Unerwarteter Fehler beim herunterladen der Datei \"$download_bezeichner\". Bitte nehmen Sie Kontakt zu uns auf!"); 
+		
+		//Datei im Passenden Dateityp holen
+		if($fileformat != NULL) {
+			//Datei im speziellen Pfad herunterladen
+			try {
+				require_once('./chainBuilder.php');
+				//Pfad für jeweiligen Dateityp holen
+				$filename = deliverFile($download_bezeichner, $fileformat);
+			} catch (Exception $e) {
+				//Fehler im Download -> erst mal den Fehler weiter leiten
+				throw new Exception($e->getMessage());
+			}
+		}
 		
 		//Passenden Datentyp im HTTP Header setzen
 		header ( "Content-Type: application/octet-stream" );
@@ -129,7 +142,7 @@ class CrtHelper {
 				$out .= "<td>$file->start</td>";
 				$out .= "<td>$file->end</td>";
 				$out .= "<td style='min-width:290px;'>";
-				$out .= "<a href=\"CrtDownloader.php?downloadCRT=$file->id\" class='btn btn-success' title='Zertifikat(CRT) herunterladen'>Zertifikat herunterladen</a> &nbsp;";
+				$out .= "<a href=\"download.php?csr=$file->id\" class='btn btn-success' title='Zertifikat(CRT) herunterladen'>Zertifikat herunterladen</a> &nbsp;";
 				$out .= "<a href=\"renewCRT.php?csr=$file->id\" class='btn btn-info' title='Zertifikat verl&auml;ngern'>Zertifikat verl&auml;ngern</a>";
 				$out .= "</td>";
 				$out .= "</tr>";
