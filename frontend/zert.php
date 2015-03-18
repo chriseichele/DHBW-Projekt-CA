@@ -10,7 +10,7 @@ include('./header.php');
 if(isset($_GET['wildcard'])) {
 	$wildcard_checked = 'checked="checked"';
 } else {
-	$wildcard_checked;
+	$wildcard_checked = '';
 }
 
 ?>
