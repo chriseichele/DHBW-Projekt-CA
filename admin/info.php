@@ -29,6 +29,7 @@ echo '  </ul></li>';
 echo '  <li><a href="#logs">Logs</a><ul>';
 echo '    <li><a href="#logs_admin_crtlog">Admin CRT-Log</a></li>';
 echo '    <li><a href="#logs_frontend_csrlog">Frontend CSR-Log</a></li>';
+echo '    <li><a href="#logs_openssl">Openssl Log</a></li>';
 echo '    <li><a href="#logs_admin_maillog">Admin Mail-Log</a></li>';
 echo '    <li><a href="#logs_frontend_maillog">Frontend Mail-Log</a></li>';
 echo '  </ul></li>';
@@ -96,6 +97,14 @@ echo '<div class="table-responsive"><pre>';
 $frontend_csrlog = "c:\apache24\logs\\frontend_csrlog.log";//Achtung '\f' ist eine definierte PHP Escape Sewuenz
 if(file_exists($frontend_csrlog)) {
 	print_r(file_get_contents($frontend_csrlog));
+}
+echo '</pre></div>';
+
+echo '<h3 id="logs_openssl">Openssl Log</h3>';
+echo '<div class="table-responsive"><pre>';
+$openssl_log = "c:\apache24\ca\openssl.log";
+if(file_exists($openssl_log)) {
+	print_r(file_get_contents($openssl_log));
 }
 echo '</pre></div>';
 
