@@ -12,7 +12,7 @@ require_once('./LogHelper.php');
 #Input: $laufzeit Laufzeit des Zertifikates (1,3 oder 5 Jahre)
 #Input: $intermediate: Ist das angeforderte Zertifikat intermediate (0,1) 
 
-function putCSR($fileObject, $laufzeit, $intermediate){
+function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 	$uploaddir = 'c:\apache24\ca\kunden\csr\\';
 	$log = new OpensslLogger();
 
@@ -53,7 +53,7 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	$email = $temp[1];
 	unset($temp);
 	
-		#writeToDB
+	#writeToDB
 	#create an entry in the request table
 	$db = new DBAccess();
 	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);	
@@ -92,7 +92,7 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 			}
 		}
 	
-	#insert 2 default SANs
+	#insert default SANs
 	$is_www = strpos($domain, "www.");
 	if($is_www === false){
 		$db->insert_sans($req_id, "www.".$domain);	
@@ -101,6 +101,22 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 		$array = explode("www.", $domain);
 		$db->insert_sans($req_id, $array[1]);
 		unset($array);
+	}
+	
+	#insert wildcard SAN, if present
+	if($wildcard === true){
+		if($is_www === false){
+			$db->insert_sans($req_id, "*.".$domain);	
+		}
+	else{
+		$array = explode("www.", $domain);
+		$db->insert_sans($req_id, "*.".$array[1]);
+		unset($array);
+	}
+	
+	#insert frontend SANs, if present
+	foreach($frontendSANs as $SAN ){
+		$db->insert_sans($req_id, $SAN);
 	}
 
 	if($req_id == "0"){
