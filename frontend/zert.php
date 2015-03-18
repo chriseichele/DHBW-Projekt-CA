@@ -39,8 +39,8 @@ include('./header.php');
 		<div class="form-group" id="add_sans">
 			<style>#add_sans input, #add_sans button {display: block;min-width:200px}</style>
 			<label>Weitere SANs hinzuf&uuml;gen:</label>
-			<input type="text" name="sans[san0]" placeholder="SAN" />
-			<input type="text" name="sans[san1]" placeholder="SAN" />
+			<input type="text" name="sans[san0]" placeholder="weiterer SAN" />
+			<input type="text" name="sans[san1]" placeholder="weiterer SAN" />
 			<button type="button" id="add_san_line" class="btn btn-default btn-sm" onclick="addSANline();false;">Zeile hinzuf&uuml;gen</button>
 		</div> 
 		<br />
@@ -57,6 +57,6 @@ include('./header.php');
 
 <script>
 function addSANline() {
-	$("#add_sans button").before('<input type="text" name="sans[san' + $("#add_sans input").length + ']" placeholder="SAN" />');
+	$("#add_sans button").before('<input type="text" name="sans[san' + $("#add_sans input").length + ']" placeholder="weiterer SAN" />');
 }
 </script>

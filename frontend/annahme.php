@@ -54,6 +54,8 @@ if(isset($_POST['sans'])) {
 		//alle SANs durchgehen, die gefüllt sind
 		$additional_sans[] = $san;
 	}
+} else {
+	$additional_sans = array();
 }
 
 
