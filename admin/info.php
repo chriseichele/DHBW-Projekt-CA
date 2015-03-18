@@ -30,8 +30,8 @@ echo '  <li><a href="#logs">Logs</a><ul>';
 echo '    <li><a href="#logs_admin_crtlog">Admin CRT-Log</a></li>';
 echo '    <li><a href="#logs_frontend_csrlog">Frontend CSR-Log</a></li>';
 echo '    <li><a href="#logs_openssl">Openssl Log</a></li>';
-echo '    <li><a href="#logs_admin_maillog">Admin Mail-Log</a></li>';
-echo '    <li><a href="#logs_frontend_maillog">Frontend Mail-Log</a></li>';
+echo '    <li><a href="#logs_maillog">Mail-Log</a></li>';
+echo '    <li><a href="#logs_dblog">DB-Log</a></li>';
 echo '  </ul></li>';
 echo '</ul></nav>';
 
@@ -94,7 +94,7 @@ echo '</pre></div>';
 
 echo '<h3 id="logs_frontend_csrlog">Frontend CSR-Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$frontend_csrlog = "c:\apache24\logs\\frontend_csrlog.log";//Achtung '\f' ist eine definierte PHP Escape Sewuenz
+$frontend_csrlog = "c:\apache24\logs\\frontend_csrlog.log";//Achtung '\f' ist eine definierte PHP Escape Sequenz
 if(file_exists($frontend_csrlog)) {
 	print_r(file_get_contents($frontend_csrlog));
 }
@@ -108,17 +108,17 @@ if(file_exists($openssl_log)) {
 }
 echo '</pre></div>';
 
-echo '<h3 id="logs_admin_maillog">Admin Mail-Log</h3>';
+echo '<h3 id="logs_maillog">Mail-Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$admin_maillog = "c:\apache24\logs\admin_maillog.log";
+$admin_maillog = "c:\apache24\logs\maillog.log";
 if(file_exists($admin_maillog)) {
 	print_r(file_get_contents($admin_maillog));
 }
 echo '</pre></div>';
 
-echo '<h3 id="logs_frontend_maillog">Frontend Mail-Log</h3>';
+echo '<h3 id="logs_dblog">DB-Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$frontend_maillog = "c:\apache24\logs\\frontend_maillog.log";//Achtung '\f' ist eine definierte PHP Escape Sewuenz
+$frontend_maillog = "c:\apache24\logs\dblog.log";
 if(file_exists($frontend_maillog)) {
 	print_r(file_get_contents($frontend_maillog));
 }

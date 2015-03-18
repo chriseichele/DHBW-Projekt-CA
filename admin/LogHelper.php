@@ -1,9 +1,17 @@
 <?php
 
+class DBLogger extends Logger {
+	
+	public function __construct() {
+		$this->file = $this->dir . "dblog.log";
+	}
+	
+}
+
 class MailLogger extends Logger {
 	
 	public function __construct() {
-		$this->file = $this->dir . "admin_maillog.log";
+		$this->file = $this->dir . "maillog.log";
 	}
 	
 }
