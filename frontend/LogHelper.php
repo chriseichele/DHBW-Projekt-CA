@@ -1,5 +1,13 @@
 <?php
 
+class OpensslLogger extends Logger {
+	
+	public function __construct() {
+		$this->file = $this->dir . "openssllog.log";
+	}
+	
+}
+
 class DBLogger extends Logger {
 	
 	public function __construct() {
