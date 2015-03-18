@@ -52,6 +52,16 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	$domain = $temp[0];
 	$email = $temp[1];
 	unset($temp);
+	
+		#writeToDB
+	#create an entry in the request table
+	$db = new DBAccess();
+	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);	
+	//Request ID aus DB Rückgabe holen
+	$req_id = $dbresult['id'];
+	
+	$log->addNotice("Ergebnis DB-Queue : ".print_r($dbresult));
+	$log->addNotice("req_id = ".$req_id);
 
 	#extracting SANs from the csr file
 	$sanString = strpos($var, "X509v3 Subject Alternative Name");
@@ -81,16 +91,17 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 				$db->insert_sans($req_id, $SANs[$i]);
 			}
 		}
-		
-	#writeToDB
-	#create an entry in the request table
-	$db = new DBAccess();
-	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);	
-	//Request ID aus DB Rückgabe holen
-	$req_id = $dbresult['id'];
 	
-	$log->addNotice("Ergebnis DB-Queue : ".print_r($dbresult));
-	$log->addNotice("req_id = ".$req_id);
+	#insert 2 default SANs
+	$is_www = strpos($domain, "www.");
+	if($is_www === false){
+		$db->insert_sans($req_id, "www.".$domain);	
+	}
+	else{
+		$array = explode("www.", $domain);
+		$db->insert_sans($req_id, $array[1]);
+		unset($array);
+	}
 
 	if($req_id == "0"){
 		#if db queue failed, return Exception
