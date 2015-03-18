@@ -7,6 +7,9 @@ function displayCSRtable($csr, $sans, $showall = true) {
 	$out = "<table class='table table-hover table-bordered'>";
 	foreach($csr as $key => $value) {
 		$row_valid = true;
+		if (empty($value)) {
+			$row_valid = false;
+		}
 		if ($key == "start" && $showall) {
 			$title = "Startzeitpunkt";
 		}
@@ -52,7 +55,7 @@ function displayCSRtable($csr, $sans, $showall = true) {
 			$title = "Status";
 		}
 		elseif ($key == "log" && $showall) {
-			$title = "Kommentar";
+			$title = "Administratorenkommentar";
 		}
 		else {
 			$row_valid = false;
