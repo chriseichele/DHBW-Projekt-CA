@@ -10,6 +10,9 @@ class UserHelper {
 		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "customer");
 	}
 	private static function Register($email, $firstname, $lastname, $pwhash, $role) {
+		require_once('./LogHelper.php');
+		$log = new AccountLogger();
+		
 		$db = new DBAccess();
 		//Prüfen ob user bereits existiert
 		$db_result = $db->get_user_all_where(array("email","=","'".$email."'"));
@@ -22,6 +25,7 @@ class UserHelper {
 			$code = hash('sha512', rand(1,100000).$email.date("YmdHis").rand(1,100000)); //Zufällige Zeichenfolge
 			$db_success = $db->insert_user($email, $firstname, $lastname, $pwhash, $role, $code) == array(); //erfolg liefert ein leeres array
 			if($db_success) {
+				$log->addNotice("User &lt;".$email."&gt; erfolgreich registriert.");
 				//Aktivierungsmail schicken
 				require_once('./MailHelper.php');
 				try {
@@ -33,6 +37,7 @@ class UserHelper {
 				return true;
 			}
 			else {
+				$log->addError("User &lt;".$email."&gt; konnte nicht registriert werden.");
 				return false;
 			}
 		}

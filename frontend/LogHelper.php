@@ -1,5 +1,13 @@
 <?php
 
+class AccountLogger extends Logger {
+	
+	public function __construct() {
+		$this->file = $this->dir . "accountlog.log";
+	}
+	
+}
+
 class OpensslLogger extends Logger {
 	
 	public function __construct() {

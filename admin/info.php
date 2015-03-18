@@ -32,6 +32,7 @@ echo '    <li><a href="#logs_frontend_csrlog">Frontend CSR-Log</a></li>';
 echo '    <li><a href="#logs_openssl">Openssl Log</a></li>';
 echo '    <li><a href="#logs_maillog">Mail-Log</a></li>';
 echo '    <li><a href="#logs_dblog">DB-Log</a></li>';
+echo '    <li><a href="#logs_accountlog">User-Account-Log</a></li>';
 echo '  </ul></li>';
 echo '</ul></nav>';
 
@@ -86,41 +87,49 @@ echo '<h2 id="logs">Logs</h2>';
 
 echo '<h3 id="logs_admin_crtlog">Admin CRT-Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$admin_crtlog = "c:\apache24\logs\admin_crtlog.log";
-if(file_exists($admin_crtlog)) {
-	print_r(file_get_contents($admin_crtlog));
+$log_path = "c:\apache24\logs\admin_crtlog.log";
+if(file_exists($log_path)) {
+	print_r(file_get_contents($log_path));
 }
 echo '</pre></div>';
 
 echo '<h3 id="logs_frontend_csrlog">Frontend CSR-Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$frontend_csrlog = "c:\apache24\logs\\frontend_csrlog.log";//Achtung '\f' ist eine definierte PHP Escape Sequenz
-if(file_exists($frontend_csrlog)) {
-	print_r(file_get_contents($frontend_csrlog));
+$log_path = "c:\apache24\logs\\frontend_csrlog.log";//Achtung '\f' ist eine definierte PHP Escape Sequenz
+if(file_exists($log_path)) {
+	print_r(file_get_contents($log_path));
 }
 echo '</pre></div>';
 
 echo '<h3 id="logs_openssl">OpenSSl Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$openssl_log = "c:\apache24\logs\openssl.log";
-if(file_exists($openssl_log)) {
-	print_r(file_get_contents($openssl_log));
+$log_path = "c:\apache24\logs\openssl.log";
+if(file_exists($log_path)) {
+	print_r(file_get_contents($log_path));
 }
 echo '</pre></div>';
 
 echo '<h3 id="logs_maillog">Mail-Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$admin_maillog = "c:\apache24\logs\maillog.log";
-if(file_exists($admin_maillog)) {
-	print_r(file_get_contents($admin_maillog));
+$log_path = "c:\apache24\logs\maillog.log";
+if(file_exists($log_path)) {
+	print_r(file_get_contents($log_path));
 }
 echo '</pre></div>';
 
 echo '<h3 id="logs_dblog">DB-Log</h3>';
 echo '<div class="table-responsive"><pre>';
-$frontend_maillog = "c:\apache24\logs\dblog.log";
-if(file_exists($frontend_maillog)) {
-	print_r(file_get_contents($frontend_maillog));
+$log_path = "c:\apache24\logs\dblog.log";
+if(file_exists($log_path)) {
+	print_r(file_get_contents($log_path));
+}
+echo '</pre></div>';
+
+echo '<h3 id="logs_accountlog">User-Account-Log</h3>';
+echo '<div class="table-responsive"><pre>';
+$log_path = "c:\apache24\logs\accountlog.log";
+if(file_exists($log_path)) {
+	print_r(file_get_contents($log_path));
 }
 echo '</pre></div>';
 

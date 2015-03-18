@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+require_once('./LogHelper.php');
+$log = new AccountLogger();
+
 // GET Parameter prüfen
 
 if(isset($_GET['code'])) {
@@ -27,17 +30,19 @@ if($u->activation_code == $code) {
 	$dbresult = $db->update_user_activation_code($where, array(null));
 	if($dbresult['affected_rows'] == 1) {
 		$_SESSION['message']['success'][] = "Ihr Account wurde erfolgreich aktiviert. Sie k&ouml;nnen sich jetzt einloggen.";
+		$log->addNotice("Useraccount &lt;".$u->email."&gt; erfolgreich aktiviert.");
 		header('Location: index.php');
 		exit();
 	}
 	else {
 		$_SESSION['message']['error'][] = "Aktivierung fehlgeschlagen! Bitte kontaktieren sie uns.";
+		$log->addError("Useraccount &lt;".$u->email."&gt; nicht aktiviert.");
 		header('Location: index.php');
 		exit();
 	}
 }
 else {
-	$_SESSION['message']['error'][] = "Aktivierungslink Fehlerhaft! Bitte &uuml;berpr&uuml;fen Sie, ob sie diesen korrekt eingegeben haben. (Email oder Code fehlerhaft)";
+	$_SESSION['message']['error'][] = "Aktivierungslink Fehlerhaft! Bitte &uuml;berpr&uuml;fen Sie, ob sie diesen korrekt eingegeben haben. (Code fehlerhaft oder Account bereits aktiviert)";
 	header('Location: index.php');
 	exit();
 }
