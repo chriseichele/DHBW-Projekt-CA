@@ -77,7 +77,7 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 	#create an entry in the request table
 	$db = new DBAccess();
 	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);
-	logOS("Ergebnis : ".$dbresult);
+	logOS("Ergebnis DB-Queue : ".print_r($dbresult));
 	
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
