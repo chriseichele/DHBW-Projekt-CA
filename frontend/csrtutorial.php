@@ -9,6 +9,9 @@ include('./header.php');
     <div class="container">
         <h1>CSR Tutorial</h1>
         <p>Schritt f&uuml;r Schritt Anleitung zur Erstellung eines <b>C</b>ertificate-<b>S</b>igning-<b>R</b>equests mit OpenSSL.</p>
+        <br/>
+        <p>Wollten Sie stattdessen ein Zertifikat mit mehreren Hostnamen erstellen?</p>
+        <a class="btn btn-primary btn-lg" href="./csrsanstutorial.php" title="CSR-Tutorial mit SANs ansehen">CSR-Tutorial mit SANs</a>
     </div>
 </div>
 <div class="container">
