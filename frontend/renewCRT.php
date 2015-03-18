@@ -62,7 +62,7 @@ include('./header.php');
 		</p>
 	</div>
 	<form enctype="multipart/form-data" action="annahme_renew.php" method="post">
-		<input type="hidden" name="zerttype" value="<?php if($request->intermediate == 1){echo'intermediate';}elseif($request->intermediate == null){echo'normal';} ?>" />
+		<input type="hidden" name="zerttype" value="<?php if($request->intermediate == '1'){echo'intermediate';}elseif($request->intermediate == '0'){echo'normal';} ?>" />
 		<div class="form-group">
     		<label for="laufzeit">W&auml;hlen Sie die gew&uuml;nschte Laufzeit(ab heute) f&uuml;r das neue Zertifikat aus:</label>
     		<select id="laufzeit" name="laufzeit" class="form-control">
