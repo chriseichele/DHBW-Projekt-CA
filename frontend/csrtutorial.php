@@ -13,7 +13,7 @@ include('./header.php');
 </div>
 <div class="container alert alert-warning">
     <p>
-    	<span style="float:right;margin-right:10px;padding-top:5px;">Wollten Sie stattdessen ein Zertifikat mit mehreren Hostnamen erstellen?</span>
+    	<span style="float:left;margin-right:10px;padding-top:5px;">Wollten Sie stattdessen ein Zertifikat mit mehreren Hostnamen erstellen?</span>
     	<a style="float:right;" class="btn btn-default btn-sm" href="./csrsanstutorial.php" title="CSR-Tutorial mit SANs ansehen">CSR-Tutorial mit SANs ansehen</a>
     </p>
 </div>

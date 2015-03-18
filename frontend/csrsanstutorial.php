@@ -13,7 +13,7 @@ include('./header.php');
 </div>
 <div class="alert alert-warning container">
     <p>
-        <span style="float:right;margin-right:10px;padding-top:5px;">Wollten Sie stattdessen ein Standard-Zertifikat erstellen?</span>
+        <span style="float:left;margin-right:10px;padding-top:5px;">Wollten Sie stattdessen ein Standard-Zertifikat erstellen?</span>
         <a style="float:right;" class="btn btn-default btn-sm" href="./csrtutorial.php" title="Einfaches CSR-Tutorial ansehen">CSR-Tutorial ansehen</a>
     </p>
 </div>
