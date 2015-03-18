@@ -30,7 +30,7 @@ else {
 }
 
 if($zerttype == 'intermediate') {
-	$is_intermediate = true;
+	$is_intermediate = 1;//true
 	if($jahre == '3') {
 		$jahre = 3;
 	}
@@ -48,7 +48,7 @@ if($zerttype == 'intermediate') {
 	}
 }
 elseif($zerttype == 'normal') {
-	$is_intermediate = false;
+	$is_intermediate = 0;//false
 	if($jahre == '1') {
 		$jahre = 1;
 	}

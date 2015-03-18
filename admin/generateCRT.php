@@ -2,12 +2,13 @@
 require_once('./db.php');
 require_once('./LogHelper.php');
 
-$log = new OpensslLogger();
-
 #input id: id für das Zertifikat in der DB
 #output .crt Datei 
 		
 		function createCertificate($id){
+
+			$log = new OpensslLogger();
+
 			#TODO: Abfragen ob der User eingeloggt  ist
 			#get various informations from database used for signing the certificate
 			$db = new DBAccess();
