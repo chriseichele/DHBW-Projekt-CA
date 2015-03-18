@@ -2,15 +2,20 @@
 
 require_once('./UserHelper.php');
 require_once('./LogHelper.php');
-$log = new DBLogger();
 
 class DBAccess {
 
+    //external class
+    private $log;
     //private $resulttype = MYSQLI_ASSOC;
     private $dbhost = "localhost";
     private $dbuser = "root";
     private $dbpass = "Himmel12";
     private $dbdb = "CA";
+
+    public function __construct() {
+        $this->log = new DBLogger();
+    }
 
     private function connect() {
         $connection = new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbdb);
@@ -24,7 +29,7 @@ class DBAccess {
     }
 
     private function query($connection_handler, $query) {
-        $log->addLine($query, "QUERY");
+        $this->log->addLine($query, "QUERY");
         if ($connection_handler == NULL)
             $connection = $this->connect();
         else
@@ -287,6 +292,10 @@ class DBAccess {
 
     function update_request_dates($where_clause, $start, $end) {
         return $this->update("request", array("start", "end"), array($start, $end), $where_clause);
+    }
+
+    function update_request_log($where_clause, $log) {
+        return $this->update("request", array("log"), array($log), $where_clause);
     }
 
     function update_sans($where_clause, $name) {

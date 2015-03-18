@@ -65,7 +65,7 @@ abstract class Logger {
 		}
 	}
 
-	protected function addLine($entry, $type) {
+	public function addLine($entry, $type) {
 		if (!file_exists($this->dir) && !is_dir($this->dir)) {
 			//Log Verzeichnis erstellen wenn es noch nicht existiert
     		mkdir($this->dir);         
