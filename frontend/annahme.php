@@ -12,7 +12,7 @@ $backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#
 $email = UserHelper::GetUserEmail();
 
 if(isset($_POST['zerttype'])){
-	$zerttype = $_POST['zerttype'];
+	$zerttype = htmlentities($_POST['zerttype']);
 }
 else {
 	$_SESSION['message']['error'][] = 'Kein Zertifikatstyp gesetzt.';
@@ -112,7 +112,7 @@ if(UserHelper::IsLoggedIn()) {
 		} 
 		catch(Exception $e) {
   			$_SESSION['message']['error'][] = $e->getMessage();
-  			$log->addError('Fehler bei CSR Upload: '.$e->getMessage());
+  			$log->addError('Fehler bei CSR-(Typ "'.$zerttype.'")-Upload: '.$e->getMessage());
 		}
 		
 		Header('Location: '.$backurl);
