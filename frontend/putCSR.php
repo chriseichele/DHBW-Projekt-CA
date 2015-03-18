@@ -63,29 +63,32 @@ function putCSR($fileObject, $laufzeit, $intermediate){
 			for($i = 0; $i < count($SANs); $i++){
 			$SANs[$i] = substr($SANs[$i], 1, -2);
 			}
+			unset($value);
+			#die Sonderfälle Pos 0 und Max abfangen
+			unset($SANs[0]);
+			$temp = explode(" ",$SANs[count($SANs)]);
+			$SANs[count($SANs)] = $temp[0];
+			unset($temp);
+			#Array neu schreiben
+			$SANs = array_values(array_filter($SANs));
+			
+				
+			#inserts SANs into san table
+			for($i = 0; $i < count($SANs); $i++){
+				$db->insert_sans($req_id, $SANs[$i]);
+			}
 		}
-		unset($value);
-		#die Sonderfälle Pos 0 und Max abfangen
-		unset($SANs[0]);
-		$temp = explode(" ",$SANs[count($SANs)]);
-		$SANs[count($SANs)] = $temp[0];
-		unset($temp);
-		#Array neu schreiben
-		$SANs = array_values(array_filter($SANs));
-	
+		
 	#writeToDB
 	#create an entry in the request table
 	$db = new DBAccess();
-	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);
-	logOS("Ergebnis DB-Queue : ".print_r($dbresult));
-	
+	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, $intermediate, NULL,$uploadfile, NULL);	
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
 	
-	#inserts SANs into san table
-	for($i = 0; $i < count($SANs); $i++){
-		$db->insert_sans($req_id, $SANs[$i]);
-	}
+	logOS("Ergebnis DB-Queue : ".print_r($dbresult));
+	logOS("req_id = ".$req_id);
+
 	if($req_id == "0"){
 		#if db queue failed, return Exception
 		throw new Exception("Die Aktualisierung der DB war nicht erfolgreich!");
