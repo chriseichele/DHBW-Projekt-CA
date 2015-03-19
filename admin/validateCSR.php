@@ -90,8 +90,8 @@ else {
 	}
 	$result = $db->update_request_status($where, $new_status);
 	if($result['affected_rows'] == 1) {
-		$result = $db->update_request_verifier($where, UserHelper::GetUserEmail());
 		$result = $db->update_request_log($where, $comment);
+		$result = $db->update_request_verifier($where, UserHelper::GetUserEmail());
 		if($result['affected_rows'] == 1) {
 			if($accept) {
 				try {
