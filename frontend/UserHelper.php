@@ -7,9 +7,11 @@ require_once('./MessageHandler.php');
 class UserHelper {
 
 	public static function RegisterCustomer($email, $firstname, $lastname, $pwhash) {
+		//Nur Customer neu registrieren lassen
 		return UserHelper::Register($email, $firstname, $lastname, $pwhash, "customer");
 	}
 	private static function Register($email, $firstname, $lastname, $pwhash, $role) {
+		//Aufruf um Benutzer neu zu registrieren
 		require_once('./LogHelper.php');
 		$log = new AccountLogger();
 		
@@ -44,7 +46,7 @@ class UserHelper {
 	}
 
 	public static function Login($email, $pwhash) {
-	
+		//Login Aufruf für Außerhalb
 		$db = new DBAccess();
 		
 		$users = $db->get_user_all_where(array("email", "=", "'".$email."'"));
@@ -71,6 +73,7 @@ class UserHelper {
 	}
 
 	private static function DoLogin($email, $firstname, $lastname) {
+		//Login Daten in Session Schreiben
 		$_SESSION["user"]["login"] = true;
 		$_SESSION["user"]["email"] = $email;
 		$_SESSION["user"]["firstname"] = $firstname;
@@ -80,6 +83,7 @@ class UserHelper {
 	}
 	
 	public static function IsLoggedIn() {
+		//Login Überprüfung (true/false)
 		if (isset($_SESSION["user"]["login"]) && isset($_SESSION["user"]["timestamp"])) {
 			if(($_SESSION["user"]["timestamp"] + (10 * 60)) < time()) {
 				//Alle 10 Minuten neu Prüfen ob User exisitiert
@@ -107,6 +111,7 @@ class UserHelper {
 	}
 	
 	public static function GetUserEmail() {
+		Return email vom eingeloggten User
 		if(UserHelper::IsLoggedIn()) {
 			return $_SESSION["user"]["email"];
 		} 
@@ -116,6 +121,7 @@ class UserHelper {
 	}
 	
 	public static function GetUserName() {
+		//Return Vorname+Nachname vom eingeloggten User
 		if(UserHelper::IsLoggedIn()) {
 			return $_SESSION["user"]["firstname"] . " " . $_SESSION["user"]["lastname"];
 		} 
@@ -125,6 +131,7 @@ class UserHelper {
 	}
 	
 	public static function Logout() {
+		//Do Logout
 		if(isset($_SESSION)) {
 			session_destroy();
 			$_SESSION = array();
@@ -137,10 +144,13 @@ class UserHelper {
 // #################################### Funktionen
 
 function doUserRightsCheck() {
+	//User Berechtigungsprüfung
 	if(UserHelper::IsLoggedIn()) {
+		//Erfolg bei Eingeloggtem Benutzer im Frontend
 		return true;
 	}
 	else {
+		//kein Eingeloggter User -> zurück leiten und Fehlermeldung
 		addMessageIfNew("info", "Sie m&uuml;ssen sich zuerst einloggen, um die gew&uuml;nschte Seite anzeigen zu k&ouml;nnen.");
 		$backurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php#noreferer';
 		Header('Location: '.$backurl);
@@ -149,6 +159,11 @@ function doUserRightsCheck() {
 }
 
 function getLoginForm() {
+/*
+ * Gibt entweder das Login Fomular zurück, oder den Username mit Logout Button
+ * Kapselt auch die Aufrufe für Registrierung und Login
+ *
+ */
 
 $out = "";
 
