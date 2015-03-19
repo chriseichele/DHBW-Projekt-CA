@@ -103,7 +103,7 @@ echo '<h3 id="logs_openssl">';
 echo '<button class="btn btn-sm btn-default" onclick="togglePre(\'#logs_openssl_pre\');" title="Bereich Ein-/Ausblenden">TOGGLE</button>&nbsp;&nbsp;';
 echo 'OpenSSL Log</h3>';
 echo '<div class="table-responsive"><pre id="logs_openssl_pre">';
-$log_path = "c:\apache24\logs\openssl.log";
+$log_path = "c:\apache24\logs\openssllog.log";
 if(file_exists($log_path)) {
 	print_r(file_get_contents($log_path));
 }
