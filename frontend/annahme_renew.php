@@ -115,7 +115,9 @@ if(UserHelper::IsLoggedIn()) {
 		}
 	
 		$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
+		$laufzeit_string = ($jahre == 0.25) ? ("&frac14; Jahr") : $laufzeit_string ;
 		$laufzeit_string = ($jahre == 0.5) ? ("&frac12; Jahr") : $laufzeit_string ;
+		$laufzeit_string = ($jahre == 0.75) ? ("&frac34; Jahr") : $laufzeit_string ;
 		$_SESSION['message']['success'][] = 'Der CSR wurde erfolgreich um die gew&uuml;nschte Laufzeit '.$laufzeit_string.' verl&auml;ngert.';
 		$log->addNotice("CSR ID ".$csr_id." erfolgreich als CSR ID ".$req_id." verl&auml;ngert.");
 		
