@@ -25,7 +25,7 @@ class UserHelper {
 			$code = hash('sha512', rand(1,100000).$email.date("YmdHis").rand(1,100000)); //Zufällige Zeichenfolge
 			$db_success = $db->insert_user($email, $firstname, $lastname, $pwhash, $role, $code) == array(); //erfolg liefert ein leeres array
 			if($db_success) {
-				$log->addNotice("User &lt;".$email."&gt; erfolgreich registriert.");
+				$log->addNotice("User &lt;".$email."&gt; hat sich erfolgreich registriert.");
 				//Aktivierungsmail schicken
 				require_once('./MailHelper.php');
 				try {
