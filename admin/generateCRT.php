@@ -21,7 +21,7 @@ require_once('./UserHelper.php');
 			$start = $csr->start;
 			$end = $csr->end;
 			$duration = 365 * ($end - $start);
-			$opensslconf_path = "c:\apache24\ca\kunden\temp_".date("Y-m-d-H-i-s")."_openssl.cnf"
+			$opensslconf_path = "c:\apache24\ca\kunden\temp_".date("Y-m-d-H-i-s")."_openssl.cnf";
 			#Prüfung ob die Select-Abfrage erfolgreich war
 			if($pathToCSR == NULL) {
 				throw new Exception("Der Pfad zur CSR Datei konnte nicht ermittelt werden!");
