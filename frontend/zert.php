@@ -38,12 +38,18 @@ if(isset($_GET['wildcard'])) {
 		</div> 
 		<div class="form-group">
 			<label for="dateihochladen">W&auml;hlen Sie eine CSR-Datei von Ihrem Rechner aus:</label>
-			<input type="file" name="userfile"id="dateihochladen" size="50" maxlength="100000" required="required">
+			<input type="file" name="userfile"id="dateihochladen" size="50" maxlength="100000" style="margin-top:3px;" required="required">
 		</div> 
-		<div class="checkbox">
-    		<label>
-      			<input type="checkbox" name="wildcard" <?php echo $wildcard_checked; ?>> Wildcard SAN f&uuml;r meine Domain hinzufügen
-    		</label>
+		<p class="alert alert-info" style="padding:10px;">
+			Die CSR-Datei sollte mindestens <b>Country-Name</b>, <b>State</b>, <b>Location</b>, <b>Organisation-Name</b>, <b>Organisation-Unit-Name</b>, <b>Common-Name</b> und <b>Responsible-Email</b> enthalten.
+		</p>
+		<div class="form-group">
+			<label>Wildcard</label>
+			<div class="checkbox" style="margin-top:0;">
+    			<label>
+      				<input type="checkbox" name="wildcard" <?php echo $wildcard_checked; ?>> Wildcard SAN f&uuml;r meine Domain hinzufügen
+    			</label>
+  			</div>
   		</div>
 		<div class="form-group" id="add_sans">
 			<style>#add_sans input, #add_sans button {display: block;min-width:200px;padding:3px;}</style>
