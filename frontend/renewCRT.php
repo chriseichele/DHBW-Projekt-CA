@@ -57,7 +57,7 @@ include('./header.php');
 	<div class="alert alert-warning">
 		<h3 style="margin-top:0;">Vorsicht</h3>
 		<p>
-			Beim verl&auml;ngern eines Zertifikats wird der alte Schl&uuml;ssel wieder verwendet. 
+			Beim Verl&auml;ngern eines Zertifikats wird der alte Schl&uuml;ssel wieder verwendet. 
 			<br/>W&auml;hlen Sie diese Option nicht, wenn Ihr altes Zertifikat kompromittiert wurde!
 		</p>
 	</div>
@@ -87,11 +87,7 @@ include('./header.php');
         <div class="form-horizontal"> 
         	<div class="form-group container">  
 				<input type="submit" class="btn btn-lg btn-primary" style="margin-bottom:10px;" value="Zertifikat neu anfordern" />
-				<?php if($request->intermediate == 1){
-					echo'<a href="intermediate.php" class="btn btn-lg btn-default" style="margin-bottom:10px;">Zertifikat mit neuem CSR anfordern</a>';
-				}elseif($request->intermediate == null){
-					echo'<a href="normaleszert.php" class="btn btn-lg btn-default" style="margin-bottom:10px;">Zertifikat mit neuem CSR anfordern</a>';
-				}?>
+				<a href="zert.php" class="btn btn-lg btn-default" style="margin-bottom:10px;">Zertifikat mit neuem CSR anfordern</a>
 			</div> 
 		</div>       
 	</form>
