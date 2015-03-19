@@ -72,7 +72,7 @@ include('./header.php');
     		if($csr['status'] == 'created') {
     			echo '<form action="delete.php" method="post" class="form-group col-md-6">';
     			echo '<input type="hidden" name="csr" value="'.$csr_id.'" />';
-    			echo '<button onclick="confirm(\'Sind sie sicher, dass Sie den CSR unwiderruflich l&ouml;schen m&ouml;chten?\');" class="btn btn-danger btn-lg btn-block" role="button">Request unwiderruflich l&ouml;schen</button>';
+    			echo '<button onclick="confirm(\'Sind Sie sicher, dass Sie den CSR unwiderruflich l&ouml;schen m&ouml;chten?\');" class="btn btn-danger btn-lg btn-block" role="button">Request unwiderruflich l&ouml;schen</button>';
     			echo '</form>';
     		}
     		echo '</div>';
