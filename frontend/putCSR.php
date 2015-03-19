@@ -56,6 +56,15 @@ function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 	$email = $temp[1];
 	unset($temp);
 	
+	#desinifizieren der User-Eingaben aus der csr
+	$country = htmlentities($country);
+	$state = htmlentities($state);
+	$location = htmlentities($location);
+	$org = htmlentities($org);
+	$orgunit = htmlentities($orgunit);
+	$domain = htmlentities($domain);
+	$email = htmlentities($email);
+	
 	#writeToDB
 	#create an entry in the request table
 	$db = new DBAccess();
