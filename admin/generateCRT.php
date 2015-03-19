@@ -18,9 +18,11 @@ require_once('./UserHelper.php');
 			$csr = reset($db_result);
 			$pathToCSR = $csr->path_csr;
 			$name = date("Y-m-d-H-i-s")."_".$csr->common_name;
-			$start = $csr->start;
-			$end = $csr->end;
-			$duration = 365 * ($end - $start);
+			//cert times
+			$start = strtotime($csr->start);
+			$end = strtotime($csr->end);
+			//duration = time between start and end / ( seconds * minutes * hours )
+			$duration = floor(($end - start)/(60*60*24));
 			$opensslconf_path = "c:\apache24\ca\kunden\\temp_".date("Y-m-d-H-i-s")."_openssl.cnf";
 			#Prüfung ob die Select-Abfrage erfolgreich war
 			if($pathToCSR == NULL) {
