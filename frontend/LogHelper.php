@@ -35,7 +35,7 @@ class MailLogger extends Logger {
 class CsrLogger extends Logger {
 	
 	public function __construct() {
-		$this->file = $this->dir . "frontend_csrlog.log";
+		$this->file = $this->dir . "csrlog.log";
 	}
 	
 }

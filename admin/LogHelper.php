@@ -27,7 +27,7 @@ class MailLogger extends Logger {
 class CrtLogger extends Logger {
 	
 	public function __construct() {
-		$this->file = $this->dir . "admin_crtlog.log";
+		$this->file = $this->dir . "crtlog.log";
 	}
 	
 }

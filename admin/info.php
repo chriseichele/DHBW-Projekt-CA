@@ -79,21 +79,21 @@ echo '</pre></div>';
 echo '<h2 id="logs">Logs</h2>';
 echo '<p>c:\apache24\logs\...</p>';
 
-echo '<h3 id="logs_admin_crtlog">';
-echo '<button class="btn btn-sm btn-default" onclick="togglePre(\'#logs_admin_crtlog_pre\');" title="Bereich Ein-/Ausblenden">TOGGLE</button>&nbsp;&nbsp;';
+echo '<h3 id="logs_crtlog">';
+echo '<button class="btn btn-sm btn-default" onclick="togglePre(\'#logs_crtlog_pre\');" title="Bereich Ein-/Ausblenden">TOGGLE</button>&nbsp;&nbsp;';
 echo 'Admin CRT-Log</h3>';
-echo '<div class="table-responsive"><pre id="logs_admin_crtlog_pre">';
-$log_path = "c:\apache24\logs\admin_crtlog.log";
+echo '<div class="table-responsive"><pre id="logs_crtlog_pre">';
+$log_path = "c:\apache24\logs\crtlog.log";
 if(file_exists($log_path)) {
 	print_r(file_get_contents($log_path));
 }
 echo '</pre></div>';
 
-echo '<h3 id="logs_frontend_csrlog">';
-echo '<button class="btn btn-sm btn-default" onclick="togglePre(\'#logs_frontend_csrlog_pre\');" title="Bereich Ein-/Ausblenden">TOGGLE</button>&nbsp;&nbsp;';
+echo '<h3 id="logs_csrlog">';
+echo '<button class="btn btn-sm btn-default" onclick="togglePre(\'#logs_csrlog_pre\');" title="Bereich Ein-/Ausblenden">TOGGLE</button>&nbsp;&nbsp;';
 echo 'Frontend CSR-Log</h3>';
-echo '<div class="table-responsive"><pre id="logs_frontend_csrlog_pre">';
-$log_path = "c:\apache24\logs\\frontend_csrlog.log";//Achtung '\f' ist eine definierte PHP Escape Sequenz
+echo '<div class="table-responsive"><pre id="logs_csrlog_pre">';
+$log_path = "c:\apache24\logs\csrlog.log";
 if(file_exists($log_path)) {
 	print_r(file_get_contents($log_path));
 }
