@@ -18,7 +18,7 @@ $cn = $csr->common_name;
     file_put_contents($pathToCRT, file_get_contents("c:\Apache24\ca\ca.crt").PHP_EOL , FILE_APPEND);
     return $path;
   }
-    elseif($type === 'ngnix'){
+    elseif($type === 'nginx'){
       $path = "c:\apache24\ca\kunden\\".date("Y-m-d-H-i-s")."_".$cn.".chained.crt";
       file_put_contents($path, file_get_contents($pathToCRT).PHP_EOL);
       file_put_contents($pathToCRT, file_get_contents("c:\Apache24\ca\ica.crt") , FILE_APPEND);
