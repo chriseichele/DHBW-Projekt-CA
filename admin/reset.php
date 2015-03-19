@@ -30,6 +30,7 @@ unlink("c:\apache24\logs\\"."csrlog.log");
 unlink("c:\apache24\logs\\"."dblog.log");
 unlink("c:\apache24\logs\\"."maillog.log");
 unlink("c:\apache24\logs\\"."openssllog.log");
+unlink("c:\apache24\logs\\"."accountlog.log");
 
 echo '<h1>Verzeichnisse werden wieder angelegt...</h1>';
 
