@@ -171,14 +171,14 @@ if(UserHelper::IsLoggedIn()) {
 else {
 
 	if(isset($_POST['email']) && isset($_POST['pw'])) {
-		$email = $_POST['email'];
+		$email = htmlentities($_POST['email']);
 		$email = strtolower($email);
 		$pwhash = hash('sha512', $_POST['pw'] . $email);
 	  
 		if(isset($_POST['register']) && isset($_POST['firstname']) && isset($_POST['pw2']) && isset($_POST['lastname'])) {
 			//Register
-			$firstname = $_POST['firstname'];
-			$lastname = $_POST['lastname'];
+			$firstname = htmlentities($_POST['firstname']);
+			$lastname = htmlentities($_POST['lastname']);
 			$pwhash2 = hash('sha512', $_POST['pw2'] . $email);
 			
 			if ($pwhash == $pwhash2 
