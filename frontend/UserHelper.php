@@ -111,7 +111,7 @@ class UserHelper {
 	}
 	
 	public static function GetUserEmail() {
-		Return email vom eingeloggten User
+		//Return email vom eingeloggten User
 		if(UserHelper::IsLoggedIn()) {
 			return $_SESSION["user"]["email"];
 		} 
