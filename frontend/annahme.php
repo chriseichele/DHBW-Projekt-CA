@@ -86,52 +86,49 @@ $log = new CsrLogger();
 
 
 if(UserHelper::IsLoggedIn()) {
+	//Zu Große Dateien ausschließe 
 	if ($dateigroesse < 10000){
 
-
-	if($dateityp == "application/x-x509-ca-cert" 
-	|| $dateityp == "application/octet-stream" 
-	|| $dateityp == "application/pkcs10") {
+		//Nur bestimmte Dateitypen zulassen, grob flache Dateien ausschließen
+		if($dateityp == "application/x-x509-ca-cert" 
+		|| $dateityp == "application/octet-stream" 
+		|| $dateityp == "application/pkcs10") {
 	
-	
-		
-		//Datei abspeichern
-		try {
-			$csr_id = putCSR($file, $jahre, $wildcard, $additional_sans);
-			
-			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
-			$laufzeit_string = ($jahre == 0.5) ? ("&frac12; Jahr") : $laufzeit_string ;
-			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
-			$log->addNotice("CSR ID ".$csr_id." erfolgreich hochgeladen.");
-			
-			//Admins über neue Datei benachrichtigen
-			require_once('./MailHelper.php');
+			//Datei abspeichern
 			try {
-				send_new_cert_mail_to_admins($csr_id);
-			} catch(Exception $e) {
-  				//trotzdem keine fehlermeldung ausgeben, da sie den Kunden nix angehen
-  				//MailHelper sollte schon ins Log geschrieben haben
+				$csr_id = putCSR($file, $jahre, $wildcard, $additional_sans);
+			
+				$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
+				$laufzeit_string = ($jahre == 0.5) ? ("&frac12; Jahr") : $laufzeit_string ;
+				$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
+				$log->addNotice("CSR ID ".$csr_id." erfolgreich hochgeladen.");
+			
+				//Admins über neue Datei benachrichtigen
+				require_once('./MailHelper.php');
+				try {
+					send_new_cert_mail_to_admins($csr_id);
+				} catch(Exception $e) {
+					//trotzdem keine fehlermeldung ausgeben, da sie den Kunden nix angehen
+					//MailHelper sollte schon ins Log geschrieben haben
+				} 
 			} 
-		} 
-		catch(Exception $e) {
-  			$_SESSION['message']['error'][] = $e->getMessage();
-  			$log->addError('Fehler bei CSR-Upload: '.$e->getMessage());
-		}
+			catch(Exception $e) {
+				$_SESSION['message']['error'][] = $e->getMessage();
+				$log->addError('Fehler bei CSR-Upload: '.$e->getMessage());
+			}
 		
-		Header('Location: '.$backurl);
-		exit();
+			Header('Location: '.$backurl);
+			exit();
+		}
+		else {
+			// Fehlermeldung
+			$_SESSION['message']['error'][] = 'Keine CSR-Datei.';
+			Header('Location: '.$backurl);
+			exit();
+		}
 	}
-	
-	
 	else {
 		// Fehlermeldung
-		$_SESSION['message']['error'][] = 'Keine CSR-Datei.';
-		Header('Location: '.$backurl);
-		exit();
-	}
-	}
-	else {
-	// Fehlermeldung
 		$_SESSION['message']['error'][] = 'Die hochgeladene Datei ist zu groß.';
 		Header('Location: '.$backurl);
 		exit();
