@@ -87,6 +87,8 @@ require_once('./LogHelper.php');
 		# Extensions to add to a certificate request
 			
 		basicConstraints = CA:FALSE
+		authorityInfoAccess = caIssuers;URI:http://wwi12-05.dhbw-heidenheim.de/pub/ica.crt
+		authorityInfoAccess = caIssuers;URI:http://wwi12-05.dhbw-heidenheim.de/pub/ca.crt
 		keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 		subjectAltName = @alt_names
 		[ alt_names ]".PHP_EOL;
