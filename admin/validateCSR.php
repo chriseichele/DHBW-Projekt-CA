@@ -44,8 +44,7 @@ if($accept) {
 	}
 		
 	if(empty($comment)) {
-		//Kommentar zwar übergeben aber leer
-		//Akzeptieren muss begründet werden
+		//Kommentar leer - Akzeptieren muss begründet werden
 		$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
 		$backurl = isset($csr_id) ? ("zertifikatsanfragen.php?csr=".$csr_id) : $backurl;
 		header('Location: '.$backurl);
@@ -60,8 +59,7 @@ if($accept) {
 	}
 		
 	if(empty($comment)) {
-		//Kommentar zwar übergeben aber leer
-		//Akzeptieren muss begründet werden
+		//Kommentar leer - Akzeptieren muss begründet werden
 		$_SESSION['message']['warning'][] = "Bitte begr&uuml;nden Sie ihre Entscheidung!";
 		$backurl = isset($csr_id) ? ("zertifikatsanfragen.php?csr=".$csr_id) : $backurl;
 		header('Location: '.$backurl);
