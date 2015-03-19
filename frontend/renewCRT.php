@@ -73,6 +73,13 @@ include('./header.php');
 			</select>
 		</div> 
 		<input type="hidden" name="csr" value="<?php echo $csr_id; ?>" />
+		<div class="form-group" id="add_sans">
+			<style>#add_sans input, #add_sans button {display: block;min-width:200px;padding:3px;}</style>
+			<label>Weitere SANs hinzuf&uuml;gen:</label>
+			<input type="text" name="sans[0]" placeholder="SAN 1" />
+			<input type="text" name="sans[1]" placeholder="SAN 2" />
+			<button type="button" id="add_san_line" class="btn btn-default btn-sm" onclick="addSANline();false;">Zeile hinzuf&uuml;gen</button>
+		</div> 
 		<br />
         <div class="form-horizontal"> 
         	<div class="form-group container">  
@@ -88,3 +95,9 @@ include('./header.php');
 </div>
 
 <?php include('./footer.php'); ?>
+
+<script>
+function addSANline() {
+	$("#add_sans button").before('<input type="text" name="sans[' + $("#add_sans input").length + ']" placeholder="SAN '+($("#add_sans input").length+1)+'" />');
+}
+</script>

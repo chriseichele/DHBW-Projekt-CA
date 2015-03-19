@@ -39,7 +39,7 @@ if(isset($_GET['wildcard'])) {
 		</div> 
 		<div class="checkbox">
     		<label>
-      			<input type="checkbox" name="wildcard" <?php echo $wildcard_checked; ?>> Wildcard Zertifikat f&uuml;r meine Domain erstellen
+      			<input type="checkbox" name="wildcard" <?php echo $wildcard_checked; ?>> Wildcard SAN f&uuml;r meine Domain hinzufügen
     		</label>
   		</div>
 		<div class="form-group" id="add_sans">

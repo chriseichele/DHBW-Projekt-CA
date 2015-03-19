@@ -53,7 +53,7 @@ if(isset($_POST['sans'])) {
 	foreach($_POST['sans'] as $san) {
 		//alle SANs durchgehen, die gefüllt sind
 		if(!empty($san)) {
-			$additional_sans[] = $san;
+			$additional_sans[] = htmlentities($san);
 		}
 	}
 } else {

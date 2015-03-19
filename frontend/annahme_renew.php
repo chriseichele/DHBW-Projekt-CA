@@ -65,6 +65,18 @@ else {
 	exit();
 }
 
+if(isset($_POST['sans'])) {
+	$additional_sans = array();
+	foreach($_POST['sans'] as $san) {
+		//alle SANs durchgehen, die gefüllt sind
+		if(!empty($san)) {
+			$additional_sans[] = htmlentities($san);
+		}
+	}
+} else {
+	$additional_sans = array();
+}
+
 $log = new CsrLogger();
 
 if(UserHelper::IsLoggedIn()) {
@@ -88,12 +100,16 @@ if(UserHelper::IsLoggedIn()) {
 		foreach($sans as $san) {
 			$db->insert_sans($req_id, $san->name);
 		}
+		//Zusätzliche SANs vom Fontend hinzufügen
+		foreach($additional_sans as $san) {
+			$db->insert_sans($req_id, $san->name);
+		}
 	
 		$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
 		$_SESSION['message']['success'][] = 'Der CSR wurde erfolgreich um die gew&uuml;nschte Laufzeit '.$laufzeit_string.' verl&auml;ngert.';
 		$log->addNotice("CSR ID ".$csr_id." erfolgreich als CSR ID ".$req_id." verl&auml;ngert.");
 		
-		//Admins über neue Datei benachrichtigen
+		//Admins über neuen CSR benachrichtigen
 		require_once('./MailHelper.php');
 		try {
 			send_new_cert_mail_to_admins($req_id);
