@@ -1,12 +1,13 @@
 <?php
 require_once('./db.php');
 require_once('./LogHelper.php');
+require_once('./UserHelper.php');
 
 #input id: id für das Zertifikat in der DB
 #output .crt Datei 
 		
 		function createCertificate($id){
-
+			doAdminRightsCheck();
 			$log = new OpensslLogger();
 
 			#TODO: Abfragen ob der User eingeloggt  ist
@@ -57,9 +58,6 @@ require_once('./LogHelper.php');
 						//Zertifikat Erstellung erfolgreich -> Pfad in DB aktualisieren
 						$update_crt_path = $db->update_request_path_cer($where, $pathToCRT);
 						if(isset($update_crt_path['affected_rows'])){
-							//ADD certificate chain to the certificate
-							#file_put_contents($pathToCRT, file_get_contents("c:\Apache24\ca\ica.crt") , FILE_APPEND);
-							#file_put_contents($pathToCRT, file_get_contents("c:\Apache24\ca\ca.crt") , FILE_APPEND);
 							//Alles OK
 							return true;
 						}
@@ -88,7 +86,6 @@ require_once('./LogHelper.php');
 			
 		basicConstraints = CA:FALSE
 		authorityInfoAccess = caIssuers;URI.1:http://wwi12-05.dhbw-heidenheim.de/pub/ica.crt
-		authorityInfoAccess = caIssuers;URI.2:http://wwi12-05.dhbw-heidenheim.de/pub/ca.crt
 		keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 		subjectAltName = @alt_names
 		[ alt_names ]".PHP_EOL;
