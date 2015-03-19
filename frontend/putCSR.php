@@ -1,6 +1,7 @@
 <?php
 require_once('./db.php');
 require_once('./LogHelper.php');
+require_once('./UserHelper.php');
 
 
 #db.php database class
@@ -13,6 +14,8 @@ require_once('./LogHelper.php');
 #Input: $intermediate: Ist das angeforderte Zertifikat intermediate (0,1) 
 
 function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
+	doUserRightsCheck();
+	
 	$uploaddir = 'c:\apache24\ca\kunden\csr\\';
 	$log = new OpensslLogger();
 
