@@ -79,7 +79,7 @@ class CrtHelper {
 		
 		//Datei wieder löschen, wenn spezielle Datei für Dateityp erstellt wurde
 		if($fileformat != NULL) {
-			unlink( $filename );
+			$return = unlink( $filename );
 		}
 	}
 	
