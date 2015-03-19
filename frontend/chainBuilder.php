@@ -5,6 +5,7 @@ require_once('./LogHelper.php');
 function deliverFile($id, $type){
 #TODO: Überprüfen
 $db = new DBAccess();
+$log = new OpensslLogger();
 $where = array("id","=","'".$id."'");
 $db_result = $db->get_request_all_where($where);
 $csr = reset($db_result);
