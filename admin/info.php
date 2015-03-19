@@ -81,7 +81,7 @@ echo '<p>c:\apache24\logs\...</p>';
 
 echo '<h3 id="logs_crtlog">';
 echo '<button class="btn btn-sm btn-default" onclick="togglePre(\'#logs_crtlog_pre\');" title="Bereich Ein-/Ausblenden">TOGGLE</button>&nbsp;&nbsp;';
-echo 'Admin CRT-Log</h3>';
+echo 'CRT-Log</h3>';
 echo '<div class="table-responsive"><pre id="logs_crtlog_pre">';
 $log_path = "c:\apache24\logs\crtlog.log";
 if(file_exists($log_path)) {
@@ -91,7 +91,7 @@ echo '</pre></div>';
 
 echo '<h3 id="logs_csrlog">';
 echo '<button class="btn btn-sm btn-default" onclick="togglePre(\'#logs_csrlog_pre\');" title="Bereich Ein-/Ausblenden">TOGGLE</button>&nbsp;&nbsp;';
-echo 'Frontend CSR-Log</h3>';
+echo 'CSR-Log</h3>';
 echo '<div class="table-responsive"><pre id="logs_csrlog_pre">';
 $log_path = "c:\apache24\logs\csrlog.log";
 if(file_exists($log_path)) {
