@@ -14,9 +14,11 @@ function displayCSRtable($csr, $sans, $showall = true) {
 		}
 		if ($key == "start" && $showall) {
 			$title = "Startzeitpunkt";
+			$value = date("d.m.Y - H:i:s", strtotime(stripslashes($value)))." Uhr";
 		}
 		elseif ($key == "end" && $showall) {
 			$title = "Endzeitpunkt";
+			$value = date("d.m.Y - H:i:s", strtotime(stripslashes($value)))." Uhr";
 		}
 		elseif ($key == "country") {
 			$title = "L&auml;ndercode";

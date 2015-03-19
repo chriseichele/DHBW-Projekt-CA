@@ -26,7 +26,10 @@ if(isset($_GET['wildcard'])) {
 		<div class="form-group">
     		<label for="laufzeit">W&auml;hlen Sie die gew&uuml;nschte Laufzeit(ab heute) f&uuml;r das Zertifikat aus:</label>
     		<select id="laufzeit" name="laufzeit" class="form-control" required="required">
-  				<option value="1">1 Jahr Laufzeit</option>
+  				<option value="0.25">&frac14; Jahr Laufzeit</option>
+  				<option value="0.5">&frac12; Jahr Laufzeit</option>
+  				<option value="0.75">&frac34; Jahr Laufzeit</option>
+  				<option value="1" selected="selected">1 Jahr Laufzeit</option>
   				<option value="2">2 Jahre Laufzeit</option>
   				<option value="3">3 Jahre Laufzeit</option>
   				<option value="4">4 Jahre Laufzeit</option>

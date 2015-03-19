@@ -52,7 +52,7 @@ else {
 $where = array("request_id","=","'".$csr_id."'");
 $sans = $db->get_sans_all_where($where);
 
-$log = LogHelper();
+$log = new CsrLogger();
 
 //Löschen vornehmen
 

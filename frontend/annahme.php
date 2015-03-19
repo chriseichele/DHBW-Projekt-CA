@@ -12,21 +12,30 @@ $backurl = (basename($backurl)==basename($_SERVER['SCRIPT_NAME'])) ? 'index.php#
 $email = UserHelper::GetUserEmail();
 
 if(isset($_POST['laufzeit'])){
-	$jahre = $_POST['laufzeit'];
+	$laufzeit = $_POST['laufzeit'];
 	
-	if($jahre == '1') {
+	if($laufzeit == '0.25') {
+		$jahre = 0.25;
+	}
+	elseif($laufzeit == '0.5') {
+		$jahre = 0.5;
+	}
+	elseif($laufzeit == '0.75') {
+		$jahre = 0.75;
+	}
+	elseif($laufzeit == '1') {
 		$jahre = 1;
 	}
-	elseif($jahre == '2') {
+	elseif($laufzeit == '2') {
 		$jahre = 2;
 	}
-	elseif($jahre == '3') {
+	elseif($laufzeit == '3') {
 		$jahre = 3;
 	}
-	elseif($jahre == '4') {
+	elseif($laufzeit == '4') {
 		$jahre = 4;
 	}
-	elseif($jahre == '5') {
+	elseif($laufzeit == '5') {
 		$jahre = 5;
 	}
 	else {
@@ -91,6 +100,7 @@ if(UserHelper::IsLoggedIn()) {
 			$csr_id = putCSR($file, $jahre, $wildcard, $additional_sans);
 			
 			$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
+			$laufzeit_string = ($jahre == 0.5) ? ("&frac12; Jahr") : $laufzeit_string ;
 			$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
 			$log->addNotice("CSR ID ".$csr_id." erfolgreich hochgeladen.");
 			

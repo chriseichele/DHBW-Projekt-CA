@@ -37,19 +37,28 @@ else {
 if(isset($_POST['laufzeit'])){
 	$laufzeit = $_POST['laufzeit'];
 	
-	if($jahre == '1') {
+	if($laufzeit == '0.25') {
+		$jahre = 0.25;
+	}
+	elseif($laufzeit == '0.5') {
+		$jahre = 0.5;
+	}
+	elseif($laufzeit == '0.75') {
+		$jahre = 0.75;
+	}
+	elseif($laufzeit == '1') {
 		$jahre = 1;
 	}
-	elseif($jahre == '2') {
+	elseif($laufzeit == '2') {
 		$jahre = 2;
 	}
-	elseif($jahre == '3') {
+	elseif($laufzeit == '3') {
 		$jahre = 3;
 	}
-	elseif($jahre == '4') {
+	elseif($laufzeit == '4') {
 		$jahre = 4;
 	}
-	elseif($jahre == '5') {
+	elseif($laufzeit == '5') {
 		$jahre = 5;
 	}
 	else {
@@ -82,7 +91,7 @@ $log = new CsrLogger();
 if(UserHelper::IsLoggedIn()) {
 
 	//Datenbankeintrag zum CSR mit neuem Datum Kopieren.
-	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$jahre)." day")), $request->country, $request->state, $request->city, $request->organisation_name, $request->common_name, "1", $request->organisation_unit_name, $request->responsible_email, $request->challenge_password, $request->optional_company_name, $request->intermediate, NULL, $request->path_csr, NULL);
+	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".ceil(365*$jahre)." day")), $request->country, $request->state, $request->city, $request->organisation_name, $request->common_name, "1", $request->organisation_unit_name, $request->responsible_email, $request->challenge_password, $request->optional_company_name, $request->intermediate, NULL, $request->path_csr, NULL);
     
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
@@ -90,7 +99,7 @@ if(UserHelper::IsLoggedIn()) {
 	if($req_id == null) {
 		//Fehler
 		$_SESSION['message']['error'][] = 'Unerwarteter Fehler bei der Zertifikatsbestellung!';
-		$log->addError("Unerwarteter Fehler beim verlängern von CSR ID ".$csr_id.".");
+		$log->addError("Unerwarteter Fehler beim Verlängern von CSR ID ".$csr_id.".");
 		Header('Location: renewCRT.php?csr='.$csr_id);
 		exit();
 	}
@@ -102,10 +111,11 @@ if(UserHelper::IsLoggedIn()) {
 		}
 		//Zusätzliche SANs vom Fontend hinzufügen
 		foreach($additional_sans as $san) {
-			$db->insert_sans($req_id, $san->name);
+			$db->insert_sans($req_id, $san);
 		}
 	
 		$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
+		$laufzeit_string = ($jahre == 0.5) ? ("&frac12; Jahr") : $laufzeit_string ;
 		$_SESSION['message']['success'][] = 'Der CSR wurde erfolgreich um die gew&uuml;nschte Laufzeit '.$laufzeit_string.' verl&auml;ngert.';
 		$log->addNotice("CSR ID ".$csr_id." erfolgreich als CSR ID ".$req_id." verl&auml;ngert.");
 		

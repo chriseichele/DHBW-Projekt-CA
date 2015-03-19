@@ -62,14 +62,17 @@ include('./header.php');
 		</p>
 	</div>
 	<form enctype="multipart/form-data" action="annahme_renew.php" method="post">
-		<input type="hidden" name="zerttype" value="<?php if($request->intermediate == '1'){echo'intermediate';}elseif($request->intermediate == '0'){echo'normal';} ?>" />
 		<div class="form-group">
     		<label for="laufzeit">W&auml;hlen Sie die gew&uuml;nschte Laufzeit(ab heute) f&uuml;r das neue Zertifikat aus:</label>
     		<select id="laufzeit" name="laufzeit" class="form-control">
-    			<?php if($request->intermediate == null){echo'<option value="1">1 Jahr Laufzeit</option>';} ?>
+  				<option value="0.25">&frac14; Jahr Laufzeit</option>
+  				<option value="0.5">&frac12; Jahr Laufzeit</option>
+  				<option value="0.75">&frac34; Jahr Laufzeit</option>
+  				<option value="1" selected="selected">1 Jahr Laufzeit</option>
+  				<option value="2">2 Jahre Laufzeit</option>
   				<option value="3">3 Jahre Laufzeit</option>
+  				<option value="4">4 Jahre Laufzeit</option>
   				<option value="5">5 Jahre Laufzeit</option>
-    			<?php if($request->intermediate == 1){echo'<option value="10">10 Jahre Laufzeit</option>';} ?>
 			</select>
 		</div> 
 		<input type="hidden" name="csr" value="<?php echo $csr_id; ?>" />

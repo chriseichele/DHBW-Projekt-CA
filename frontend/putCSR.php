@@ -9,7 +9,7 @@ require_once('./LogHelper.php');
 #This function saves a given .csr file to the filesystem 
 #and writes its content to a database
 #Input: $filename name of the uploaded file. 
-#Input: $laufzeit Laufzeit des Zertifikates (1,3 oder 5 Jahre)
+#Input: $laufzeit Laufzeit des Zertifikates (0.25 - 5 Jahre)
 #Input: $intermediate: Ist das angeforderte Zertifikat intermediate (0,1) 
 
 function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
@@ -56,7 +56,7 @@ function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 	#writeToDB
 	#create an entry in the request table
 	$db = new DBAccess();
-	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, NULL, NULL,$uploadfile, NULL);	
+	$dbresult = $db->insert_request(date("Y-m-d H:i:s"), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".ceil(365*$laufzeit)." day")), $country, $state, $location, $org, $domain, "1", $orgunit, $email, NULL, NULL, NULL, NULL,$uploadfile, NULL);	
 	//Request ID aus DB Rückgabe holen
 	$req_id = $dbresult['id'];
 	
