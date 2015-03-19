@@ -8,7 +8,7 @@ require_once('./UserHelper.php');
 		
 		function createCertificate($id){
 			doAdminRightsCheck();
-			$log = new OpensslLogger();6
+			$log = new OpensslLogger();
 
 			#TODO: Abfragen ob der User eingeloggt  ist
 			#get various informations from database used for signing the certificate
@@ -21,6 +21,7 @@ require_once('./UserHelper.php');
 			$start = $csr->start;
 			$end = $csr->end;
 			$duration = 365 * ($end - $start);
+			$opensslconf_path = "c:\apache24\ca\kunden\temp_".date("Y-m-d-H-i-s")."_openssl.cnf"
 			#Prüfung ob die Select-Abfrage erfolgreich war
 			if($pathToCSR == NULL) {
 				throw new Exception("Der Pfad zur CSR Datei konnte nicht ermittelt werden!");
@@ -36,15 +37,15 @@ require_once('./UserHelper.php');
 					$checkSAN = $db_result[0]->name;
 					if($checkSAN != NULL){
 						#create certificate with SANs
-						getSANs($id, 0);
-						$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile c:\apache24\ca\kunden\openssl.cnf";
+						getSANs($id, $opensslconf_path);
+						$opensslcmd = "c:\apache24\bin\openssl.exe x509 -req -CA c:\apache24\ca\ica.crt -CAkey c:\apache24\ca\ica.key -CAcreateserial -in ".$pathToCSR." -out ".$pathToCRT." -days ".$duration." -sha256 -extensions v3_req -extfile ".$opensslconf_path;
 						#sign certificate
 						shell_exec($opensslcmd);
 						#write Command and config to log
 						$log->addNotice($opensslcmd);
-						$log->addNotice(file_get_contents("c:\apache24\htdocs\dev\arne\openssl.cnf"));
+						$log->addNotice(file_get_contents($opensslconf_path));
 						#delete config created in getSANs($id, 0)
-						unlink("c:\apache24\htdocs\dev\arne\openssl.cnf");
+						unlink($opensslconf_path);
 					}
 					else{
 					#if no SANs where found, sign normally
@@ -77,7 +78,7 @@ require_once('./UserHelper.php');
 
 		}
 	
-	function getSANs($id){
+	function getSANs($id, $opensslconf_path){
 		#create a temporary config for certificate signing. 
 		#Use different constraints for non-intermediate and intermediate certificates
 		
@@ -90,13 +91,13 @@ require_once('./UserHelper.php');
 		subjectAltName = @alt_names
 		[ alt_names ]".PHP_EOL;
 
-		file_put_contents("c:\apache24\ca\kunden\openssl.cnf", $configContent);
+		file_put_contents($opensslconf_path, $configContent);
 		#lookup SANs in DB and attach them to the config file
 		$db = new DBAccess();
 		$where = array("request_id","=","'".$id."'");
 		$db_result = $db->get_sans_all_where($where);
 		for($i = 0; $i < count($db_result); $i++){
-			file_put_contents("c:\apache24\ca\kunden\openssl.cnf", "DNS.".$i." = ".$db_result[$i]->name.PHP_EOL, FILE_APPEND);
+			file_put_contents($opensslconf_path, "DNS.".$i." = ".$db_result[$i]->name.PHP_EOL, FILE_APPEND);
 		}
 
 	}
