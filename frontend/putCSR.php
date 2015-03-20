@@ -114,6 +114,8 @@ function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 		$db->insert_sans($req_id, $array[1]);
 		unset($array);
 	}
+	//insert common name as default san too
+	$db->insert_sans($req_id, $domain);	
 	
 	#insert wildcard SAN, if present
 	if($wildcard === true){
