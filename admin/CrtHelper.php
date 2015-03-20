@@ -103,10 +103,16 @@ class CrtHelper {
 		return $out;
 	}
 	
-	private static function getOpenCSR() {
+	private static function getOpenCSR($excludeMe = false) {
 		//Dateien von der Datenbank abfragen
 		$db = new DBAccess();
-		$where = array("status","=","'created'");
+		if($excludeMe) {
+			//Requests für einen eigenen User ausblenden
+			require_once('./UserHelper.php');
+			$where = array("status","=","'created'"," AND ","requester","!=","'".UserHelper::GetUserEmail()."'");
+		} else {
+			$where = array("status","=","'created'");
+		}
 		$requests = $db->get_request_all_where($where);
 		$files = null;
 		if(!empty($requests)) {
@@ -117,8 +123,8 @@ class CrtHelper {
 		//-> return der dateien als Array, bezeichner als key
 		return $files;
 	}
-	public static function getOpenCSRList() {
-		$files = CrtHelper::getOpenCSR();
+	public static function getOpenCSRList($excludeMe = false) {
+		$files = CrtHelper::getOpenCSR($excludeMe);
 		
 		$out = "<table class='table table-bordered'>";
 		$out .= "<tr><th>CSR</th><th>Common Name</th><th>Startzeit</th><th>Endzeit</th><th><!-- Action --></th></tr>";

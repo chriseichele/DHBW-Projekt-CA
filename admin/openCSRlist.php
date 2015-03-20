@@ -19,7 +19,7 @@ include('./header.php');
 <?php
 
 echo '<div class="container table-responsive">';
-echo CrtHelper::getOpenCSRList();
+echo CrtHelper::getOpenCSRList(true);
 echo '</div>';
 
 include('./footer.php'); ?>
