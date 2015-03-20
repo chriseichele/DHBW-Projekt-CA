@@ -40,9 +40,9 @@ $cn = $csr->common_name;
         
         return $path;
       }
-        elseif($type === 'PEM-Format'){
-          $path = "c:\apache24\ca\kunden\\temp_".date("Y-m-d-H-i-s")."_".$cn.".pem";
-          $opensslcmd = "c:\apache24\bin\openssl.exe x509 -inform der ".$pathToCRT." -out ".$path;
+        elseif($type === 'DER-Format'){
+          $path = "c:\\apache24\\ca\\kunden\\temp_".date("Y-m-d-H-i-s")."_".$cn.".der";
+          $opensslcmd = "c:\apache24\bin\openssl.exe x509 -inform PEM -outform DER ".$pathToCRT." -out ".$path;
           shell_exec($opensslcmd);
           $log->addNotice($opensslcmd);
           return $path;
