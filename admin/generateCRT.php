@@ -71,7 +71,7 @@ require_once('./UserHelper.php');
 						}
 					}
 					else {
-						throw new Exception("Zertifikatserstellung mit OpenSSL fehlgeschlagen!" . "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+						throw new Exception("Zertifikatserstellung mit OpenSSL fehlgeschlagen!");
 					}
 				}
 				else {
