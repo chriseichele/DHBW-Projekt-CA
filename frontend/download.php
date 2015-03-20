@@ -57,6 +57,7 @@ include('./header.php');
 	<a href="CrtDownloader.php?downloadCRT=<?php echo $csr_id; ?>&fileformat=DER-Format" class="btn btn-success btn-lg btn-block" role="button">Zertifikat im <b>DER-Format</b> herunterladen</a>
 	<a href="CrtDownloader.php?downloadCRT=<?php echo $csr_id; ?>&fileformat=generic" class="btn btn-success btn-lg btn-block" role="button">Zertifikat im <b>Generischen Format</b> herunterladen</a>
 </div>
+<p>&nbsp;</p>
 <div class="container">
 	<a href="viewCSR.php?csr=<?php echo $csr_id; ?>" class="btn btn-default btn-lg btn-block" role="button">Zur&uuml;ck zur Detailansicht</a>
 </div>
