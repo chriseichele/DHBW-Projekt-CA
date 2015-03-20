@@ -107,7 +107,18 @@ function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 	#insert default SANs
 	$is_www = strpos($domain, "www.");
 	if($is_www === false){
-		$db->insert_sans($req_id, "www.".$domain);	
+		#Abfangen von wildcard-certs im common name
+		$is_wildcard = strpos($domain, "*.");
+		if($is_wildcard === false){
+			#if the common name is not a wildcard skip
+		}
+		else{
+			#if a wildcard is present, cut *. from the common name and insert SAN
+			$tempSAN = substr($domain, 2);
+			$db->insert_sans($req_id, $tempSAN);
+			unset($tempSAN);
+		}
+	
 	}
 	else{
 		$array = explode("www.", $domain);
