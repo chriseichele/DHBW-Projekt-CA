@@ -12,8 +12,9 @@ include('./header.php');
 ?>
 <div class="jumbotron">
 	<div class="container">
-		<h1>&Uuml;bersicht aller offenen Zertifikats&shy;anfragen</h1>
-		<p>In der Detailansicht k&ouml;nnen diese genehmigt oder abgelehnt werden.</p>     
+		<h1>&Uuml;bersicht offener Zertifikats&shy;anfragen</h1>
+		<p>In der Detailansicht k&ouml;nnen diese genehmigt oder abgelehnt werden.
+		<br/>Ihre eigenen Zertifikate werden hier nicht angezeigt.</p> 
 	</div>
 </div>
 <?php
