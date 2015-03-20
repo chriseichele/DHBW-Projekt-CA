@@ -71,7 +71,7 @@ class CrtHelper {
 		header ( "Content-Type: application/octet-stream" );
 		
 		//Passenden Dateinamen im Download-Requester vorgeben
-		$save_as_name = ($fileformat != NULL) ? ($filelist[$download_bezeichner]->common_name .".".strtolower($fileformat).".". pathinfo($filename, PATHINFO_EXTENSION)) : ($filelist[$download_bezeichner]->common_name .".". pathinfo($filename, PATHINFO_EXTENSION)) ;
+		$save_as_name = ($fileformat != NULL) ? (str_replace("*.","",$filelist[$download_bezeichner]->common_name) .".".strtolower($fileformat).".". pathinfo($filename, PATHINFO_EXTENSION)) : (str_replace("*.","",$filelist[$download_bezeichner]->common_name) .".". pathinfo($filename, PATHINFO_EXTENSION)) ;
 		header ( "Content-Disposition: attachment; filename=\"$save_as_name\"" );
 		
 		// Datei ausgeben.

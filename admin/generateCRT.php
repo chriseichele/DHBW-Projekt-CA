@@ -17,7 +17,7 @@ require_once('./UserHelper.php');
 			$db_result = $db->get_request_all_where($where);
 			$csr = reset($db_result);
 			$pathToCSR = $csr->path_csr;
-			$name = date("Y-m-d-H-i-s")."_".$csr->common_name;
+			$name = date("Y-m-d-H-i-s")."_".str_replace("*.","",$csr->common_name);
 			//cert times
 			$start = strtotime($csr->start);
 			$end = strtotime($csr->end);
