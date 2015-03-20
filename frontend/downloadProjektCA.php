@@ -11,8 +11,8 @@ echo' <div class="jumbotron">
 	</div>
 </div>
 <div class="container">
-	<a href="./pub/ca.crt" class="btn btn-success btn-lg btn-block" role="button">Root Zertifikat</a>
-	<a href="./pub/ica.crt" class="btn btn-success btn-lg btn-block" role="button">Intermediate Zertifikat</a>
+	<a href="https://'.$_SERVER['HTTP_HOST'].'/pub/ca.crt" class="btn btn-success btn-lg btn-block" role="button">Root Zertifikat</a>
+	<a href="https://'.$_SERVER['HTTP_HOST'].'/pub/ica.crt" class="btn btn-success btn-lg btn-block" role="button">Intermediate Zertifikat</a>
 </div>';
 
 include('./footer.php'); 
