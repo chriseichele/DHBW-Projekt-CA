@@ -19,7 +19,7 @@ function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 	$uploaddir = 'c:\apache24\ca\kunden\csr\\';
 	$log = new OpensslLogger();
 
-	$uploadfile = $uploaddir . basename($fileObject['name']);
+	$uploadfile = $uploaddir . date("Y-m-d-H-i-s")."_" . basename($fileObject['name']);
 	//Eindeutigen Namen vergeben
 	$path_parts = pathinfo($uploadfile);
 	$i = 0;

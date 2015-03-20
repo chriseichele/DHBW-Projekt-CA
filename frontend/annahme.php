@@ -99,7 +99,9 @@ if(UserHelper::IsLoggedIn()) {
 				$csr_id = putCSR($file, $jahre, $wildcard, $additional_sans);
 			
 				$laufzeit_string = ($jahre <= 1) ? ($jahre." Jahr") : ($jahre." Jahre") ;
+				$laufzeit_string = ($jahre == 0.25) ? ("&frac14; Jahr") : $laufzeit_string ;
 				$laufzeit_string = ($jahre == 0.5) ? ("&frac12; Jahr") : $laufzeit_string ;
+				$laufzeit_string = ($jahre == 0.75) ? ("&frac34; Jahr") : $laufzeit_string ;
 				$_SESSION['message']['success'][] = 'Der CSR "'.$dateiname.'" mit gew&uuml;nschter Laufzeit '.$laufzeit_string.' wurde erfolgreich hochgeladen. <a href="./viewCSR.php?csr='.$csr_id.'">Anzeigen</a>';
 				$log->addNotice("CSR ID ".$csr_id." erfolgreich hochgeladen.");
 			

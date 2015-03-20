@@ -29,6 +29,8 @@ require_once('./UserHelper.php');
 				throw new Exception("Der Pfad zur CSR Datei konnte nicht ermittelt werden!");
 			}
 			else {
+				#update request times to certificate creation time
+				$update = $db->update_request_dates($where, date('Y-m-d H:i:s'), date('Y-m-d H:i:s',strtotime(date("Y-m-d H:i:s", time()) . " + ".$duration." day")));
 				#update the request status to finished. Then it will be displayed in the frontend
 				$update = $db->update_request_status($where, 3);
 				#Prüfung ob die Update-Abfrage erfolgreich war			
