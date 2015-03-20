@@ -23,7 +23,7 @@ if(!$doReset) {
 	echo '<h1>'.$pagetitle.'</h1>';
 	echo '<form style="margin:2em 0 0.5em;" method="post" action="'.$_SERVER["PHP_SELF"].'">';
 	echo '<input type="hidden" name="killall" value="true" />';
-	echo '<input type="submit" onclick="confirm(\'Sind Sie sicher, dass Sie alle Daten unwiderruflich l&ouml;schen m&ouml;chten?\');"  class="btn btn-block btn-lg btn-danger" value="ALLES UNWIDERRRUFLICH L&Ouml;SCHEN" />';
+	echo '<input type="submit" onclick="return confirm(\'Sind Sie sicher, dass Sie alle Daten unwiderruflich l&ouml;schen m&ouml;chten?\');"  class="btn btn-block btn-lg btn-danger" value="ALLES UNWIDERRRUFLICH L&Ouml;SCHEN" />';
 	echo '</form>';
 
 } else {
