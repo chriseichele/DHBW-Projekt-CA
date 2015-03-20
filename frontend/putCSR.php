@@ -129,16 +129,18 @@ function putCSR($fileObject, $laufzeit, $wildcard, $frontendSANs){
 	$db->insert_sans($req_id, $domain);	
 	
 	#insert wildcard SAN, if present
-	if($wildcard === true){
-		if($is_www === false){
-			$db->insert_sans($req_id, "*.".$domain);	
+	if($is_wildcard === false){
+		if($wildcard === true){
+			if($is_www === false){
+				$db->insert_sans($req_id, "*.".$domain);	
+			}
+			else{
+				$array = explode("www.", $domain);
+				$db->insert_sans($req_id, "*.".$array[1]);
+				unset($array);
+			}
 		}
-		else{
-			$array = explode("www.", $domain);
-			$db->insert_sans($req_id, "*.".$array[1]);
-			unset($array);
-		}
-	}	
+	}
 	
 	#insert frontend SANs, if present
 	foreach($frontendSANs as $SAN ){
